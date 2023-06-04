@@ -28,6 +28,26 @@ const Hotels_list = () => {
 
   //sub stream
   const [data, setData] = useState([]);
+  const [categories, setCategories] = useState({});
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const { data } = await axios.get("http://localhost:5001/api/category", {
+          mode: "cors",
+        });
+        const categoryMap = {};
+        data.forEach((category) => {
+          categoryMap[category._id] = category.name;
+        });
+        setCategories(categoryMap);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   const { ExportCSVButton } = CSVExport;
 
@@ -48,26 +68,52 @@ const Hotels_list = () => {
       formatter: (cellContent, row) => {
         return (
           <div>
-            <img src={row.img[0]} alt="" style={{ width: 120, height: 120 }} />
+            <img
+              src={row.photos[0]}
+              alt=""
+              style={{ width: 120, height: 120 }}
+            />
           </div>
         );
       },
     },
     {
-      text: "Product Name",
-      formatter: (cellContent, row, index) => {
-        return (
-          <>
-            {" "}
-            <p>{row.name.slice(0, 30)}</p>
-          </>
-        );
+      text: "Category",
+      formatter: (cellContent, row) => {
+        const categoryName =
+          categories[row.category ? row.category.id : ""] || "";
+        return <p>{categoryName}</p>;
       },
     },
-
+    // {
+    //   text: "Category",
+    //   formatter: (cellContent, row) => {
+    //     return <p>{row.category ? (row.category.id == id[value] ? name : "") : ""}</p>;
+    //   },
+    // },
     {
-      dataField: "buyPrice",
-      text: "Product Price",
+      dataField: "desc",
+      text: "Description",
+    },
+    {
+      dataField: "availble",
+      text: "Availble",
+    },
+    {
+      dataField: "address",
+      text: "Address",
+    },
+    {
+      dataField: "perDay",
+      text: "Per Day",
+    },
+    {
+      dataField: "perMonth",
+      text: "Per Month",
+    },
+    {
+      dataField: "perYear",
+      text: "Per Month",
     },
     {
       text: "Action",
@@ -132,7 +178,7 @@ const Hotels_list = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:5001/api/products`, {
+        const { data } = await axios.get(`http://localhost:5001/api/hotels`, {
           mode: "cors",
         });
         setData(data);
@@ -141,13 +187,13 @@ const Hotels_list = () => {
       }
     };
     getData();
-  }, [data]);
+  }, []);
   //delete
   const [products, setProducts] = useState(data);
   const handleCategory = async (id) => {
     const confirmation = window.confirm("Are you Sure?");
     if (confirmation) {
-      const url = `http://localhost:5001/api/products/${id}`;
+      const url = `http://localhost:5001/api/hotels/${id}`;
       fetch(url, {
         method: "DELETE",
       })
