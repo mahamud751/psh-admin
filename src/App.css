@@ -1,0 +1,108 @@
+.App {
+  text-align: center;
+}
+
+.content-wrapper {
+  padding: 10px;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+button {
+  height: 54px;
+  background: #463196 0% 0% no-repeat padding-box;
+  border-radius: 5px;
+  border: none;
+  color: #FFFFFF;
+  border-radius: 5px;
+}
+
+thead {
+  background-color: #C4BFDF;
+}
+
+.menu_li {
+  font-size: 15px;
+}
+
+th {
+  text-align: center;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+::-webkit-file-upload-button {
+  background: #C8C1DF;
+  color: #0F0C1A;
+  padding: 1em;
+  border: none;
+}
+
+#pageDropDown {
+  width: 62px;
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  border: 1px solid #C8C1DF;
+  border-radius: 5px;
+  color: #939198;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media only screen and (max-width: 600px) {
+
+  .navbar_main_nav {
+    display: flex;
+    flex-direction: column;
+  }
+
+  ::-webkit-file-upload-button {
+    background: #C8C1DF;
+    color: #0F0C1A;
+    padding: 1em;
+    border: none;
+  }
+
+  #pageDropDown {
+    width: 62px;
+    margin-bottom: 10px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 1px solid #C8C1DF;
+    border-radius: 5px;
+    color: #939198;
+  }
+
+}

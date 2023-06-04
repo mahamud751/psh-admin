@@ -1,0 +1,259 @@
+.wrapper {
+  margin: 30px 20px;
+}
+
+.navbar_logo_text {
+  text-align: center;
+  font: normal normal medium 18px/27px Poppins;
+  letter-spacing: 0px;
+  color: #0f0c1a;
+}
+
+
+
+.main_nav-link:hover {
+  background: #463196 0% 0% no-repeat padding-box;
+  border-radius: 10px;
+  width: 97%;
+
+}
+
+.span_text2 {
+  color: black
+}
+
+.main_nav-link:hover .span_text {
+  color: white;
+  text-decoration: none;
+}
+
+.main_nav-link:hover .span_text2 {
+  color: white;
+  text-decoration: none;
+}
+
+
+
+.nav-link {
+  width: 129px;
+
+}
+
+.main_text_nav-link {
+  color: #0f0c1a;
+}
+
+.span_text {
+  color: #0f0c1a;
+  font-size: 12px;
+  width: 120px;
+}
+
+
+.navbar_span {
+  font: normal normal medium 15px/23px Poppins;
+  letter-spacing: 0px;
+  color: #463196;
+  font-weight: 300;
+  margin-top: 4px;
+}
+
+.navbar-expands {
+  display: flex;
+}
+
+.logoSearch {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.password_sm {
+  display: none;
+}
+
+.search {
+  display: flex;
+  justify-content: space-between;
+
+  padding: 5px 18px;
+  width: 600px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 4px 10px #0000001f;
+  border-radius: 10px;
+}
+
+.search>input {
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
+.s-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 5px;
+
+  /* background: linear-gradient(98.63deg, #8f00ff 0%, #ff18b7 100%); */
+}
+
+.s-icon:hover {
+  cursor: pointer;
+
+}
+
+
+/* .password_btn {
+  width: 140px;
+  margin-top: 10px;
+  height: 40px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 1px solid #c8c1df;
+} */
+.nav_design {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* .navbar_bar {
+  display: none;
+} */
+
+.left_nav {
+  margin-left: 200px;
+}
+
+
+.side_menubar {
+  background: #C4BFDF 0% 0% no-repeat padding-box;
+  border-radius: 20px;
+  position: fixed;
+  width: 140px;
+
+}
+
+.profile_image {
+  margin-top: -22px;
+  margin-left: -12px;
+}
+
+@media only screen and (max-width: 600px) {
+  .wrapper {
+    margin: 0%;
+
+  }
+
+  .menu_flex {
+    display: unset;
+  }
+
+  .main-header {
+    background: #EEEEEE;
+    height: 100px;
+    margin-bottom: 60px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+  }
+
+  .password_sm {
+    display: block;
+  }
+
+  .navbar_bar {
+    display: flex;
+
+  }
+
+  .nav-link {
+    width: 180px;
+    height: 50px;
+  }
+
+  .nav-sidebar {
+    width: 160px;
+    text-align: left;
+  }
+
+  .main_nav-link {
+    display: flex;
+
+  }
+
+  .menu_right_li {
+    margin-left: -20px;
+  }
+
+  .side_menubar {
+    background: #FCFCFC 0% 0% no-repeat padding-box;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    width: 230px;
+  }
+
+
+
+
+  .navbar-expand .navbar-nav {
+    -ms-flex-direction: row;
+    display: flex;
+    justify-content: space-between;
+    width: 32%;
+  }
+
+  .main_nav-link:hover {
+    background: #463196 0% 0% no-repeat padding-box;
+    border-radius: 10px;
+    width: 160px;
+  }
+
+  .span_text {
+    margin-left: 10px;
+  }
+
+  .search {
+
+    padding: 5px 24px;
+    width: 100%;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    box-shadow: 0px 4px 10px #0000001f;
+    border-radius: 10px;
+    margin-left: -45px;
+  }
+
+  .nav_design {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+  }
+
+  .log_out_sm {
+    display: none;
+  }
+
+
+  .profile_image {
+    margin-left: 20px;
+  }
+
+  /* .logoSearch {} */
+
+  .s-icon {
+    margin-left: -55px;
+    margin-right: 20px;
+  }
+
+  .college_btn2 {
+    margin-top: 10px;
+  }
+
+  .bars_1 {
+    position: fixed;
+    display: contents;
+  }
+
+  .navbar_logo_text {
+    display: none;
+  }
+}
