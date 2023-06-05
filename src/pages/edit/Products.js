@@ -12,9 +12,12 @@ const Products = ({ data }) => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:5001/api/category`, {
-          mode: "cors",
-        });
+        const { data } = await axios.get(
+          `https://psh-server.onrender.com/api/category`,
+          {
+            mode: "cors",
+          }
+        );
         setData(data);
       } catch (error) {
         console.log(error);
@@ -59,7 +62,10 @@ const Products = ({ data }) => {
         img: list,
       };
 
-      await axios.put(`http://localhost:5001/api/products/${_id}`, product);
+      await axios.put(
+        `https://psh-server.onrender.com/api/products/${_id}`,
+        product
+      );
       MySwal.fire("Good job!", "successfully edited", "success");
     } catch (err) {
       MySwal.fire("Something Error Found.", "warning");
