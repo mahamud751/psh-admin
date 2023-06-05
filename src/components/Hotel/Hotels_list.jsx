@@ -8,7 +8,7 @@ import ToolkitProvider from "react-bootstrap-table2-toolkit/dist/react-bootstrap
 import paginationFactory from "react-bootstrap-table2-paginator";
 import BootstrapTable from "react-bootstrap-table-next";
 import { Link } from "react-router-dom";
-import Products from "../../pages/edit/Products";
+import Hotels from "../../pages/edit/Hotels";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import "./Hotel.css";
@@ -137,7 +137,7 @@ const Hotels_list = (props) => {
               <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content" style={{ width: 700 }}>
                   <div className="modal-body">
-                    <Products data={row} />
+                    <Hotels data={row} />
                   </div>
                 </div>
               </div>

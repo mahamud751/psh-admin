@@ -4,7 +4,7 @@ import withReactContent from "sweetalert2-react-content";
 import axios from "axios";
 import { useEffect } from "react";
 
-const Products = ({ data }) => {
+const Hotels = ({ data }) => {
   const { _id, name } = data;
   const [user, setUser] = useState(data);
   const [files, setFiles] = useState("");
@@ -59,11 +59,11 @@ const Products = ({ data }) => {
 
       const product = {
         ...newPost,
-        img: list,
+        photos: list,
       };
 
       await axios.put(
-        `https://psh-server.onrender.com/api/products/${_id}`,
+        `https://psh-server.onrender.com/api/hotels/${_id}`,
         product
       );
       MySwal.fire("Good job!", "successfully edited", "success");
@@ -94,49 +94,52 @@ const Products = ({ data }) => {
                   ))}
                 </select>
               </div>
+
               <div className="col-md-12 mb-3">
                 <label
                   htmlFor="inputState"
                   className="form-label profile_label3"
                 >
-                  Product Name
+                  Description
                 </label>
                 <input
                   type="text"
                   className="main_form  w-100"
-                  name="name"
+                  name="desc"
                   onBlur={handleOnBlur}
-                  defaultValue={name || ""}
+                  defaultValue={user.desc || ""}
                 />
               </div>
-              <div className="col-md-12 mb-3">
+
+              <div className="col-md-4 mb-3">
                 <label
                   htmlFor="inputState"
                   className="form-label profile_label3"
                 >
-                  Short Description
+                  Per Day
                 </label>
                 <input
                   type="text"
                   className="main_form  w-100"
-                  name="shortDescription"
+                  name="perDay"
                   onBlur={handleOnBlur}
-                  defaultValue={user.shortDescription || ""}
+                  defaultValue={user.perDay || ""}
                 />
               </div>
-              <div className="col-md-12 mb-3">
+
+              <div className="col-md-4 mb-3">
                 <label
                   htmlFor="inputState"
                   className="form-label profile_label3"
                 >
-                  FullDescription
+                  Per Month
                 </label>
                 <input
                   type="text"
                   className="main_form  w-100"
-                  name="fullDescription"
+                  name="perMonth"
                   onBlur={handleOnBlur}
-                  defaultValue={user.fullDescription || ""}
+                  defaultValue={user.perMonth || ""}
                 />
               </div>
               <div className="col-md-4 mb-3">
@@ -144,59 +147,30 @@ const Products = ({ data }) => {
                   htmlFor="inputState"
                   className="form-label profile_label3"
                 >
-                  Price
+                  Per Year
                 </label>
                 <input
                   type="text"
                   className="main_form  w-100"
-                  name="realPrice"
+                  name="perYear"
                   onBlur={handleOnBlur}
-                  defaultValue={user.realPrice || ""}
+                  defaultValue={user.perYear || ""}
                 />
               </div>
-              <div className="col-md-4 mb-3">
-                <label
-                  htmlFor="inputState"
-                  className="form-label profile_label3"
-                >
-                  Buy Price
-                </label>
-                <input
-                  type="text"
-                  className="main_form  w-100"
-                  name="buyPrice"
-                  onBlur={handleOnBlur}
-                  defaultValue={user.buyPrice || ""}
-                />
-              </div>
-              <div className="col-md-4 mb-3">
-                <label
-                  htmlFor="inputState"
-                  className="form-label profile_label3"
-                >
-                  Offer Price
-                </label>
-                <input
-                  type="text"
-                  className="main_form  w-100"
-                  name="offerPrice"
-                  onBlur={handleOnBlur}
-                  defaultValue={user.offerPrice || ""}
-                />
-              </div>
+
               <div className="col-md-6 mb-3">
                 <label
                   htmlFor="inputState"
                   className="form-label profile_label3"
                 >
-                  Quantity
+                  Avaliblilty
                 </label>
                 <input
                   type="text"
                   className="main_form  w-100"
-                  name="qtn"
+                  name="availble"
                   onBlur={handleOnBlur}
-                  defaultValue={user.qtn || ""}
+                  defaultValue={user.availble || ""}
                 />
               </div>
               <div className="col-md-6 mb-3">
@@ -214,35 +188,13 @@ const Products = ({ data }) => {
                   defaultValue={user.rating || ""}
                 />
               </div>
-              <div className="col-md-6 form_sub_stream">
-                <label className="profile_label3">Product Type</label>
-                <select
-                  id="inputState"
-                  name="productType"
-                  className="main_form w-100"
-                >
-                  <option value="regular">Regular</option>
-                  <option value="offer">Offer</option>
-                  <option value="flashsale">FlashSale</option>
-                </select>
-              </div>
-              <div className="col-md-6 form_sub_stream">
-                <label className="profile_label3">Status</label>
-                <select
-                  id="inputState"
-                  name="status"
-                  className="main_form w-100"
-                >
-                  <option value="active">Active</option>
-                  <option value="inactive">Inactive</option>
-                </select>
-              </div>
+
               <div className="col-md-12 mb-3">
                 <label
                   htmlFor="inputState"
                   className="form-label profile_label3"
                 >
-                  Product Picture
+                  Hotel Picture
                 </label>
                 <input
                   type="file"
@@ -260,7 +212,7 @@ const Products = ({ data }) => {
                   className="profile_btn"
                   style={{ width: 220 }}
                 >
-                  Edit Product
+                  Edit Hotel
                 </button>
               </div>
             </div>
@@ -271,4 +223,4 @@ const Products = ({ data }) => {
   );
 };
 
-export default Products;
+export default Hotels;
