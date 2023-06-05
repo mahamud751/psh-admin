@@ -4,26 +4,16 @@ import img3 from "../../img/college/Icon feather-edit.png";
 import axios from "axios";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
-import ToolkitProvider, {
-  CSVExport,
-} from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min";
+import ToolkitProvider from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import BootstrapTable from "react-bootstrap-table-next";
 import { Link } from "react-router-dom";
 import Products from "../../pages/edit/Products";
-const MyExportCSV = (props) => {
-  const handleClick = () => {
-    props.onExport();
-  };
-  return (
-    <div>
-      <button className="college_btn mb-2 p-3" onClick={handleClick}>
-        Export to CSV
-      </button>
-    </div>
-  );
-};
-const Hotels_list = () => {
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import "./Hotel.css";
+
+const Hotels_list = (props) => {
   const MySwal = withReactContent(Swal);
 
   //sub stream
@@ -48,8 +38,6 @@ const Hotels_list = () => {
 
     fetchCategories();
   }, []);
-
-  const { ExportCSVButton } = CSVExport;
 
   const columns = [
     {
@@ -208,6 +196,44 @@ const Hotels_list = () => {
         });
     }
   };
+  const handleDownloadPDF = () => {
+    const doc = new jsPDF();
+
+    // Define the table columns
+    const columns = [
+      { title: "No", dataKey: "no" },
+      { title: "Category", dataKey: "category" },
+      { title: "Description", dataKey: "desc" },
+      { title: "Availble", dataKey: "availble" },
+      { title: "Address", dataKey: "address" },
+      { title: "Per Day", dataKey: "perDay" },
+      { title: "Per Month", dataKey: "perMonth" },
+      { title: "Per Year", dataKey: "perYear" },
+    ];
+
+    // Map the data array to match the table columns
+    const tableData = data.map((item, index) => {
+      const categoryName =
+        categories[item.category ? item.category.id : ""] || "";
+      return [
+        index + 1,
+
+        categoryName,
+        item.desc,
+        item.availble,
+        item.address,
+        item.perDay,
+        item.perMonth,
+        item.perYear,
+      ];
+    });
+
+    // Set the table content using autotable plugin
+    doc.autoTable(columns, tableData, { startY: 20 });
+
+    // Save the PDF file
+    doc.save("hotel_list.pdf");
+  };
   return (
     <div className="wrapper">
       <div className="content-wrapper" style={{ background: "unset" }}>
@@ -215,13 +241,25 @@ const Hotels_list = () => {
           <div className="container-fluid">
             <div className="row">
               <div className="col-md-7">
-                <h6 className="college_h6">Category List</h6>
+                <h6 className="college_h6">Hotel List</h6>
               </div>
-              <div className="col-md-5">
-                <div className="corporate_addNew_btn">
-                  <Link to={"/add_category"}>
-                    <button className="college_btn2 ms-4 p-3">Add New</button>
-                  </Link>
+              <div className="export_btn_main">
+                <div>
+                  <div className="">
+                    <div className="corporate_addNew_btn">
+                      <Link to={"/add_hotel"}>
+                        <button className="college_btn2 ms-4 p-3">
+                          Add New
+                        </button>
+                      </Link>
+                    </div>
+                  </div>
+                  <button
+                    className="export_btn mt-2 p-3"
+                    onClick={handleDownloadPDF}
+                  >
+                    Export to PDF
+                  </button>
                 </div>
               </div>
             </div>
@@ -239,7 +277,6 @@ const Hotels_list = () => {
                   >
                     {(props) => (
                       <React.Fragment>
-                        <MyExportCSV {...props.csvProps} />
                         <BootstrapTable
                           bootstrap4
                           keyField="_id"
@@ -254,15 +291,9 @@ const Hotels_list = () => {
                 </>
               </div>
             </div>
-            {/* /.row (main row) */}
           </div>
-          {/* /.container-fluid */}
         </section>
-        {/* /.content */}
       </div>
-      {/* /.content-wrapper */}
-
-      {/* Control Sidebar */}
     </div>
   );
 };

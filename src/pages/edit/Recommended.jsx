@@ -5,7 +5,7 @@ import withReactContent from "sweetalert2-react-content";
 import "./Main_steam.css";
 import axios from "axios";
 
-const Category = ({ data }) => {
+const Recommended = ({ data }) => {
   const { _id, name } = data;
   const [user, setUser] = useState(data);
   const [files, setFiles] = useState("");
@@ -47,7 +47,7 @@ const Category = ({ data }) => {
         photos: list,
       };
 
-      await axios.put(`http://localhost:5001/api/category/${_id}`, product);
+      await axios.put(`http://localhost:5001/api/recommended/${_id}`, product);
       MySwal.fire("Good job!", "successfully edited", "success");
     } catch (err) {
       MySwal.fire("Something Error Found.", "warning");
@@ -96,7 +96,7 @@ const Category = ({ data }) => {
                   className="profile_btn"
                   style={{ width: 220 }}
                 >
-                  Edit Category
+                  Edit Recommended
                 </button>
               </div>
             </div>
@@ -107,4 +107,4 @@ const Category = ({ data }) => {
   );
 };
 
-export default Category;
+export default Recommended;

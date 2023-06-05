@@ -226,6 +226,46 @@ const Navbar = () => {
                     </a>
                   </li>
                 </Link>
+                <Link to={"/add_promo"}>
+                  <li className="main_nav-link">
+                    <a href="/add_promo" className="nav-link">
+                      <img style={{ width: 16 }} src={img7} alt="" />
+                      <div className="menu_flex">
+                        <span className="span_text">Add Promo</span>
+                      </div>
+                    </a>
+                  </li>
+                </Link>
+                <Link to={"/promo_list"}>
+                  <li className="main_nav-link">
+                    <a href="/promo_list" className="nav-link">
+                      <i class="fa-solid fa-grip-lines span_text2"></i>
+                      <div className="menu_flex">
+                        <span className="span_text">Promo List</span>
+                      </div>
+                    </a>
+                  </li>
+                </Link>
+                <Link to={"/add_recommended"}>
+                  <li className="main_nav-link">
+                    <a href="/add_recommended" className="nav-link">
+                      <img style={{ width: 16 }} src={img7} alt="" />
+                      <div className="menu_flex">
+                        <span className="span_text">Add Recommended</span>
+                      </div>
+                    </a>
+                  </li>
+                </Link>
+                <Link to={"/recommended_list"}>
+                  <li className="main_nav-link">
+                    <a href="/recommended_list" className="nav-link">
+                      <i class="fa-solid fa-grip-lines span_text2"></i>
+                      <div className="menu_flex">
+                        <span className="span_text">Recommended List</span>
+                      </div>
+                    </a>
+                  </li>
+                </Link>
                 <Link to={"/order"}>
                   <li className="main_nav-link">
                     <a href="/order" className="nav-link">

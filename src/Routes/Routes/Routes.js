@@ -8,6 +8,10 @@ import Hotel from "../../pages/Hotel";
 import Order from "../../pages/Order";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import Add_hotel from "../../pages/Add_hotel";
+import Promo from "../../pages/Promo";
+import Add_Promo from "../../pages/Add_Promo";
+import Add_Recommended from "../../pages/Add_Recommended";
+import Recommended from "../../pages/Recommended";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +44,22 @@ const router = createBrowserRouter([
       {
         path: "/hotel_list",
         element: <Hotel></Hotel>,
+      },
+      {
+        path: "/add_promo",
+        element: <Add_Promo></Add_Promo>,
+      },
+      {
+        path: "/promo_list",
+        element: <Promo></Promo>,
+      },
+      {
+        path: "/add_recommended",
+        element: <Add_Recommended></Add_Recommended>,
+      },
+      {
+        path: "/recommended_list",
+        element: <Recommended></Recommended>,
       },
       {
         path: "/order",

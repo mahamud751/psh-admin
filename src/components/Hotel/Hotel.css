@@ -1,0 +1,10 @@
+.export_btn_main {
+    display: flex;
+    justify-content: end;
+}
+
+.export_btn {
+    width: 180px;
+
+
+}

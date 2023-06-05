@@ -4,17 +4,16 @@ import img3 from "../../img/college/Icon feather-edit.png";
 import axios from "axios";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
-import ToolkitProvider, {
-  CSVExport,
-} from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min";
+import ToolkitProvider from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import BootstrapTable from "react-bootstrap-table-next";
 import Category from "../../pages/edit/Category";
 import { Link } from "react-router-dom";
+import Promo from "../../pages/edit/Promo";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
-const Category_list = () => {
+const Promo_list = () => {
   const MySwal = withReactContent(Swal);
 
   //sub stream
@@ -38,7 +37,7 @@ const Category_list = () => {
         return (
           <div>
             <img
-              src={row.photos && row.photos[0]}
+              src={row.photos[0] && row.photos[0]}
               alt=""
               style={{ width: 120 }}
             />
@@ -81,7 +80,7 @@ const Category_list = () => {
               <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content" style={{ width: 700 }}>
                   <div className="modal-body">
-                    <Category data={row} />
+                    <Promo data={row} />
                   </div>
                 </div>
               </div>
@@ -113,7 +112,7 @@ const Category_list = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:5001/api/category`, {
+        const { data } = await axios.get(`http://localhost:5001/api/promo`, {
           mode: "cors",
         });
         setData(data);
@@ -128,7 +127,7 @@ const Category_list = () => {
   const handleCategory = async (id) => {
     const confirmation = window.confirm("Are you Sure?");
     if (confirmation) {
-      const url = `http://localhost:5001/api/category/${id}`;
+      const url = `http://localhost:5001/api/promo/${id}`;
       fetch(url, {
         method: "DELETE",
       })
@@ -156,9 +155,8 @@ const Category_list = () => {
     doc.autoTable(columns, tableData, { startY: 20 });
 
     // Save the PDF file
-    doc.save("category_list.pdf");
+    doc.save("promo_list.pdf");
   };
-
   return (
     <div className="wrapper">
       <div className="content-wrapper" style={{ background: "unset" }}>
@@ -172,7 +170,7 @@ const Category_list = () => {
                 <div>
                   <div className="">
                     <div className="corporate_addNew_btn">
-                      <Link to={"/add_category"}>
+                      <Link to={"/add_promo"}>
                         <button className="college_btn2 ms-4 p-3">
                           Add New
                         </button>
@@ -229,4 +227,4 @@ const Category_list = () => {
   );
 };
 
-export default Category_list;
+export default Promo_list;
