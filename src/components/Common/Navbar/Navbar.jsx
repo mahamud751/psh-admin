@@ -186,7 +186,7 @@ const Navbar = () => {
                     </a>
                   </li>
                 </Link>
-                <Link to={"/add_category"}>
+                {/* <Link to={"/add_category"}>
                   <li className="main_nav-link">
                     <a href="/add_category" className="nav-link">
                       <i class="fa-sharp fa-solid fa-building-columns span_text2"></i>
@@ -205,7 +205,7 @@ const Navbar = () => {
                       </div>
                     </a>
                   </li>
-                </Link>
+                </Link> */}
                 <Link to={"/add_hotel"}>
                   <li className="main_nav-link">
                     <a href="/add_hotel" className="nav-link">

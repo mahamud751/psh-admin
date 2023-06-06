@@ -18,29 +18,26 @@ const Hotels_list = (props) => {
 
   //sub stream
   const [data, setData] = useState([]);
-  const [categories, setCategories] = useState({});
+  // const [categories, setCategories] = useState({});
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const { data } = await axios.get(
-          "https://psh-server.onrender.com/api/category",
-          {
-            mode: "cors",
-          }
-        );
-        const categoryMap = {};
-        data.forEach((category) => {
-          categoryMap[category._id] = category.name;
-        });
-        setCategories(categoryMap);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchCategories = async () => {
+  //     try {
+  //       const { data } = await axios.get("https://psh-server.onrender.com/api/category", {
+  //         mode: "cors",
+  //       });
+  //       const categoryMap = {};
+  //       data.forEach((category) => {
+  //         categoryMap[category._id] = category.name;
+  //       });
+  //       setCategories(categoryMap);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
 
-    fetchCategories();
-  }, []);
+  //   fetchCategories();
+  // }, []);
 
   const columns = [
     {
@@ -68,20 +65,24 @@ const Hotels_list = (props) => {
         );
       },
     },
-    {
-      text: "Category",
-      formatter: (cellContent, row) => {
-        const categoryName =
-          categories[row.category ? row.category.id : ""] || "";
-        return <p>{categoryName}</p>;
-      },
-    },
+    // {
+    //   text: "Type",
+    //   formatter: (cellContent, row) => {
+    //     const categoryName =
+    //       categories[row.category ? row.category.id : ""] || "";
+    //     return <p>{categoryName}</p>;
+    //   },
+    // },
     // {
     //   text: "Category",
     //   formatter: (cellContent, row) => {
     //     return <p>{row.category ? (row.category.id == id[value] ? name : "") : ""}</p>;
     //   },
     // },
+    {
+      dataField: "type",
+      text: "Type",
+    },
     {
       dataField: "desc",
       text: "Description",
@@ -91,8 +92,8 @@ const Hotels_list = (props) => {
       text: "Availble",
     },
     {
-      dataField: "address",
-      text: "Address",
+      dataField: "city",
+      text: "City",
     },
     {
       dataField: "perDay",
@@ -208,7 +209,7 @@ const Hotels_list = (props) => {
     // Define the table columns
     const columns = [
       { title: "No", dataKey: "no" },
-      { title: "Category", dataKey: "category" },
+      { title: "Type", dataKey: "type" },
       { title: "Description", dataKey: "desc" },
       { title: "Availble", dataKey: "availble" },
       { title: "Address", dataKey: "address" },
@@ -219,12 +220,10 @@ const Hotels_list = (props) => {
 
     // Map the data array to match the table columns
     const tableData = data.map((item, index) => {
-      const categoryName =
-        categories[item.category ? item.category.id : ""] || "";
       return [
         index + 1,
 
-        categoryName,
+        item.type,
         item.desc,
         item.availble,
         item.address,

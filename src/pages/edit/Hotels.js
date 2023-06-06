@@ -9,22 +9,19 @@ const Hotels = ({ data }) => {
   const [user, setUser] = useState(data);
   const [files, setFiles] = useState("");
   const [data2, setData] = useState([]);
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const { data } = await axios.get(
-          `https://psh-server.onrender.com/api/category`,
-          {
-            mode: "cors",
-          }
-        );
-        setData(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getData();
-  }, []);
+  // useEffect(() => {
+  //   const getData = async () => {
+  //     try {
+  //       const { data } = await axios.get(`https://psh-server.onrender.com/api/category`, {
+  //         mode: "cors",
+  //       });
+  //       setData(data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   getData();
+  // }, []);
   const MySwal = withReactContent(Swal);
 
   const handleOnBlur = (e) => {
@@ -79,19 +76,20 @@ const Hotels = ({ data }) => {
             <div className="card-body row">
               <div className="col-md-12 form_sub_stream ">
                 <label htmlFor="inputState" className="profile_label3">
-                  Category
+                  Type
                 </label>
-                <select
-                  name="categoryId"
-                  id="inputState"
-                  className="main_form w-100"
-                >
-                  <option selected>Select Category</option>
-                  {data2.map((pd) => (
-                    <option key={pd._id} value={pd._id}>
-                      {pd.name}
-                    </option>
-                  ))}
+                <select name="type" id="inputState" className="main_form w-100">
+                  <option selected>Select Type</option>
+
+                  <option key={"Premium"} value={"Premium"}>
+                    Standard
+                  </option>
+                  <option key={"Standard"} value={"Standard"}>
+                    Premium
+                  </option>
+                  <option key={"Normal"} value={"Normal"}>
+                    Normal
+                  </option>
                 </select>
               </div>
 

@@ -28,16 +28,25 @@ const Add_hotel = () => {
     event.preventDefault();
     const formData = new FormData(event.target);
     const data2 = {
-      address: formData.get("address"),
+      name: formData.get("name"),
+      type: formData.get("type"),
+      city: formData.get("city"),
       availble: formData.get("availble"),
-      desc: formData.get("desc"),
       rating: formData.get("rating"),
       perDay: formData.get("perDay"),
+      desc: formData.get("desc"),
+      fulldesc: formData.get("fulldesc"),
+      bedroom: formData.get("bedroom"),
+      bathroom: formData.get("bathroom"),
+      car: formData.get("car"),
+      bike: formData.get("bike"),
+      pet: formData.get("pet"),
       perMonth: formData.get("perMonth"),
       perYear: formData.get("perYear"),
-      category: {
-        id: formData.get("categoryId"),
-      },
+
+      // category: {
+      //   id: formData.get("categoryId"),
+      // },
     };
 
     try {
@@ -73,21 +82,22 @@ const Add_hotel = () => {
         <div className="registration_div card p-3">
           <form onSubmit={handleSubmit}>
             <div className="row">
-              <div className="col-md-12 form_sub_stream ">
+              <div className="col-md-6 form_sub_stream ">
                 <label htmlFor="inputState" className="profile_label3">
-                  Category
+                  Type
                 </label>
-                <select
-                  name="categoryId"
-                  id="inputState"
-                  className="main_form w-100"
-                >
+                <select name="type" id="inputState" className="main_form w-100">
                   <option selected>Select Category</option>
-                  {data.map((pd) => (
-                    <option key={pd._id} value={pd._id}>
-                      {pd.name}
-                    </option>
-                  ))}
+
+                  <option key={"Premium"} value={"Premium"}>
+                    Premium
+                  </option>
+                  <option key={"Standard"} value={"Standard"}>
+                    Standard
+                  </option>
+                  <option key={"Normal"} value={"Normal"}>
+                    Normal
+                  </option>
                 </select>
               </div>
 
@@ -96,13 +106,13 @@ const Add_hotel = () => {
                   htmlFor="inputState"
                   className="form-label profile_label3 "
                 >
-                  Address
+                  Name
                 </label>
                 <input
                   type="text"
                   className="main_form w-100"
-                  name="address"
-                  placeholder="address"
+                  name="name"
+                  placeholder="Name"
                 />
               </div>
               <div className="col-md-6 form_sub_stream">
@@ -110,13 +120,117 @@ const Add_hotel = () => {
                   htmlFor="inputState"
                   className="form-label profile_label3 "
                 >
-                  Description
+                  City
+                </label>
+                <input
+                  type="text"
+                  className="main_form w-100"
+                  name="city"
+                  placeholder="city"
+                />
+              </div>
+              <div className="col-md-6 form_sub_stream">
+                <label
+                  htmlFor="inputState"
+                  className="form-label profile_label3 "
+                >
+                  Short Description
                 </label>
                 <input
                   type="text"
                   className="main_form w-100"
                   name="desc"
                   placeholder="Short Description"
+                />
+              </div>
+              <div className="col-md-6 form_sub_stream">
+                <label
+                  htmlFor="inputState"
+                  className="form-label profile_label3 "
+                >
+                  Full Description
+                </label>
+                <input
+                  type="text"
+                  className="main_form w-100"
+                  name="fulldesc"
+                  placeholder="Full Description"
+                />
+              </div>
+
+              <div className="col-md-4 form_sub_stream">
+                <label
+                  htmlFor="inputState"
+                  className="form-label profile_label3 "
+                >
+                  Bedroom
+                </label>
+
+                <input
+                  type="number"
+                  className="main_form w-100"
+                  name="bedroom"
+                  placeholder="bedroom"
+                />
+              </div>
+              <div className="col-md-4 form_sub_stream">
+                <label
+                  htmlFor="inputState"
+                  className="form-label profile_label3 "
+                >
+                  Bathroom
+                </label>
+
+                <input
+                  type="number"
+                  className="main_form w-100"
+                  name="bathroom"
+                  placeholder="bathroom"
+                />
+              </div>
+              <div className="col-md-4 form_sub_stream">
+                <label
+                  htmlFor="inputState"
+                  className="form-label profile_label3 "
+                >
+                  Car
+                </label>
+
+                <input
+                  type="number"
+                  className="main_form w-100"
+                  name="car"
+                  placeholder="car"
+                />
+              </div>
+              <div className="col-md-4 form_sub_stream">
+                <label
+                  htmlFor="inputState"
+                  className="form-label profile_label3 "
+                >
+                  Bike
+                </label>
+
+                <input
+                  type="number"
+                  className="main_form w-100"
+                  name="bike"
+                  placeholder="bike"
+                />
+              </div>
+              <div className="col-md-4 form_sub_stream">
+                <label
+                  htmlFor="inputState"
+                  className="form-label profile_label3 "
+                >
+                  Pet
+                </label>
+
+                <input
+                  type="number"
+                  className="main_form w-100"
+                  name="pet"
+                  placeholder="pet"
                 />
               </div>
 
