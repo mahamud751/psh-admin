@@ -1,14 +1,11 @@
 import React from "react";
-import Comment_list from "./Comment_list/Comment_list";
-import Comment_report_list from "./Comment_report_list/Comment_report_list";
 import "./Home.css";
-import PostList from "./PostList/PostList";
-import Post_report_list from "./Post_report_list/Post_report_list";
 import PropTypes from "prop-types";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import img from "../../img/new/style.png";
+import Hotels_list from "../Hotel/Hotels_list";
+import Dashoboard_table from "./Dashboard_table";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -54,7 +51,7 @@ const Homes = () => {
         <div className="wrapper">
           {/* Content Wrapper. Contains page content */}
           <div className="content-wrapper" style={{ background: "unset" }}>
-            <div className="home_main">
+            {/* <div className="home_main">
               <div>
                 <h1>Welcome to</h1>
                 <img
@@ -64,6 +61,53 @@ const Homes = () => {
                   style={{ width: 190 }}
                 />
               </div>
+            </div> */}
+            <div className="row">
+              <div className="col-md-4">
+                <div className="card_1">
+                  <div className="d-flex p-3">
+                    <div className="d-flex justify-content-center align-items-center">
+                      <img src={img} alt="" className="img1" />
+                    </div>
+                    <div className="ms-3 text-white">
+                      <p>Total Booking</p>
+                      <p>450</p>
+                      <p>60% Increase in 28 Days</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-md-4">
+                <div className="card_2">
+                  <div className="d-flex p-3">
+                    <div className="d-flex justify-content-center align-items-center">
+                      <img src={img} alt="" className="img2" />
+                    </div>
+                    <div className="ms-3 text-white">
+                      <p>Total Booking</p>
+                      <p>450</p>
+                      <p>60% Increase in 28 Days</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-md-4">
+                <div className="card_3">
+                  <div className="d-flex p-3">
+                    <div className="d-flex justify-content-center align-items-center">
+                      <img src={img} alt="" className="img3" />
+                    </div>
+                    <div className="ms-3 text-white">
+                      <p>Total Booking</p>
+                      <p>450</p>
+                      <p>60% Increase in 28 Days</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <Dashoboard_table />
             </div>
           </div>
         </div>

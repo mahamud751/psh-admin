@@ -5,7 +5,7 @@ const Footer = () => {
     <div>
       <footer className="main-footer text-center">
         <strong>
-          Copyright © 2023 <a href="https:hcceco.com">Korbojoy Admin</a>.
+          Copyright © 2023 <a href="https:hcceco.com">PSH Admin</a>.
         </strong>
         <span> All rights reserved.</span>
       </footer>
