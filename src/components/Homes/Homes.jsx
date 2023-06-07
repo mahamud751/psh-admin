@@ -58,10 +58,10 @@ const Homes = () => {
               <div>
                 <h1>Welcome to</h1>
                 <img
-                  src="/assets/img/logo1.png"
+                  src={"https://i.ibb.co/GpqY8tQ/PSH-web-logo-1.png"}
+                  alt=""
                   className="img-fluid"
                   style={{ width: 190 }}
-                  alt=""
                 />
               </div>
             </div>

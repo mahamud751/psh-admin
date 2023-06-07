@@ -209,7 +209,11 @@ const Navbar = () => {
                 <Link to={"/add_hotel"}>
                   <li className="main_nav-link">
                     <a href="/add_hotel" className="nav-link">
-                      <img style={{ width: 16 }} src={img7} alt="" />
+                      <img
+                        style={{ width: 16, color: "red" }}
+                        src={img7}
+                        alt=""
+                      />
                       <div className="menu_flex">
                         <span className="span_text">Add Hotel</span>
                       </div>

@@ -18,6 +18,8 @@
 
 }
 
+
+
 .span_text2 {
   color: black
 }
@@ -44,7 +46,7 @@
 }
 
 .span_text {
-  color: #0f0c1a;
+  color: #ffffff;
   font-size: 12px;
   width: 120px;
 }
@@ -127,11 +129,15 @@
 
 
 .side_menubar {
-  background: #C4BFDF 0% 0% no-repeat padding-box;
+  background: #181818 0% 0% no-repeat padding-box;
   border-radius: 20px;
   position: fixed;
   width: 140px;
 
+}
+
+.nav-link i {
+  color: white
 }
 
 .profile_image {
@@ -143,6 +149,12 @@
   .wrapper {
     margin: 0%;
 
+  }
+
+  .span_text {
+    color: black;
+    font-size: 12px;
+    width: 120px;
   }
 
   .menu_flex {
