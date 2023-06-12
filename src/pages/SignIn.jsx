@@ -1,45 +1,28 @@
 import React, { useState } from "react";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { useLocation, useNavigate } from "react-router-dom";
-import { AuthContext } from "../contexts/AuthProvider";
-import useToken from "../hooks/useToken";
+import { useNavigate, useLocation } from "react-router-dom";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import "./Signin.css";
+
+import { AuthContext } from "../contexts/UserProvider";
 const SignIn = () => {
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
-  const { signIn } = useContext(AuthContext);
+
   const [loginError, setLoginError] = useState("");
-  const [loginUserEmail, setLoginUserEmail] = useState("");
-  const [token] = useToken(loginUserEmail);
-  const location = useLocation();
+  const { loginUser } = useContext(AuthContext);
+
   const navigate = useNavigate();
+  const onSubmit = async (data) => {
+    const { email, password } = data;
 
-  const from = location.state?.from?.pathname || "/";
-
-  if (token) {
-    navigate(from, { replace: true });
-  }
-
-  const handleLogin = (data) => {
-    console.log(data);
-    setLoginError("");
-    signIn(data.email, data.password)
-      .then((result) => {
-        const user = result.user;
-        console.log(user);
-        setLoginUserEmail(data.email);
-        navigate("/");
-      })
-      .catch((error) => {
-        console.log(error.message);
-        setLoginError(error.message);
-      });
+    await loginUser(email, password);
+    navigate("/");
   };
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
@@ -69,15 +52,11 @@ const SignIn = () => {
                     />
                   </div>
                   <div className="registration_div">
-                    <form
-                      className="row g-3"
-                      onSubmit={handleSubmit(handleLogin)}
-                    >
+                    <form className="row g-3" onSubmit={handleSubmit(onSubmit)}>
                       <div className="col-md-12 form2">
                         <input
                           type="email"
                           className="form-control"
-                          name="email"
                           placeholder="Enter Username"
                           {...register("email", {
                             required: true,
@@ -90,10 +69,7 @@ const SignIn = () => {
                       <div className="col-md-12 form2 d-flex">
                         <input
                           type={showPassword ? "text" : "password"}
-                          id="password"
-                          onChange={handlePasswordChange}
                           className="form-control"
-                          name="password"
                           placeholder="Enter Password"
                           {...register("password", {
                             required: "Password is required",

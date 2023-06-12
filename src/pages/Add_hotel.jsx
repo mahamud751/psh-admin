@@ -11,12 +11,9 @@ const Add_hotel = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const { data } = await axios.get(
-          `https://psh-server.onrender.com/api/category`,
-          {
-            mode: "cors",
-          }
-        );
+        const { data } = await axios.get(`http://localhost:5001/api/category`, {
+          mode: "cors",
+        });
         setData(data);
       } catch (error) {
         console.log(error);
@@ -70,7 +67,7 @@ const Add_hotel = () => {
         photos: list,
       };
 
-      await axios.post("https://psh-server.onrender.com/api/hotels", product);
+      await axios.post("http://localhost:5001/api/hotels", product);
       MySwal.fire("Good job!", "successfully added", "success");
     } catch (err) {
       MySwal.fire("Something Error Found.", "warning");

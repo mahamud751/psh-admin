@@ -5,7 +5,7 @@ const useAdmin = (email) => {
   const [isAdminLoading, setIsAdminLoading] = useState(true);
   useEffect(() => {
     if (email) {
-      fetch(`https://psh-server.onrender.com/api/user/admin/${email}`)
+      fetch(`https://psh-server.onrender.com/api/users/admin/${email}`)
         .then((res) => res.json())
         .then((data) => {
           console.log(data);

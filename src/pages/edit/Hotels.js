@@ -12,7 +12,7 @@ const Hotels = ({ data }) => {
   // useEffect(() => {
   //   const getData = async () => {
   //     try {
-  //       const { data } = await axios.get(`https://psh-server.onrender.com/api/category`, {
+  //       const { data } = await axios.get(`http://localhost:5001/api/category`, {
   //         mode: "cors",
   //       });
   //       setData(data);
@@ -59,10 +59,7 @@ const Hotels = ({ data }) => {
         photos: list,
       };
 
-      await axios.put(
-        `https://psh-server.onrender.com/api/hotels/${_id}`,
-        product
-      );
+      await axios.put(`http://localhost:5001/api/hotels/${_id}`, product);
       MySwal.fire("Good job!", "successfully edited", "success");
     } catch (err) {
       MySwal.fire("Something Error Found.", "warning");

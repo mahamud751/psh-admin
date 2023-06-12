@@ -12,22 +12,32 @@ import img13 from "../../../img/home/log.png";
 import { UilSearch } from "@iconscout/react-unicons";
 import "./Navbar.css";
 import { useContext } from "react";
-import { AuthContext } from "../../../contexts/AuthProvider";
+
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import useAdmin from "../../../hooks/useAdmin";
+import { AuthContext } from "../../../contexts/UserProvider";
 
 const Navbar = () => {
-  const { user, logOut } = useContext(AuthContext);
+  const { logoutUser, setUser } = useContext(AuthContext);
+  const { admin } = useAdmin();
+  console.log(admin);
   const location = useLocation();
   const navigate = useNavigate();
   const handleLogOut = () => {
-    logOut()
-      .then(() => {
-        navigate("/signup");
-      })
-      .catch((err) => console.log(err));
+    // Clear localStorage and reset user state
+    logoutUser();
+    navigate("/signup"); // Redirect to signin page after logout
   };
+
+  // const handleLogOut = () => {
+  //   logOut()
+  //     .then(() => {
+  //       navigate("/signup");
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {

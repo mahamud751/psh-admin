@@ -23,7 +23,7 @@ const Hotels_list = (props) => {
   // useEffect(() => {
   //   const fetchCategories = async () => {
   //     try {
-  //       const { data } = await axios.get("https://psh-server.onrender.com/api/category", {
+  //       const { data } = await axios.get("http://localhost:5001/api/category", {
   //         mode: "cors",
   //       });
   //       const categoryMap = {};
@@ -170,12 +170,9 @@ const Hotels_list = (props) => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const { data } = await axios.get(
-          `https://psh-server.onrender.com/api/hotels`,
-          {
-            mode: "cors",
-          }
-        );
+        const { data } = await axios.get(`http://localhost:5001/api/hotels`, {
+          mode: "cors",
+        });
         setData(data);
       } catch (error) {
         console.log(error);
@@ -188,7 +185,7 @@ const Hotels_list = (props) => {
   const handleCategory = async (id) => {
     const confirmation = window.confirm("Are you Sure?");
     if (confirmation) {
-      const url = `https://psh-server.onrender.com/api/hotels/${id}`;
+      const url = `http://localhost:5001/api/hotels/${id}`;
       fetch(url, {
         method: "DELETE",
       })

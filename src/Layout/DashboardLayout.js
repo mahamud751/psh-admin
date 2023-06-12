@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { Link, Outlet } from "react-router-dom";
 import Navbar from "../../components/Common/Navbar";
-import { AuthContext } from "../contexts/AuthProvider";
 import useAdmin from "../hooks/useAdmin";
+import { AuthContext } from "../contexts/UserProvider";
 
 const DashboardLayout = () => {
   const { user } = useContext(AuthContext);
