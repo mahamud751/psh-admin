@@ -25,20 +25,18 @@ const Navbar = () => {
   console.log(admin);
   const location = useLocation();
   const navigate = useNavigate();
-  const handleLogOut = () => {
-    // Clear localStorage and reset user state
-    logoutUser();
-    navigate("/signup"); // Redirect to signin page after logout
-  };
+  // const handleLogOut = () => {
+  //   // Clear localStorage and reset user state
+  //   logoutUser();
+  //   navigate("/signup"); // Redirect to signin page after logout
+  // };
   console.log(user);
 
-  // const handleLogOut = () => {
-  //   logOut()
-  //     .then(() => {
-  //       navigate("/signup");
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
+  const handleLogOut = () => {
+    logoutUser();
+
+    navigate("/signup");
+  };
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {

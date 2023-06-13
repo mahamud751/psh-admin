@@ -9,6 +9,7 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(
     JSON.parse(localStorage.getItem("user")) || null
   );
+
   const [token, setToken] = useState(localStorage.getItem("token") || null);
   const [loading, setLoading] = useState(false);
 
@@ -30,6 +31,7 @@ export const UserProvider = ({ children }) => {
         const { data } = response;
         setUser(data.user);
         setToken(data.token);
+        setLoading(false);
       } else {
         throw new Error("Login failed");
       }
