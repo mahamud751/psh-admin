@@ -10,6 +10,7 @@ export const UserProvider = ({ children }) => {
     JSON.parse(localStorage.getItem("user")) || null
   );
   const [token, setToken] = useState(localStorage.getItem("token") || null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     // Store the user and token in localStorage
@@ -44,10 +45,14 @@ export const UserProvider = ({ children }) => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
   };
-
+  // const isAuthenticated = () => {
+  //   return token !== null && user !== null;
+  // };
   // Provide the user and token to the components
   return (
-    <AuthContext.Provider value={{ user, token, loginUser, logoutUser }}>
+    <AuthContext.Provider
+      value={{ user, token, loginUser, logoutUser, loading }}
+    >
       {children}
     </AuthContext.Provider>
   );

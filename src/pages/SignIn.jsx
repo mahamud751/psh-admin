@@ -44,12 +44,12 @@ const SignIn = () => {
               <div className="sign_in_card p-5 card">
                 <div>
                   <div className="text-center my-5">
-                    <img
+                    {/* <img
                       src={"https://i.ibb.co/GpqY8tQ/PSH-web-logo-1.png"}
                       alt=""
                       className="img-fluid"
                       style={{ width: 190 }}
-                    />
+                    /> */}
                   </div>
                   <div className="registration_div">
                     <form className="row g-3" onSubmit={handleSubmit(onSubmit)}>

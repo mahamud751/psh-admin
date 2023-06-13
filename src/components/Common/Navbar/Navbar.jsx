@@ -20,7 +20,7 @@ import useAdmin from "../../../hooks/useAdmin";
 import { AuthContext } from "../../../contexts/UserProvider";
 
 const Navbar = () => {
-  const { logoutUser, setUser } = useContext(AuthContext);
+  const { logoutUser, user } = useContext(AuthContext);
   const { admin } = useAdmin();
   console.log(admin);
   const location = useLocation();
@@ -30,6 +30,7 @@ const Navbar = () => {
     logoutUser();
     navigate("/signup"); // Redirect to signin page after logout
   };
+  console.log(user);
 
   // const handleLogOut = () => {
   //   logOut()
@@ -216,30 +217,36 @@ const Navbar = () => {
                     </a>
                   </li>
                 </Link> */}
-                <Link to={"/add_hotel"}>
-                  <li className="main_nav-link">
-                    <a href="/add_hotel" className="nav-link">
-                      <img
-                        style={{ width: 16, color: "red" }}
-                        src={img7}
-                        alt=""
-                      />
-                      <div className="menu_flex">
-                        <span className="span_text">Add Hotel</span>
-                      </div>
-                    </a>
-                  </li>
-                </Link>
-                <Link to={"/hotel_list"}>
-                  <li className="main_nav-link">
-                    <a href="/hotel_list" className="nav-link">
-                      <i class="fa-solid fa-grip-lines span_text2"></i>
-                      <div className="menu_flex">
-                        <span className="span_text">Hotel List</span>
-                      </div>
-                    </a>
-                  </li>
-                </Link>
+                {(user && user.role === "admin") || user.role === "manager" ? (
+                  <>
+                    <Link to={"/add_hotel"}>
+                      <li className="main_nav-link">
+                        <a href="/add_hotel" className="nav-link">
+                          <img
+                            style={{ width: 16, color: "red" }}
+                            src={img7}
+                            alt=""
+                          />
+                          <div className="menu_flex">
+                            <span className="span_text">Add Hotel</span>
+                          </div>
+                        </a>
+                      </li>
+                    </Link>
+                    <Link to={"/hotel_list"}>
+                      <li className="main_nav-link">
+                        <a href="/hotel_list" className="nav-link">
+                          <i class="fa-solid fa-grip-lines span_text2"></i>
+                          <div className="menu_flex">
+                            <span className="span_text">Hotel List</span>
+                          </div>
+                        </a>
+                      </li>
+                    </Link>
+                  </>
+                ) : (
+                  ""
+                )}
                 <Link to={"/add_promo"}>
                   <li className="main_nav-link">
                     <a href="/add_promo" className="nav-link">
