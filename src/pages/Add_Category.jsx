@@ -34,7 +34,7 @@ const Add_Category = () => {
         img: list,
       };
 
-      await axios.post("http://localhost:5001/api/category", product);
+      await axios.post("https://psh-server.onrender.com/api/category", product);
       MySwal.fire("Good job!", "successfully added", "success");
     } catch (err) {
       MySwal.fire("Something Error Found.", "warning");

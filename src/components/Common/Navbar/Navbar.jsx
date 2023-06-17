@@ -195,28 +195,44 @@ const Navbar = () => {
                     </a>
                   </li>
                 </Link>
-                {/* <Link to={"/add_category"}>
-                  <li className="main_nav-link">
-                    <a href="/add_category" className="nav-link">
-                      <i class="fa-sharp fa-solid fa-building-columns span_text2"></i>
-                      <div className="menu_flex">
-                        <span className="span_text">Add Category</span>
-                      </div>
-                    </a>
-                  </li>
-                </Link>
-                <Link to={"/category_list"}>
-                  <li className="main_nav-link">
-                    <a href="/category_list" className="nav-link">
-                      <img style={{ width: 16 }} src={img6} alt="" />
-                      <div className="menu_flex">
-                        <span className="span_text">Category List</span>
-                      </div>
-                    </a>
-                  </li>
-                </Link> */}
+                {user && user.role === "user" ? (
+                  <Link to={"/order"}>
+                    <li className="main_nav-link">
+                      <a href="/order" className="nav-link">
+                        <i class="fa-sharp fa-solid fa-house span_text2"></i>
+
+                        <div className="menu_flex">
+                          <span className="span_text">Order</span>
+                        </div>
+                      </a>
+                    </li>
+                  </Link>
+                ) : (
+                  ""
+                )}
                 {(user && user.role === "admin") || user.role === "manager" ? (
                   <>
+                    <Link to={"/add_category"}>
+                      <li className="main_nav-link">
+                        <a href="/add_category" className="nav-link">
+                          <i class="fa-sharp fa-solid fa-building-columns span_text2"></i>
+                          <div className="menu_flex">
+                            <span className="span_text">Add Category</span>
+                          </div>
+                        </a>
+                      </li>
+                    </Link>
+                    <Link to={"/category_list"}>
+                      <li className="main_nav-link">
+                        <a href="/category_list" className="nav-link">
+                          <img style={{ width: 16 }} src={img6} alt="" />
+                          <div className="menu_flex">
+                            <span className="span_text">Category List</span>
+                          </div>
+                        </a>
+                      </li>
+                    </Link>
+
                     <Link to={"/add_hotel"}>
                       <li className="main_nav-link">
                         <a href="/add_hotel" className="nav-link">
@@ -241,60 +257,60 @@ const Navbar = () => {
                         </a>
                       </li>
                     </Link>
+                    <Link to={"/add_promo"}>
+                      <li className="main_nav-link">
+                        <a href="/add_promo" className="nav-link">
+                          <img style={{ width: 16 }} src={img7} alt="" />
+                          <div className="menu_flex">
+                            <span className="span_text">Add Promo</span>
+                          </div>
+                        </a>
+                      </li>
+                    </Link>
+                    <Link to={"/promo_list"}>
+                      <li className="main_nav-link">
+                        <a href="/promo_list" className="nav-link">
+                          <i class="fa-solid fa-grip-lines span_text2"></i>
+                          <div className="menu_flex">
+                            <span className="span_text">Promo List</span>
+                          </div>
+                        </a>
+                      </li>
+                    </Link>
+                    <Link to={"/add_recommended"}>
+                      <li className="main_nav-link">
+                        <a href="/add_recommended" className="nav-link">
+                          <img style={{ width: 16 }} src={img7} alt="" />
+                          <div className="menu_flex">
+                            <span className="span_text">Add Recommended</span>
+                          </div>
+                        </a>
+                      </li>
+                    </Link>
+                    <Link to={"/recommended_list"}>
+                      <li className="main_nav-link">
+                        <a href="/recommended_list" className="nav-link">
+                          <i class="fa-solid fa-grip-lines span_text2"></i>
+                          <div className="menu_flex">
+                            <span className="span_text">Recommended List</span>
+                          </div>
+                        </a>
+                      </li>
+                    </Link>
+                    <Link to={"/orders"}>
+                      <li className="main_nav-link">
+                        <a href="/order" className="nav-link">
+                          <img style={{ width: 16 }} src={img9} alt="" />
+                          <div className="menu_flex">
+                            <span className="span_text">Orders</span>
+                          </div>
+                        </a>
+                      </li>
+                    </Link>
                   </>
                 ) : (
                   ""
                 )}
-                <Link to={"/add_promo"}>
-                  <li className="main_nav-link">
-                    <a href="/add_promo" className="nav-link">
-                      <img style={{ width: 16 }} src={img7} alt="" />
-                      <div className="menu_flex">
-                        <span className="span_text">Add Promo</span>
-                      </div>
-                    </a>
-                  </li>
-                </Link>
-                <Link to={"/promo_list"}>
-                  <li className="main_nav-link">
-                    <a href="/promo_list" className="nav-link">
-                      <i class="fa-solid fa-grip-lines span_text2"></i>
-                      <div className="menu_flex">
-                        <span className="span_text">Promo List</span>
-                      </div>
-                    </a>
-                  </li>
-                </Link>
-                <Link to={"/add_recommended"}>
-                  <li className="main_nav-link">
-                    <a href="/add_recommended" className="nav-link">
-                      <img style={{ width: 16 }} src={img7} alt="" />
-                      <div className="menu_flex">
-                        <span className="span_text">Add Recommended</span>
-                      </div>
-                    </a>
-                  </li>
-                </Link>
-                <Link to={"/recommended_list"}>
-                  <li className="main_nav-link">
-                    <a href="/recommended_list" className="nav-link">
-                      <i class="fa-solid fa-grip-lines span_text2"></i>
-                      <div className="menu_flex">
-                        <span className="span_text">Recommended List</span>
-                      </div>
-                    </a>
-                  </li>
-                </Link>
-                <Link to={"/order"}>
-                  <li className="main_nav-link">
-                    <a href="/order" className="nav-link">
-                      <img style={{ width: 16 }} src={img9} alt="" />
-                      <div className="menu_flex">
-                        <span className="span_text">Orders</span>
-                      </div>
-                    </a>
-                  </li>
-                </Link>
 
                 <li className="main_nav-link password_sm">
                   <a className="nav-link" onClick={handleLogOut}>

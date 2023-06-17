@@ -5,7 +5,7 @@ import Home from "../../pages/Home";
 import Category from "../../pages/Category";
 import SignIn from "../../pages/SignIn";
 import Hotel from "../../pages/Hotel";
-import Order from "../../pages/Order";
+import Orders from "../../pages/Orders";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import Add_hotel from "../../pages/Add_hotel";
 import Promo from "../../pages/Promo";
@@ -29,16 +29,10 @@ const router = createBrowserRouter([
         element: <Home></Home>,
       },
 
-      // {
-      //   path: "/add_category",
-
-      //   element: <Add_Category></Add_Category>,
-
-      // },
-
       {
-        path: "/category_list",
-        element: <Category></Category>,
+        path: "/add_category",
+
+        element: <Add_Category></Add_Category>,
       },
       // {
       //   path: "/add_hotel",
@@ -66,7 +60,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/order",
-        element: <Order></Order>,
+        element: <Orders></Orders>,
       },
     ],
   },
@@ -87,7 +81,6 @@ const router = createBrowserRouter([
 
       {
         path: "/add_category",
-
         element: <Add_Category></Add_Category>,
       },
 
@@ -121,7 +114,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/order",
-        element: <Order></Order>,
+        element: <Orders></Orders>,
       },
     ],
   },

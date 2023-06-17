@@ -3,17 +3,26 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-
 const Add_hotel = () => {
+  const [kitchen, setKitchen] = useState(false);
+  const [tv, setTV] = useState(false);
+  const [washer, setWasher] = useState(false);
+  const [balcony, setBalcony] = useState(false);
+  const [netflix, setNetflix] = useState(false);
+  const [wifi, setWifi] = useState(false);
+
   const [files, setFiles] = useState("");
   const MySwal = withReactContent(Swal);
   const [data, setData] = useState([]);
   useEffect(() => {
     const getData = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:5001/api/category`, {
-          mode: "cors",
-        });
+        const { data } = await axios.get(
+          `https://psh-server.onrender.com/api/category`,
+          {
+            mode: "cors",
+          }
+        );
         setData(data);
       } catch (error) {
         console.log(error);
@@ -24,6 +33,15 @@ const Add_hotel = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
+    const data3 = {
+      // existing fields...
+      kitchen,
+      tv,
+      washer,
+      balcony,
+      netflix,
+      wifi,
+    };
     const data2 = {
       name: formData.get("name"),
       type: formData.get("type"),
@@ -41,9 +59,9 @@ const Add_hotel = () => {
       perMonth: formData.get("perMonth"),
       perYear: formData.get("perYear"),
 
-      // category: {
-      //   id: formData.get("categoryId"),
-      // },
+      category: {
+        id: formData.get("categoryId"),
+      },
     };
 
     try {
@@ -64,10 +82,11 @@ const Add_hotel = () => {
 
       const product = {
         ...data2,
+        ...data3,
         photos: list,
       };
 
-      await axios.post("http://localhost:5001/api/hotels", product);
+      await axios.post("https://psh-server.onrender.com/api/hotels", product);
       MySwal.fire("Good job!", "successfully added", "success");
     } catch (err) {
       MySwal.fire("Something Error Found.", "warning");
@@ -83,18 +102,17 @@ const Add_hotel = () => {
                 <label htmlFor="inputState" className="profile_label3">
                   Type
                 </label>
-                <select name="type" id="inputState" className="main_form w-100">
-                  <option selected>Select Category</option>
-
-                  <option key={"Premium"} value={"Premium"}>
-                    Premium
-                  </option>
-                  <option key={"Standard"} value={"Standard"}>
-                    Standard
-                  </option>
-                  <option key={"Normal"} value={"Normal"}>
-                    Normal
-                  </option>
+                <select
+                  name="categoryId"
+                  id="inputState"
+                  className="main_form w-100"
+                >
+                  <option selected>Select Type</option>
+                  {data.map((pd) => (
+                    <option key={pd._id} value={pd._id}>
+                      {pd.name}
+                    </option>
+                  ))}
                 </select>
               </div>
 
@@ -292,7 +310,7 @@ const Add_hotel = () => {
                   placeholder="availble"
                 />
               </div>
-              <div className="col-md-6 form_sub_stream">
+              <div className="col-md-12 form_sub_stream">
                 <label
                   htmlFor="inputState"
                   className="form-label profile_label3 "
@@ -305,6 +323,73 @@ const Add_hotel = () => {
                   className="main_form w-100"
                   name="rating"
                   placeholder="Rating"
+                />
+              </div>
+              <div className="col-md-4 form_sub_stream">
+                <i className="fa-solid fa-kitchen-set fa-xl mx-2 "></i>
+                <label htmlFor="kitchen" className="form-label profile_label3">
+                  Kitchen
+                </label>
+                <input
+                  type="checkbox"
+                  id="kitchen"
+                  checked={kitchen}
+                  onChange={(e) => setKitchen(e.target.checked)}
+                />
+              </div>
+              <div className="col-md-4 form_sub_stream">
+                <label htmlFor="tv" className="form-label profile_label3">
+                  TV
+                </label>
+                <input
+                  type="checkbox"
+                  id="tv"
+                  checked={tv}
+                  onChange={(e) => setTV(e.target.checked)}
+                />
+              </div>
+              <div className="col-md-4 form_sub_stream">
+                <label htmlFor="washer" className="form-label profile_label3">
+                  Washer
+                </label>
+                <input
+                  type="checkbox"
+                  id="washer"
+                  checked={washer}
+                  onChange={(e) => setWasher(e.target.checked)}
+                />
+              </div>
+              <div className="col-md-4 form_sub_stream">
+                <label htmlFor="balcony" className="form-label profile_label3">
+                  Balcony
+                </label>
+                <input
+                  type="checkbox"
+                  id="balcony"
+                  checked={balcony}
+                  onChange={(e) => setBalcony(e.target.checked)}
+                />
+              </div>
+              <div className="col-md-4 form_sub_stream">
+                <label htmlFor="netflix" className="form-label profile_label3">
+                  Netflix
+                </label>
+                <input
+                  type="checkbox"
+                  id="netflix"
+                  checked={netflix}
+                  onChange={(e) => setNetflix(e.target.checked)}
+                />
+              </div>
+              <div className="col-md-4 form_sub_stream">
+                <label htmlFor="wifi" className="form-label profile_label3">
+                  Wifi
+                </label>
+                <input
+                  type="checkbox"
+                  id="wifi"
+                  checked={wifi}
+                  onChange={(e) => setWifi(e.target.checked)}
                 />
               </div>
 

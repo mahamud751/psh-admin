@@ -11,6 +11,8 @@ import paginationFactory from "react-bootstrap-table2-paginator";
 import BootstrapTable from "react-bootstrap-table-next";
 import Category from "../../pages/edit/Category";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/UserProvider";
 const MyExportCSV = (props) => {
   const handleClick = () => {
     props.onExport();
@@ -23,9 +25,11 @@ const MyExportCSV = (props) => {
     </div>
   );
 };
-const Orders_list = () => {
+const Order_list = () => {
   const MySwal = withReactContent(Swal);
-
+  const { user } = useContext(AuthContext);
+  const email = user.email;
+  console.log(email);
   //sub stream
   const [data, setData] = useState([]);
 
@@ -136,8 +140,10 @@ const Orders_list = () => {
         console.log(error);
       }
     };
-    getData();
+    getData(data);
   }, [data]);
+  const main = data.filter((pd) => pd.email === email);
+
   //delete
   const [products, setProducts] = useState(data);
   const handleCategory = async (id) => {
@@ -176,7 +182,7 @@ const Orders_list = () => {
                     bootstrap4
                     keyField="id"
                     columns={columns}
-                    data={data}
+                    data={main}
                     pagination={pagination}
                   >
                     {(props) => (
@@ -185,7 +191,7 @@ const Orders_list = () => {
                           bootstrap4
                           keyField="id"
                           columns={columns}
-                          data={data}
+                          data={main}
                           pagination={pagination}
                           {...props.baseProps}
                         />
@@ -208,4 +214,4 @@ const Orders_list = () => {
   );
 };
 
-export default Orders_list;
+export default Order_list;

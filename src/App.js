@@ -6,7 +6,7 @@ import Home from "./pages/Home";
 import Add_Category from "./pages/Add_Category";
 import Category from "./pages/Category";
 import Hotel from "./pages/Hotel";
-import Order from "./pages/Order";
+import Orders from "./pages/Orders";
 import Add_hotel from "./pages/Add_hotel";
 import Promo from "./pages/Promo";
 import Add_Promo from "./pages/Add_Promo";
@@ -14,6 +14,7 @@ import Add_Recommended from "./pages/Add_Recommended";
 import Recommended from "./pages/Recommended";
 import PrivateRoute from "./Routes/PrivateRoute/PrivateRoute";
 import AdminRoute from "./Routes/AdminRoute/AdminRoute";
+import Order from "./pages/Order";
 function App() {
   return (
     <div>
@@ -24,12 +25,6 @@ function App() {
 
         <Route path="/" element={<PrivateRoute />}>
           <Route path="/" element={<Home />} />
-          <Route path="add_category" element={<Add_Category />} />
-          <Route path="category_list" element={<Category />} />
-          <Route path="add_promo" element={<Add_Promo />} />
-          <Route path="promo_list" element={<Promo />} />
-          <Route path="add_recommended" element={<Add_Recommended />} />
-          <Route path="recommended_list" element={<Recommended />} />
           <Route path="order" element={<Order />} />
         </Route>
         <Route path="/" element={<AdminRoute />}>
@@ -42,7 +37,7 @@ function App() {
           <Route path="promo_list" element={<Promo />} />
           <Route path="add_recommended" element={<Add_Recommended />} />
           <Route path="recommended_list" element={<Recommended />} />
-          <Route path="order" element={<Order />} />
+          <Route path="orders" element={<Orders />} />
         </Route>
       </Routes>
     </div>

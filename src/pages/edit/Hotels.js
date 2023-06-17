@@ -9,19 +9,22 @@ const Hotels = ({ data }) => {
   const [user, setUser] = useState(data);
   const [files, setFiles] = useState("");
   const [data2, setData] = useState([]);
-  // useEffect(() => {
-  //   const getData = async () => {
-  //     try {
-  //       const { data } = await axios.get(`http://localhost:5001/api/category`, {
-  //         mode: "cors",
-  //       });
-  //       setData(data);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   getData();
-  // }, []);
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const { data } = await axios.get(
+          `https://psh-server.onrender.com/api/category`,
+          {
+            mode: "cors",
+          }
+        );
+        setData(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getData();
+  }, []);
   const MySwal = withReactContent(Swal);
 
   const handleOnBlur = (e) => {
@@ -59,7 +62,10 @@ const Hotels = ({ data }) => {
         photos: list,
       };
 
-      await axios.put(`http://localhost:5001/api/hotels/${_id}`, product);
+      await axios.put(
+        `https://psh-server.onrender.com/api/hotels/${_id}`,
+        product
+      );
       MySwal.fire("Good job!", "successfully edited", "success");
     } catch (err) {
       MySwal.fire("Something Error Found.", "warning");
@@ -75,18 +81,17 @@ const Hotels = ({ data }) => {
                 <label htmlFor="inputState" className="profile_label3">
                   Type
                 </label>
-                <select name="type" id="inputState" className="main_form w-100">
+                <select
+                  name="categoryId"
+                  id="inputState"
+                  className="main_form w-100"
+                >
                   <option selected>Select Type</option>
-
-                  <option key={"Premium"} value={"Premium"}>
-                    Standard
-                  </option>
-                  <option key={"Standard"} value={"Standard"}>
-                    Premium
-                  </option>
-                  <option key={"Normal"} value={"Normal"}>
-                    Normal
-                  </option>
+                  {data2.map((pd) => (
+                    <option key={pd._id} value={pd._id}>
+                      {pd.name}
+                    </option>
+                  ))}
                 </select>
               </div>
 

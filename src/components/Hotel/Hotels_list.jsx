@@ -18,26 +18,29 @@ const Hotels_list = (props) => {
 
   //sub stream
   const [data, setData] = useState([]);
-  // const [categories, setCategories] = useState({});
+  const [categories, setCategories] = useState({});
 
-  // useEffect(() => {
-  //   const fetchCategories = async () => {
-  //     try {
-  //       const { data } = await axios.get("http://localhost:5001/api/category", {
-  //         mode: "cors",
-  //       });
-  //       const categoryMap = {};
-  //       data.forEach((category) => {
-  //         categoryMap[category._id] = category.name;
-  //       });
-  //       setCategories(categoryMap);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const { data } = await axios.get(
+          "https://psh-server.onrender.com/api/category",
+          {
+            mode: "cors",
+          }
+        );
+        const categoryMap = {};
+        data.forEach((category) => {
+          categoryMap[category._id] = category.name;
+        });
+        setCategories(categoryMap);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-  //   fetchCategories();
-  // }, []);
+    fetchCategories();
+  }, []);
 
   const columns = [
     {
@@ -65,24 +68,24 @@ const Hotels_list = (props) => {
         );
       },
     },
-    // {
-    //   text: "Type",
-    //   formatter: (cellContent, row) => {
-    //     const categoryName =
-    //       categories[row.category ? row.category.id : ""] || "";
-    //     return <p>{categoryName}</p>;
-    //   },
-    // },
+    {
+      text: "Type",
+      formatter: (cellContent, row) => {
+        const categoryName =
+          categories[row.category ? row.category.id : ""] || "";
+        return <p>{categoryName}</p>;
+      },
+    },
     // {
     //   text: "Category",
     //   formatter: (cellContent, row) => {
     //     return <p>{row.category ? (row.category.id == id[value] ? name : "") : ""}</p>;
     //   },
     // },
-    {
-      dataField: "type",
-      text: "Type",
-    },
+    // {
+    //   dataField: "type",
+    //   text: "Type",
+    // },
     {
       dataField: "desc",
       text: "Description",
@@ -170,9 +173,12 @@ const Hotels_list = (props) => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:5001/api/hotels`, {
-          mode: "cors",
-        });
+        const { data } = await axios.get(
+          `https://psh-server.onrender.com/api/hotels`,
+          {
+            mode: "cors",
+          }
+        );
         setData(data);
       } catch (error) {
         console.log(error);
@@ -185,7 +191,7 @@ const Hotels_list = (props) => {
   const handleCategory = async (id) => {
     const confirmation = window.confirm("Are you Sure?");
     if (confirmation) {
-      const url = `http://localhost:5001/api/hotels/${id}`;
+      const url = `https://psh-server.onrender.com/api/hotels/${id}`;
       fetch(url, {
         method: "DELETE",
       })

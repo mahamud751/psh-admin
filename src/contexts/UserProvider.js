@@ -23,7 +23,7 @@ export const UserProvider = ({ children }) => {
     try {
       // Make your API call here to login the user using Axios
       const response = await axios.post(
-        "http://localhost:5001/api/users/login",
+        "https://psh-server.onrender.com/api/users/login",
         { email, password }
       );
 
