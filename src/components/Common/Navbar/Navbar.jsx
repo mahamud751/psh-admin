@@ -212,6 +212,27 @@ const Navbar = () => {
                 )}
                 {(user && user.role === "admin") || user.role === "manager" ? (
                   <>
+                    <Link to={"/add_manager"}>
+                      <li className="main_nav-link">
+                        <a href="/add_manager" className="nav-link">
+                          <i class="fa-sharp fa-solid fa-building-columns span_text2"></i>
+                          <div className="menu_flex">
+                            <span className="span_text">Add Manager</span>
+                          </div>
+                        </a>
+                      </li>
+                    </Link>
+                    <Link to={"/manager_list"}>
+                      <li className="main_nav-link">
+                        <a href="/manager_list" className="nav-link">
+                          <img style={{ width: 16 }} src={img6} alt="" />
+                          <div className="menu_flex">
+                            <span className="span_text">Manager List</span>
+                          </div>
+                        </a>
+                      </li>
+                    </Link>
+
                     <Link to={"/add_category"}>
                       <li className="main_nav-link">
                         <a href="/add_category" className="nav-link">

@@ -39,7 +39,32 @@ export const UserProvider = ({ children }) => {
       console.error(error);
     }
   };
+  const registerUser = async (name, address, email, phone, password, role) => {
+    try {
+      const response = await axios.post(
+        "https://psh-server.onrender.com/api/users",
+        {
+          name,
+          address,
+          email,
+          phone,
+          password,
+          role,
+        }
+      );
 
+      if (response.status === 200) {
+        const { data } = response;
+        setUser(data.result);
+        setToken(data.token);
+        setLoading(false);
+      } else {
+        throw new Error("Registration failed");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
   const logoutUser = () => {
     // Clear user and token from state and localStorage
     setUser(null);
@@ -53,7 +78,7 @@ export const UserProvider = ({ children }) => {
   // Provide the user and token to the components
   return (
     <AuthContext.Provider
-      value={{ user, token, loginUser, logoutUser, loading }}
+      value={{ user, token, loginUser, logoutUser, loading, registerUser }}
     >
       {children}
     </AuthContext.Provider>

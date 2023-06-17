@@ -15,6 +15,8 @@ import Recommended from "./pages/Recommended";
 import PrivateRoute from "./Routes/PrivateRoute/PrivateRoute";
 import AdminRoute from "./Routes/AdminRoute/AdminRoute";
 import Order from "./pages/Order";
+import Add_Manager from "./pages/Add_manager";
+import Manager from "./pages/Manager";
 function App() {
   return (
     <div>
@@ -29,6 +31,10 @@ function App() {
         </Route>
         <Route path="/" element={<AdminRoute />}>
           <Route path="/" element={<Home />} />
+
+          <Route path="add_manager" element={<Add_Manager />} />
+          <Route path="manager_list" element={<Manager />} />
+
           <Route path="add_category" element={<Add_Category />} />
           <Route path="category_list" element={<Category />} />
           <Route path="add_hotel" element={<Add_hotel />} />
