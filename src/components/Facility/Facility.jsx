@@ -4,18 +4,18 @@ import img3 from "../../img/college/Icon feather-edit.png";
 import axios from "axios";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
-import jsPDF from "jspdf";
-import "jspdf-autotable";
 import ToolkitProvider, {
   CSVExport,
 } from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import BootstrapTable from "react-bootstrap-table-next";
-
+import Facility from "../../pages/edit/Facility";
 import { Link } from "react-router-dom";
-import Recommended from "../../pages/edit/Recommended";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import "./Facility.css";
 
-const Recommended_list = () => {
+const Facility_list = () => {
   const MySwal = withReactContent(Swal);
 
   //sub stream
@@ -49,7 +49,7 @@ const Recommended_list = () => {
     },
     {
       dataField: "name",
-      text: "Category",
+      text: "Facility",
     },
     {
       text: "Action",
@@ -68,7 +68,7 @@ const Recommended_list = () => {
                 src={img}
                 alt=""
                 className="ms-3"
-                onClick={() => handleCategory(row._id)}
+                onClick={() => handleFacility(row._id)}
               />
             </div>
             <div
@@ -82,7 +82,7 @@ const Recommended_list = () => {
               <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content" style={{ width: 700 }}>
                   <div className="modal-body">
-                    <Recommended data={row} />
+                    <Facility data={row} />
                   </div>
                 </div>
               </div>
@@ -114,53 +114,52 @@ const Recommended_list = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const { data } = await axios.get(
-          `http://localhost:5001/api/recommended`,
-          {
-            mode: "cors",
-          }
-        );
+        const { data } = await axios.get(`http://localhost:5001/api/facility`, {
+          mode: "cors",
+        });
         setData(data);
       } catch (error) {
         console.log(error);
       }
     };
     getData();
-
-    // Only run the effect when data changes
   }, []);
   //delete
-  const handleCategory = async (id) => {
+  const [products, setProducts] = useState(data);
+  const handleFacility = async (id) => {
     const confirmation = window.confirm("Are you Sure?");
     if (confirmation) {
-      const url = `http://localhost:5001/api/recommended/${id}`;
-      try {
-        const response = await axios.delete(url);
-        const { deletedCount } = response.data;
-        if (deletedCount === 1) {
-          setData(data.filter((item) => item._id !== id));
+      const url = `http://localhost:5001/api/facility/${id}`;
+      fetch(url, {
+        method: "DELETE",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
           MySwal.fire("Good job!", "successfully deleted", "success");
-        }
-      } catch (error) {
-        console.log(error);
-      }
+          if (data.deletedCount === 1) {
+            const remainItem = products.filter((item) => item._id !== id);
+            setProducts(remainItem);
+          }
+        });
     }
   };
   const handleDownloadPDF = () => {
     const doc = new jsPDF();
     const columns = [
       { title: "No", dataKey: "no" },
-      { title: "Category", dataKey: "category" },
+      { title: "Facility", dataKey: "facility" },
     ];
     const tableData = data.map((item, index) => ({
       no: index + 1,
-      category: item.name,
+      facility: item.name,
     }));
     doc.autoTable(columns, tableData, { startY: 20 });
 
     // Save the PDF file
-    doc.save("recommended_list.pdf");
+    doc.save("facility_list.pdf");
   };
+
   return (
     <div className="wrapper">
       <div className="content-wrapper" style={{ background: "unset" }}>
@@ -168,13 +167,13 @@ const Recommended_list = () => {
           <div className="container-fluid">
             <div className="row">
               <div className="col-md-7">
-                <h6 className="college_h6">Recommended List</h6>
+                <h6 className="college_h6">Facility List</h6>
               </div>
               <div className="export_btn_main">
                 <div>
                   <div className="">
                     <div className="corporate_addNew_btn">
-                      <Link to={"/add_recommended"}>
+                      <Link to={"/add_facility"}>
                         <button className="college_btn2 ms-4 p-3">
                           Add New
                         </button>
@@ -231,4 +230,4 @@ const Recommended_list = () => {
   );
 };
 
-export default Recommended_list;
+export default Facility_list;

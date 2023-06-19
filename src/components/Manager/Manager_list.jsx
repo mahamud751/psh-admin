@@ -103,12 +103,9 @@ const Manager_list = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const { data } = await axios.get(
-          `https://psh-server.onrender.com/api/users`,
-          {
-            mode: "cors",
-          }
-        );
+        const { data } = await axios.get(`http://localhost:5001/api/users`, {
+          mode: "cors",
+        });
         setData(data);
       } catch (error) {
         console.log(error);
@@ -122,7 +119,7 @@ const Manager_list = () => {
   const handleCategory = async (id) => {
     const confirmation = window.confirm("Are you Sure?");
     if (confirmation) {
-      const url = `https://psh-server.onrender.com/api/users/${id}`;
+      const url = `http://localhost:5001/api/users/${id}`;
       fetch(url, {
         method: "DELETE",
       })

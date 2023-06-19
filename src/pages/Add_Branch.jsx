@@ -3,7 +3,7 @@ import React, { useState, useRef } from "react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
-const Add_Category = () => {
+const Add_Branch = () => {
   const [files, setFiles] = useState("");
   const MySwal = withReactContent(Swal);
   const formRef = useRef(null);
@@ -29,12 +29,12 @@ const Add_Category = () => {
         })
       );
 
-      const product = {
+      const branch = {
         ...data2,
         photos: list,
       };
 
-      await axios.post("http://localhost:5001/api/category", product);
+      await axios.post("http://localhost:5001/api/branch", branch);
       MySwal.fire("Good job!", "successfully added", "success");
       formRef.current.reset();
     } catch (err) {
@@ -59,7 +59,7 @@ const Add_Category = () => {
                   type="text"
                   className="main_form w-100"
                   name="name"
-                  placeholder="Product Name"
+                  placeholder="Branch Name"
                 />
               </div>
               <div className="col-md-12 form_sub_stream">
@@ -86,7 +86,7 @@ const Add_Category = () => {
                 className="profile_btn"
                 style={{ width: 175 }}
               >
-                Add Category
+                Add Branch
               </button>
             </div>
           </form>
@@ -96,4 +96,4 @@ const Add_Category = () => {
   );
 };
 
-export default Add_Category;
+export default Add_Branch;

@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import img from "../../img/new/style.png";
-import Hotels_list from "../Hotel/Hotels_list";
+import Property_list from "../Property/Property_list";
 import Dashoboard_table from "./Dashboard_table";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;

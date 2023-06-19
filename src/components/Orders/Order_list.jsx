@@ -10,7 +10,6 @@ import ToolkitProvider, {
 import paginationFactory from "react-bootstrap-table2-paginator";
 import BootstrapTable from "react-bootstrap-table-next";
 import Category from "../../pages/edit/Category";
-import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/UserProvider";
 const MyExportCSV = (props) => {
@@ -29,7 +28,6 @@ const Order_list = () => {
   const MySwal = withReactContent(Swal);
   const { user } = useContext(AuthContext);
   const email = user.email;
-  console.log(email);
   //sub stream
   const [data, setData] = useState([]);
 
@@ -129,12 +127,9 @@ const Order_list = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const { data } = await axios.get(
-          `https://psh-server.onrender.com/api/order`,
-          {
-            mode: "cors",
-          }
-        );
+        const { data } = await axios.get(`http://localhost:5001/api/order`, {
+          mode: "cors",
+        });
         setData(data);
       } catch (error) {
         console.log(error);
@@ -149,7 +144,7 @@ const Order_list = () => {
   const handleCategory = async (id) => {
     const confirmation = window.confirm("Are you Sure?");
     if (confirmation) {
-      const url = `https://psh-server.onrender.com/api/order/${id}`;
+      const url = `http://localhost:5001/api/order/${id}`;
       fetch(url, {
         method: "DELETE",
       })

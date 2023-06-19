@@ -4,43 +4,21 @@ import img3 from "../../img/college/Icon feather-edit.png";
 import axios from "axios";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
-import ToolkitProvider from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min";
+import ToolkitProvider, {
+  CSVExport,
+} from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import BootstrapTable from "react-bootstrap-table-next";
+import Branch from "../../pages/edit/Branch";
 import { Link } from "react-router-dom";
-import Hotels from "../../pages/edit/Hotels";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
-import "./Hotel.css";
 
-const Hotels_list = (props) => {
+const Branch_list = () => {
   const MySwal = withReactContent(Swal);
 
   //sub stream
   const [data, setData] = useState([]);
-  const [categories, setCategories] = useState({});
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const { data } = await axios.get(
-          "https://psh-server.onrender.com/api/category",
-          {
-            mode: "cors",
-          }
-        );
-        const categoryMap = {};
-        data.forEach((category) => {
-          categoryMap[category._id] = category.name;
-        });
-        setCategories(categoryMap);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchCategories();
-  }, []);
 
   const columns = [
     {
@@ -55,60 +33,22 @@ const Hotels_list = (props) => {
       },
     },
     {
-      text: "Picture",
+      text: "Image",
       formatter: (cellContent, row) => {
         return (
           <div>
             <img
-              src={row.photos[0]}
+              src={row.photos && row.photos[0]}
               alt=""
-              style={{ width: 120, height: 120 }}
+              style={{ width: 120 }}
             />
           </div>
         );
       },
     },
     {
-      text: "Type",
-      formatter: (cellContent, row) => {
-        const categoryName =
-          categories[row.category ? row.category.id : ""] || "";
-        return <p>{categoryName}</p>;
-      },
-    },
-    // {
-    //   text: "Category",
-    //   formatter: (cellContent, row) => {
-    //     return <p>{row.category ? (row.category.id == id[value] ? name : "") : ""}</p>;
-    //   },
-    // },
-    // {
-    //   dataField: "type",
-    //   text: "Type",
-    // },
-    {
-      dataField: "desc",
-      text: "Description",
-    },
-    {
-      dataField: "availble",
-      text: "Availble",
-    },
-    {
-      dataField: "city",
-      text: "City",
-    },
-    {
-      dataField: "perDay",
-      text: "Per Day",
-    },
-    {
-      dataField: "perMonth",
-      text: "Per Month",
-    },
-    {
-      dataField: "perYear",
-      text: "Per Month",
+      dataField: "name",
+      text: "Branch",
     },
     {
       text: "Action",
@@ -127,7 +67,7 @@ const Hotels_list = (props) => {
                 src={img}
                 alt=""
                 className="ms-3"
-                onClick={() => handleCategory(row._id)}
+                onClick={() => handleBranch(row._id)}
               />
             </div>
             <div
@@ -141,7 +81,7 @@ const Hotels_list = (props) => {
               <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content" style={{ width: 700 }}>
                   <div className="modal-body">
-                    <Hotels data={row} />
+                    <Branch data={row} />
                   </div>
                 </div>
               </div>
@@ -173,12 +113,9 @@ const Hotels_list = (props) => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const { data } = await axios.get(
-          `https://psh-server.onrender.com/api/hotels`,
-          {
-            mode: "cors",
-          }
-        );
+        const { data } = await axios.get(`http://localhost:5001/api/branch`, {
+          mode: "cors",
+        });
         setData(data);
       } catch (error) {
         console.log(error);
@@ -188,10 +125,10 @@ const Hotels_list = (props) => {
   }, []);
   //delete
   const [products, setProducts] = useState(data);
-  const handleCategory = async (id) => {
+  const handleBranch = async (id) => {
     const confirmation = window.confirm("Are you Sure?");
     if (confirmation) {
-      const url = `https://psh-server.onrender.com/api/hotels/${id}`;
+      const url = `http://localhost:5001/api/branch/${id}`;
       fetch(url, {
         method: "DELETE",
       })
@@ -208,40 +145,20 @@ const Hotels_list = (props) => {
   };
   const handleDownloadPDF = () => {
     const doc = new jsPDF();
-
-    // Define the table columns
     const columns = [
       { title: "No", dataKey: "no" },
-      { title: "Type", dataKey: "type" },
-      { title: "Description", dataKey: "desc" },
-      { title: "Availble", dataKey: "availble" },
-      { title: "Address", dataKey: "address" },
-      { title: "Per Day", dataKey: "perDay" },
-      { title: "Per Month", dataKey: "perMonth" },
-      { title: "Per Year", dataKey: "perYear" },
+      { title: "Branch", dataKey: "branch" },
     ];
-
-    // Map the data array to match the table columns
-    const tableData = data.map((item, index) => {
-      return [
-        index + 1,
-
-        item.type,
-        item.desc,
-        item.availble,
-        item.address,
-        item.perDay,
-        item.perMonth,
-        item.perYear,
-      ];
-    });
-
-    // Set the table content using autotable plugin
+    const tableData = data.map((item, index) => ({
+      no: index + 1,
+      branch: item.name,
+    }));
     doc.autoTable(columns, tableData, { startY: 20 });
 
     // Save the PDF file
-    doc.save("hotel_list.pdf");
+    doc.save("branch_list.pdf");
   };
+
   return (
     <div className="wrapper">
       <div className="content-wrapper" style={{ background: "unset" }}>
@@ -249,13 +166,13 @@ const Hotels_list = (props) => {
           <div className="container-fluid">
             <div className="row">
               <div className="col-md-7">
-                <h6 className="college_h6">Hotel List</h6>
+                <h6 className="college_h6">Branch List</h6>
               </div>
               <div className="export_btn_main">
                 <div>
                   <div className="">
                     <div className="corporate_addNew_btn">
-                      <Link to={"/add_hotel"}>
+                      <Link to={"/add_branch"}>
                         <button className="college_btn2 ms-4 p-3">
                           Add New
                         </button>
@@ -299,11 +216,17 @@ const Hotels_list = (props) => {
                 </>
               </div>
             </div>
+            {/* /.row (main row) */}
           </div>
+          {/* /.container-fluid */}
         </section>
+        {/* /.content */}
       </div>
+      {/* /.content-wrapper */}
+
+      {/* Control Sidebar */}
     </div>
   );
 };
 
-export default Hotels_list;
+export default Branch_list;

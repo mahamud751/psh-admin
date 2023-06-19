@@ -1,47 +1,62 @@
 import axios from "axios";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-const Add_hotel = () => {
-  const [kitchen, setKitchen] = useState(false);
-  const [tv, setTV] = useState(false);
-  const [washer, setWasher] = useState(false);
-  const [balcony, setBalcony] = useState(false);
-  const [netflix, setNetflix] = useState(false);
-  const [wifi, setWifi] = useState(false);
-
+const Add_property = () => {
   const [files, setFiles] = useState("");
   const MySwal = withReactContent(Swal);
-  const [data, setData] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [branch, setBranch] = useState([]);
+  const [facilities, setFacilities] = useState([]);
+  const formRef = useRef(null);
   useEffect(() => {
-    const getData = async () => {
+    const fetchData = async () => {
       try {
-        const { data } = await axios.get(
-          `https://psh-server.onrender.com/api/category`,
-          {
-            mode: "cors",
-          }
-        );
-        setData(data);
+        const response = await axios.get("http://localhost:5001/api/category");
+        setCategories(response.data);
       } catch (error) {
         console.log(error);
       }
     };
-    getData();
+
+    fetchData();
   }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:5001/api/branch");
+        setBranch(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:5001/api/facility");
+        setFacilities(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
-    const data3 = {
-      // existing fields...
-      kitchen,
-      tv,
-      washer,
-      balcony,
-      netflix,
-      wifi,
-    };
+    const selectedFacilities = [];
+    facilities.forEach((facility) => {
+      if (formData.getAll("facility[]").includes(facility._id)) {
+        selectedFacilities.push(facility.name);
+      }
+    });
+
     const data2 = {
       name: formData.get("name"),
       type: formData.get("type"),
@@ -58,10 +73,9 @@ const Add_hotel = () => {
       pet: formData.get("pet"),
       perMonth: formData.get("perMonth"),
       perYear: formData.get("perYear"),
-
-      category: {
-        id: formData.get("categoryId"),
-      },
+      categoryId: formData.get("category"),
+      branchId: formData.get("branch"),
+      facility: selectedFacilities,
     };
 
     try {
@@ -82,12 +96,12 @@ const Add_hotel = () => {
 
       const product = {
         ...data2,
-        ...data3,
         photos: list,
       };
 
-      await axios.post("https://psh-server.onrender.com/api/hotels", product);
+      await axios.post("http://localhost:5001/api/property", product);
       MySwal.fire("Good job!", "successfully added", "success");
+      formRef.current.reset();
     } catch (err) {
       MySwal.fire("Something Error Found.", "warning");
     }
@@ -96,26 +110,68 @@ const Add_hotel = () => {
     <div className="wrapper">
       <div className="content-wrapper" style={{ background: "unset" }}>
         <div className="registration_div card p-3">
-          <form onSubmit={handleSubmit}>
+          <form ref={formRef} onSubmit={handleSubmit}>
             <div className="row">
               <div className="col-md-6 form_sub_stream ">
                 <label htmlFor="inputState" className="profile_label3">
-                  Type
+                  Property Type
                 </label>
                 <select
-                  name="categoryId"
+                  name="category"
                   id="inputState"
                   className="main_form w-100"
                 >
                   <option selected>Select Type</option>
-                  {data.map((pd) => (
+                  {categories.map((pd) => (
                     <option key={pd._id} value={pd._id}>
                       {pd.name}
                     </option>
                   ))}
                 </select>
               </div>
+              <div className="col-md-6 form_sub_stream ">
+                <label htmlFor="inputState" className="profile_label3">
+                  Branch
+                </label>
+                <select
+                  name="branch"
+                  id="inputState"
+                  className="main_form w-100"
+                  required
+                >
+                  <option value="">Select Type</option>
+                  {branch.map((category) => (
+                    <option key={category._id} value={category._id}>
+                      {category.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="col-md-6 form_sub_stream">
+                <label className="profile_label3">Facility</label>
 
+                <div className="row mt-5">
+                  {facilities.map((facility) => (
+                    <div className="col-md-4" key={facility._id}>
+                      <input
+                        type="checkbox"
+                        id={facility._id}
+                        name="facility[]"
+                        value={facility._id}
+                        multiple
+                      />
+                      <label className="ms-2" htmlFor={facility._id}>
+                        {facility.name}
+                      </label>
+                      <img
+                        src={facility.photos[0]}
+                        alt=""
+                        className="facility_img"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
               <div className="col-md-6 form_sub_stream">
                 <label
                   htmlFor="inputState"
@@ -325,73 +381,6 @@ const Add_hotel = () => {
                   placeholder="Rating"
                 />
               </div>
-              <div className="col-md-4 form_sub_stream">
-                <i className="fa-solid fa-kitchen-set fa-xl mx-2 "></i>
-                <label htmlFor="kitchen" className="form-label profile_label3">
-                  Kitchen
-                </label>
-                <input
-                  type="checkbox"
-                  id="kitchen"
-                  checked={kitchen}
-                  onChange={(e) => setKitchen(e.target.checked)}
-                />
-              </div>
-              <div className="col-md-4 form_sub_stream">
-                <label htmlFor="tv" className="form-label profile_label3">
-                  TV
-                </label>
-                <input
-                  type="checkbox"
-                  id="tv"
-                  checked={tv}
-                  onChange={(e) => setTV(e.target.checked)}
-                />
-              </div>
-              <div className="col-md-4 form_sub_stream">
-                <label htmlFor="washer" className="form-label profile_label3">
-                  Washer
-                </label>
-                <input
-                  type="checkbox"
-                  id="washer"
-                  checked={washer}
-                  onChange={(e) => setWasher(e.target.checked)}
-                />
-              </div>
-              <div className="col-md-4 form_sub_stream">
-                <label htmlFor="balcony" className="form-label profile_label3">
-                  Balcony
-                </label>
-                <input
-                  type="checkbox"
-                  id="balcony"
-                  checked={balcony}
-                  onChange={(e) => setBalcony(e.target.checked)}
-                />
-              </div>
-              <div className="col-md-4 form_sub_stream">
-                <label htmlFor="netflix" className="form-label profile_label3">
-                  Netflix
-                </label>
-                <input
-                  type="checkbox"
-                  id="netflix"
-                  checked={netflix}
-                  onChange={(e) => setNetflix(e.target.checked)}
-                />
-              </div>
-              <div className="col-md-4 form_sub_stream">
-                <label htmlFor="wifi" className="form-label profile_label3">
-                  Wifi
-                </label>
-                <input
-                  type="checkbox"
-                  id="wifi"
-                  checked={wifi}
-                  onChange={(e) => setWifi(e.target.checked)}
-                />
-              </div>
 
               {/* <div className="col-md-6 form_sub_stream">
                 <label className="profile_label3">Product Type</label>
@@ -441,7 +430,7 @@ const Add_hotel = () => {
                 style={{ width: 175 }}
                 onSubmit={handleSubmit}
               >
-                Add Hotel
+                Add Property
               </button>
             </div>
           </form>
@@ -451,4 +440,4 @@ const Add_hotel = () => {
   );
 };
 
-export default Add_hotel;
+export default Add_property;

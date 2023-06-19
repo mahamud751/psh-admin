@@ -8,7 +8,7 @@ import ToolkitProvider from "react-bootstrap-table2-toolkit/dist/react-bootstrap
 import paginationFactory from "react-bootstrap-table2-paginator";
 import BootstrapTable from "react-bootstrap-table-next";
 import { Link } from "react-router-dom";
-import Hotels from "../../pages/edit/Hotels";
+import Property from "../../pages/edit/Property";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
@@ -103,7 +103,7 @@ const Dashoboard_table = (props) => {
               <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content" style={{ width: 700 }}>
                   <div className="modal-body">
-                    <Hotels data={row} />
+                    <Property data={row} />
                   </div>
                 </div>
               </div>
@@ -135,12 +135,9 @@ const Dashoboard_table = (props) => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const { data } = await axios.get(
-          `https://psh-server.onrender.com/api/hotels`,
-          {
-            mode: "cors",
-          }
-        );
+        const { data } = await axios.get(`http://localhost:5001/api/hotels`, {
+          mode: "cors",
+        });
         setData(data);
       } catch (error) {
         console.log(error);
@@ -153,7 +150,7 @@ const Dashoboard_table = (props) => {
   const handleCategory = async (id) => {
     const confirmation = window.confirm("Are you Sure?");
     if (confirmation) {
-      const url = `https://psh-server.onrender.com/api/hotels/${id}`;
+      const url = `http://localhost:5001/api/hotels/${id}`;
       fetch(url, {
         method: "DELETE",
       })

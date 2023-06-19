@@ -5,7 +5,7 @@ import withReactContent from "sweetalert2-react-content";
 import "./Main_steam.css";
 import axios from "axios";
 
-const Promo = ({ data }) => {
+const Facility = ({ data }) => {
   const { _id, name } = data;
   const [user, setUser] = useState(data);
   const [files, setFiles] = useState("");
@@ -47,7 +47,7 @@ const Promo = ({ data }) => {
         photos: list,
       };
 
-      await axios.put(`http://localhost:5001/api/promo/${_id}`, product);
+      await axios.put(`http://localhost:5001/api/facility/${_id}`, product);
       MySwal.fire("Good job!", "successfully edited", "success");
     } catch (err) {
       MySwal.fire("Something Error Found.", "warning");
@@ -64,7 +64,7 @@ const Promo = ({ data }) => {
                   htmlFor="inputState"
                   className="form-label profile_label3"
                 >
-                  Category Name
+                  Facility Name
                 </label>
                 <input
                   type="text"
@@ -79,7 +79,7 @@ const Promo = ({ data }) => {
                   htmlFor="inputState"
                   className="form-label profile_label3"
                 >
-                  Category Picture
+                  Facility Picture
                 </label>
                 <input
                   type="file"
@@ -96,7 +96,7 @@ const Promo = ({ data }) => {
                   className="profile_btn"
                   style={{ width: 220 }}
                 >
-                  Edit Promo
+                  Edit Facility
                 </button>
               </div>
             </div>
@@ -107,4 +107,4 @@ const Promo = ({ data }) => {
   );
 };
 
-export default Promo;
+export default Facility;

@@ -3,7 +3,7 @@ import React, { useState, useRef } from "react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
-const Add_Category = () => {
+const Add_Facility = () => {
   const [files, setFiles] = useState("");
   const MySwal = withReactContent(Swal);
   const formRef = useRef(null);
@@ -34,7 +34,7 @@ const Add_Category = () => {
         photos: list,
       };
 
-      await axios.post("http://localhost:5001/api/category", product);
+      await axios.post("http://localhost:5001/api/facility", product);
       MySwal.fire("Good job!", "successfully added", "success");
       formRef.current.reset();
     } catch (err) {
@@ -86,7 +86,7 @@ const Add_Category = () => {
                 className="profile_btn"
                 style={{ width: 175 }}
               >
-                Add Category
+                Add Facility
               </button>
             </div>
           </form>
@@ -96,4 +96,4 @@ const Add_Category = () => {
   );
 };
 
-export default Add_Category;
+export default Add_Facility;

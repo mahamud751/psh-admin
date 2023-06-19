@@ -1,30 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import axios from "axios";
-import { useEffect } from "react";
 
-const Hotels = ({ data }) => {
-  const { _id, name } = data;
+import "./Main_steam.css";
+import axios from "axios";
+
+const Seat = ({ data }) => {
+  const { _id, name, seatNumber, desc } = data;
   const [user, setUser] = useState(data);
   const [files, setFiles] = useState("");
-  const [data2, setData] = useState([]);
+  const [categories, setCategories] = useState([]);
+
   useEffect(() => {
-    const getData = async () => {
+    const fetchData = async () => {
       try {
-        const { data } = await axios.get(
-          `https://psh-server.onrender.com/api/category`,
-          {
-            mode: "cors",
-          }
-        );
-        setData(data);
+        const response = await axios.get("http://localhost:5001/api/property");
+        setCategories(response.data);
       } catch (error) {
         console.log(error);
       }
     };
-    getData();
+
+    fetchData();
   }, []);
+  console.log(categories);
   const MySwal = withReactContent(Swal);
 
   const handleOnBlur = (e) => {
@@ -62,10 +61,7 @@ const Hotels = ({ data }) => {
         photos: list,
       };
 
-      await axios.put(
-        `https://psh-server.onrender.com/api/hotels/${_id}`,
-        product
-      );
+      await axios.put(`http://localhost:5001/api/seat/${_id}`, product);
       MySwal.fire("Good job!", "successfully edited", "success");
     } catch (err) {
       MySwal.fire("Something Error Found.", "warning");
@@ -76,129 +72,78 @@ const Hotels = ({ data }) => {
       <form onSubmit={handleSubmit}>
         <div className="row">
           <div>
-            <div className="card-body row">
+            <div className="card-body">
               <div className="col-md-12 form_sub_stream ">
                 <label htmlFor="inputState" className="profile_label3">
-                  Type
+                  Room
                 </label>
                 <select
-                  name="categoryId"
+                  name="property"
                   id="inputState"
                   className="main_form w-100"
                 >
-                  <option selected>Select Type</option>
-                  {data2.map((pd) => (
+                  <option selected>Select Room</option>
+                  {categories.map((pd) => (
                     <option key={pd._id} value={pd._id}>
                       {pd.name}
                     </option>
                   ))}
                 </select>
               </div>
-
               <div className="col-md-12 mb-3">
                 <label
                   htmlFor="inputState"
                   className="form-label profile_label3"
                 >
-                  Description
+                  Seat Name
+                </label>
+                <input
+                  type="text"
+                  className="main_form  w-100"
+                  name="name"
+                  onBlur={handleOnBlur}
+                  defaultValue={name || ""}
+                />
+              </div>
+              <div className="col-md-12 mb-3">
+                <label
+                  htmlFor="inputState"
+                  className="form-label profile_label3"
+                >
+                  Seat Number
+                </label>
+                <input
+                  type="text"
+                  className="main_form  w-100"
+                  name="seatNumber"
+                  onBlur={handleOnBlur}
+                  defaultValue={seatNumber || ""}
+                />
+              </div>
+              <div className="col-md-12 mb-3">
+                <label
+                  htmlFor="inputState"
+                  className="form-label profile_label3"
+                >
+                  Seat Description
                 </label>
                 <input
                   type="text"
                   className="main_form  w-100"
                   name="desc"
                   onBlur={handleOnBlur}
-                  defaultValue={user.desc || ""}
+                  defaultValue={desc || ""}
                 />
               </div>
-
-              <div className="col-md-4 mb-3">
-                <label
-                  htmlFor="inputState"
-                  className="form-label profile_label3"
-                >
-                  Per Day
-                </label>
-                <input
-                  type="text"
-                  className="main_form  w-100"
-                  name="perDay"
-                  onBlur={handleOnBlur}
-                  defaultValue={user.perDay || ""}
-                />
-              </div>
-
-              <div className="col-md-4 mb-3">
-                <label
-                  htmlFor="inputState"
-                  className="form-label profile_label3"
-                >
-                  Per Month
-                </label>
-                <input
-                  type="text"
-                  className="main_form  w-100"
-                  name="perMonth"
-                  onBlur={handleOnBlur}
-                  defaultValue={user.perMonth || ""}
-                />
-              </div>
-              <div className="col-md-4 mb-3">
-                <label
-                  htmlFor="inputState"
-                  className="form-label profile_label3"
-                >
-                  Per Year
-                </label>
-                <input
-                  type="text"
-                  className="main_form  w-100"
-                  name="perYear"
-                  onBlur={handleOnBlur}
-                  defaultValue={user.perYear || ""}
-                />
-              </div>
-
-              <div className="col-md-6 mb-3">
-                <label
-                  htmlFor="inputState"
-                  className="form-label profile_label3"
-                >
-                  Avaliblilty
-                </label>
-                <input
-                  type="text"
-                  className="main_form  w-100"
-                  name="availble"
-                  onBlur={handleOnBlur}
-                  defaultValue={user.availble || ""}
-                />
-              </div>
-              <div className="col-md-6 mb-3">
-                <label
-                  htmlFor="inputState"
-                  className="form-label profile_label3"
-                >
-                  Rating
-                </label>
-                <input
-                  type="text"
-                  className="main_form  w-100"
-                  name="rating"
-                  onBlur={handleOnBlur}
-                  defaultValue={user.rating || ""}
-                />
-              </div>
-
               <div className="col-md-12 mb-3">
                 <label
                   htmlFor="inputState"
                   className="form-label profile_label3"
                 >
-                  Hotel Picture
+                  Seat Picture
                 </label>
                 <input
                   type="file"
-                  id="file"
                   className="main_form w-100 p-0"
                   name="img"
                   onChange={(e) => setFiles(e.target.files)}
@@ -212,7 +157,7 @@ const Hotels = ({ data }) => {
                   className="profile_btn"
                   style={{ width: 220 }}
                 >
-                  Edit Hotel
+                  Edit Seat
                 </button>
               </div>
             </div>
@@ -223,4 +168,4 @@ const Hotels = ({ data }) => {
   );
 };
 
-export default Hotels;
+export default Seat;

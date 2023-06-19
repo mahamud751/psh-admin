@@ -23,7 +23,7 @@ export const UserProvider = ({ children }) => {
     try {
       // Make your API call here to login the user using Axios
       const response = await axios.post(
-        "https://psh-server.onrender.com/api/users/login",
+        "http://localhost:5001/api/users/login",
         { email, password }
       );
 
@@ -41,17 +41,14 @@ export const UserProvider = ({ children }) => {
   };
   const registerUser = async (name, address, email, phone, password, role) => {
     try {
-      const response = await axios.post(
-        "https://psh-server.onrender.com/api/users",
-        {
-          name,
-          address,
-          email,
-          phone,
-          password,
-          role,
-        }
-      );
+      const response = await axios.post("http://localhost:5001/api/users", {
+        name,
+        address,
+        email,
+        phone,
+        password,
+        role,
+      });
 
       if (response.status === 200) {
         const { data } = response;

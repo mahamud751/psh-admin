@@ -1,7 +1,5 @@
 import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import img from "../../../img/home/Group 1332.png";
-import img2 from "../../../img/home/Icon awesome-caret-down-1.png";
 import img3 from "../../../img/home/Ellipse 116.png";
 import img6 from "../../../img/home/noun-stream-4701152.png";
 import img7 from "../../../img/home/noun-stream-play-5240252.png";
@@ -148,9 +146,9 @@ const Navbar = () => {
 
         <aside
           className="main-sidebar sidebar-dark-primary elevation-4 side_menubar"
-          style={{
-            position: "fixed",
-          }}
+          // style={{
+          //   position: "fixed",
+          // }}
         >
           {/* Sidebar */}
           <div className="sidebar">
@@ -253,27 +251,86 @@ const Navbar = () => {
                         </a>
                       </li>
                     </Link>
-
-                    <Link to={"/add_hotel"}>
+                    <Link to={"/add_branch"}>
                       <li className="main_nav-link">
-                        <a href="/add_hotel" className="nav-link">
+                        <a href="/add_branch" className="nav-link">
+                          <i class="fa-sharp fa-solid fa-building-columns span_text2"></i>
+                          <div className="menu_flex">
+                            <span className="span_text">Add Branch</span>
+                          </div>
+                        </a>
+                      </li>
+                    </Link>
+                    <Link to={"/branch_list"}>
+                      <li className="main_nav-link">
+                        <a href="/branch_list" className="nav-link">
+                          <img style={{ width: 16 }} src={img6} alt="" />
+                          <div className="menu_flex">
+                            <span className="span_text">Branch List</span>
+                          </div>
+                        </a>
+                      </li>
+                    </Link>
+                    <Link to={"/add_facility"}>
+                      <li className="main_nav-link">
+                        <a href="/add_facility" className="nav-link">
+                          <i class="fa-sharp fa-solid fa-building-columns span_text2"></i>
+                          <div className="menu_flex">
+                            <span className="span_text">Add Facility</span>
+                          </div>
+                        </a>
+                      </li>
+                    </Link>
+                    <Link to={"/facility_list"}>
+                      <li className="main_nav-link">
+                        <a href="/facility_list" className="nav-link">
+                          <img style={{ width: 16 }} src={img6} alt="" />
+                          <div className="menu_flex">
+                            <span className="span_text">Facility List</span>
+                          </div>
+                        </a>
+                      </li>
+                    </Link>
+                    <Link to={"/add_seat"}>
+                      <li className="main_nav-link">
+                        <a href="/add_seat" className="nav-link">
+                          <i class="fa-sharp fa-solid fa-building-columns span_text2"></i>
+                          <div className="menu_flex">
+                            <span className="span_text">Add Seat</span>
+                          </div>
+                        </a>
+                      </li>
+                    </Link>
+                    <Link to={"/seat_list"}>
+                      <li className="main_nav-link">
+                        <a href="/seat_list" className="nav-link">
+                          <img style={{ width: 16 }} src={img6} alt="" />
+                          <div className="menu_flex">
+                            <span className="span_text">Seat List</span>
+                          </div>
+                        </a>
+                      </li>
+                    </Link>
+                    <Link to={"/add_property"}>
+                      <li className="main_nav-link">
+                        <a href="/add_property" className="nav-link">
                           <img
                             style={{ width: 16, color: "red" }}
                             src={img7}
                             alt=""
                           />
                           <div className="menu_flex">
-                            <span className="span_text">Add Hotel</span>
+                            <span className="span_text">Add Property</span>
                           </div>
                         </a>
                       </li>
                     </Link>
-                    <Link to={"/hotel_list"}>
+                    <Link to={"/property_list"}>
                       <li className="main_nav-link">
-                        <a href="/hotel_list" className="nav-link">
+                        <a href="/property_list" className="nav-link">
                           <i class="fa-solid fa-grip-lines span_text2"></i>
                           <div className="menu_flex">
-                            <span className="span_text">Hotel List</span>
+                            <span className="span_text">Property List</span>
                           </div>
                         </a>
                       </li>

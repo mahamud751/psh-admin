@@ -1,17 +1,34 @@
 import axios from "axios";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
-const Add_Category = () => {
+const Add_Seat = () => {
   const [files, setFiles] = useState("");
   const MySwal = withReactContent(Swal);
+  const [property, setProperty] = useState([]);
+
   const formRef = useRef(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:5001/api/property");
+        setProperty(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
     const data2 = {
       name: formData.get("name"),
+      seatNumber: formData.get("seatNumber"),
+      desc: formData.get("desc"),
+      propertyId: formData.get("property"),
     };
     try {
       const list = await Promise.all(
@@ -34,7 +51,7 @@ const Add_Category = () => {
         photos: list,
       };
 
-      await axios.post("http://localhost:5001/api/category", product);
+      await axios.post("http://localhost:5001/api/seat", product);
       MySwal.fire("Good job!", "successfully added", "success");
       formRef.current.reset();
     } catch (err) {
@@ -47,6 +64,23 @@ const Add_Category = () => {
         <div className="registration_div card">
           <form ref={formRef} onSubmit={handleSubmit}>
             <div className="row p-3">
+              <div className="col-md-12 form_sub_stream ">
+                <label htmlFor="inputState" className="profile_label3">
+                  Room
+                </label>
+                <select
+                  name="property"
+                  id="inputState"
+                  className="main_form w-100"
+                >
+                  <option selected>Select Room</option>
+                  {property.map((pd) => (
+                    <option key={pd._id} value={pd._id}>
+                      {pd.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
               <div className="col-md-12 form_sub_stream">
                 <label
                   htmlFor="inputState"
@@ -60,6 +94,36 @@ const Add_Category = () => {
                   className="main_form w-100"
                   name="name"
                   placeholder="Product Name"
+                />
+              </div>
+              <div className="col-md-12 form_sub_stream">
+                <label
+                  htmlFor="inputState"
+                  className="form-label profile_label3 "
+                >
+                  Seat Number
+                </label>
+
+                <input
+                  type="text"
+                  className="main_form w-100"
+                  name="seatNumber"
+                  placeholder="Enter Seat Number"
+                />
+              </div>
+              <div className="col-md-12 form_sub_stream">
+                <label
+                  htmlFor="inputState"
+                  className="form-label profile_label3 "
+                >
+                  Desc
+                </label>
+
+                <input
+                  type="text"
+                  className="main_form w-100"
+                  name="desc"
+                  placeholder="Enter Seat Number"
                 />
               </div>
               <div className="col-md-12 form_sub_stream">
@@ -86,7 +150,7 @@ const Add_Category = () => {
                 className="profile_btn"
                 style={{ width: 175 }}
               >
-                Add Category
+                Add Seat
               </button>
             </div>
           </form>
@@ -96,4 +160,4 @@ const Add_Category = () => {
   );
 };
 
-export default Add_Category;
+export default Add_Seat;

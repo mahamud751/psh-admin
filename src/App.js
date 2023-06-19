@@ -5,9 +5,9 @@ import SignIn from "./pages/SignIn";
 import Home from "./pages/Home";
 import Add_Category from "./pages/Add_Category";
 import Category from "./pages/Category";
-import Hotel from "./pages/Hotel";
+import Property from "./pages/Property";
 import Orders from "./pages/Orders";
-import Add_hotel from "./pages/Add_hotel";
+import Add_property from "./pages/Add_property";
 import Promo from "./pages/Promo";
 import Add_Promo from "./pages/Add_Promo";
 import Add_Recommended from "./pages/Add_Recommended";
@@ -17,6 +17,12 @@ import AdminRoute from "./Routes/AdminRoute/AdminRoute";
 import Order from "./pages/Order";
 import Add_Manager from "./pages/Add_manager";
 import Manager from "./pages/Manager";
+import Add_Branch from "./pages/Add_Branch";
+import Branch from "./pages/Branch";
+import Add_Facility from "./pages/Add_Facility";
+import Facility from "./pages/Facility";
+import Add_Seat from "./pages/Add_Seat";
+import Seat from "./pages/Seat";
 function App() {
   return (
     <div>
@@ -37,8 +43,14 @@ function App() {
 
           <Route path="add_category" element={<Add_Category />} />
           <Route path="category_list" element={<Category />} />
-          <Route path="add_hotel" element={<Add_hotel />} />
-          <Route path="hotel_list" element={<Hotel />} />
+          <Route path="add_branch" element={<Add_Branch />} />
+          <Route path="branch_list" element={<Branch />} />
+          <Route path="add_facility" element={<Add_Facility />} />
+          <Route path="facility_list" element={<Facility />} />
+          <Route path="add_seat" element={<Add_Seat />} />
+          <Route path="seat_list" element={<Seat />} />
+          <Route path="add_property" element={<Add_property />} />
+          <Route path="property_list" element={<Property />} />
           <Route path="add_promo" element={<Add_Promo />} />
           <Route path="promo_list" element={<Promo />} />
           <Route path="add_recommended" element={<Add_Recommended />} />
