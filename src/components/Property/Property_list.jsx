@@ -18,7 +18,9 @@ const Property_list = (props) => {
 
   //sub stream
   const [data, setData] = useState([]);
+
   const [categories, setCategories] = useState({});
+  const [branch, setBranch] = useState({});
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -31,6 +33,25 @@ const Property_list = (props) => {
           categoryMap[category._id] = category.name;
         });
         setCategories(categoryMap);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const { data } = await axios.get("http://localhost:5001/api/branch", {
+          mode: "cors",
+        });
+        const categoryMap = {};
+        data.forEach((category) => {
+          categoryMap[category._id] = category.name;
+        });
+        setBranch(categoryMap);
       } catch (error) {
         console.log(error);
       }
@@ -66,6 +87,7 @@ const Property_list = (props) => {
       },
     },
     { dataField: "category.name", text: "Category" },
+    { dataField: "branch.name", text: "Branch" },
     // {
     //   text: "Type",
     //   formatter: (cellContent, row) => {
@@ -181,6 +203,7 @@ const Property_list = (props) => {
     };
     getData();
   }, []);
+
   //delete
   const [products, setProducts] = useState(data);
   const handleCategory = async (id) => {

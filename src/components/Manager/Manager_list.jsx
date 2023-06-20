@@ -22,6 +22,7 @@ const Manager_list = () => {
   const email = user.email;
   //sub stream
   const [data, setData] = useState([]);
+  const [branches, setBranches] = useState([]);
 
   const columns = [
     {
@@ -40,6 +41,15 @@ const Manager_list = () => {
       dataField: "name",
       text: "Name",
     },
+    {
+      dataField: "branch",
+      text: "Branch",
+      formatter: (cellContent, row) => {
+        const branch = branches.find((b) => b._id === cellContent);
+        return branch ? branch.name : "";
+      },
+    },
+
     {
       text: "Action",
       formatter: (cellContent, row) => {
@@ -100,20 +110,27 @@ const Manager_list = () => {
       console.log("sizePerPage", sizePerPage);
     },
   });
+
   useEffect(() => {
-    const getData = async () => {
+    const fetchData = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:5001/api/users`, {
-          mode: "cors",
-        });
-        setData(data);
+        const [usersResponse, branchesResponse] = await Promise.all([
+          axios.get("http://localhost:5001/api/users"),
+          axios.get("http://localhost:5001/api/branch"),
+        ]);
+
+        setData(usersResponse.data);
+        setBranches(branchesResponse.data);
       } catch (error) {
         console.log(error);
       }
     };
-    getData();
+
+    fetchData();
   }, []);
+
   const main = data.filter((pd) => pd.role === "manager");
+
   //delete
   const [products, setProducts] = useState(data);
   const handleCategory = async (id) => {

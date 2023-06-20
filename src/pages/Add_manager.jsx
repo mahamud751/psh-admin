@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { useContext } from "react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { AuthContext } from "../contexts/UserProvider";
 import { useForm } from "react-hook-form";
 
 const Add_Manager = () => {
@@ -11,26 +10,80 @@ const Add_Manager = () => {
     register,
     formState: { errors },
     handleSubmit,
+    reset,
   } = useForm();
+  const [branches, setBranches] = useState([]);
+  const MySwal = withReactContent(Swal);
 
-  const [loginError, setLoginError] = useState("");
-  const { registerUser } = useContext(AuthContext);
+  useEffect(() => {
+    // Fetch branches from your backend API and update the branches state
+    const fetchBranches = async () => {
+      try {
+        const response = await fetch("http://localhost:5001/api/branch");
+        const data = await response.json();
+        setBranches(data);
+      } catch (error) {
+        console.error("Error fetching branches:", error);
+      }
+    };
 
+    fetchBranches();
+  }, []);
   const onSubmitRegister = async (data) => {
-    const { name, address, email, phone, password, role } = data;
+    const {
+      name,
+      address,
+      email,
+      phone,
+      password,
+      role,
+      branch: branchId,
+    } = data;
 
-    await registerUser(name, address, email, phone, password, role);
-  };
-  const [showPassword, setShowPassword] = useState(false);
-  const [password, setPassword] = useState("");
+    try {
+      const response = await axios.post("http://localhost:5001/api/users", {
+        name,
+        address,
+        email,
+        phone,
+        password,
+        role,
+        branch: branchId,
+      });
 
-  const toggleShowPassword = () => {
-    setShowPassword(!showPassword);
+      if (response.status === 200) {
+        // Registration successful
+        const responseData = response.data;
+        console.log(responseData);
+        // Show success message using SweetAlert2
+        MySwal.fire({
+          icon: "success",
+          title: "Registration Successful",
+          text: "Manager added successfully.",
+        });
+        reset();
+      } else {
+        // Registration failed
+        const errorData = response.data;
+        console.log(errorData);
+        // Show error message using SweetAlert2
+        MySwal.fire({
+          icon: "error",
+          title: "Registration Failed",
+          text: "Failed to add manager. Please try again.",
+        });
+      }
+    } catch (error) {
+      console.error("Error registering manager:", error);
+      // Show error message using SweetAlert2
+      MySwal.fire({
+        icon: "error",
+        title: "Registration Failed",
+        text: "Failed to add manager. Please try again.",
+      });
+    }
   };
 
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
   const roles = ["admin", "user", "manager"];
   return (
     <div className="wrapper">
@@ -86,6 +139,7 @@ const Add_Manager = () => {
                   })}
                 />
               </div>
+
               <div className="col-md-12 form_sub_stream">
                 <label htmlFor="inputState" className="profile_label3">
                   Role
@@ -100,6 +154,23 @@ const Add_Manager = () => {
                   {roles.map((role) => (
                     <option key={role} value={role}>
                       {role}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="col-md-12 form_sub_stream">
+                <label htmlFor="inputState" className="profile_label3">
+                  Branch
+                </label>
+                <select
+                  id="inputState"
+                  className="main_form w-100"
+                  {...register("branch")}
+                >
+                  <option>Select Branch</option>
+                  {branches.map((branch) => (
+                    <option key={branch._id} value={branch._id}>
+                      {branch.name}
                     </option>
                   ))}
                 </select>

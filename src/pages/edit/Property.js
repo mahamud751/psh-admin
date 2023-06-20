@@ -5,7 +5,28 @@ import axios from "axios";
 import { useEffect } from "react";
 
 const Property = ({ data }) => {
-  const { _id, name } = data;
+  console.log(data);
+  const {
+    _id,
+    name,
+    city,
+    availble,
+    desc,
+    fulldesc,
+    rating,
+    perDay,
+    perMonth,
+    perYear,
+    bedroom,
+    bathroom,
+    photos,
+    car,
+    bike,
+    pet,
+    categoryId,
+    branchId,
+    facility,
+  } = data;
   const [user, setUser] = useState(data);
   const [files, setFiles] = useState("");
   const [categories, setCategories] = useState([]);
@@ -103,10 +124,11 @@ const Property = ({ data }) => {
                 </label>
                 <select
                   name="category"
+                  value={categoryId}
                   id="inputState"
                   className="main_form w-100"
                 >
-                  <option selected>Select Type</option>
+                  <option value="">Select Type</option>
                   {categories.map((pd) => (
                     <option key={pd._id} value={pd._id}>
                       {pd.name}
@@ -121,10 +143,11 @@ const Property = ({ data }) => {
                 <select
                   name="branch"
                   id="inputState"
+                  value={user.branchId}
                   className="main_form w-100"
                   required
                 >
-                  <option value="">Select Type</option>
+                  <option>Select Type</option>
                   {branch.map((category) => (
                     <option key={category._id} value={category._id}>
                       {category.name}
@@ -168,7 +191,7 @@ const Property = ({ data }) => {
                   type="text"
                   className="main_form w-100"
                   name="name"
-                  defaultValue={user.name || ""}
+                  defaultValue={name || ""}
                 />
               </div>
               <div className="col-md-6 form_sub_stream">
@@ -182,7 +205,7 @@ const Property = ({ data }) => {
                   type="text"
                   className="main_form w-100"
                   name="city"
-                  defaultValue={user.city || ""}
+                  defaultValue={city || ""}
                 />
               </div>
               <div className="col-md-6 form_sub_stream">
@@ -196,7 +219,7 @@ const Property = ({ data }) => {
                   type="text"
                   className="main_form w-100"
                   name="desc"
-                  defaultValue={user.desc || ""}
+                  defaultValue={desc || ""}
                 />
               </div>
               <div className="col-md-6 form_sub_stream">
@@ -210,7 +233,7 @@ const Property = ({ data }) => {
                   type="text"
                   className="main_form w-100"
                   name="fulldesc"
-                  defaultValue={user.fulldesc}
+                  defaultValue={fulldesc}
                 />
               </div>
               <div className="col-md-4 form_sub_stream">
@@ -225,7 +248,7 @@ const Property = ({ data }) => {
                   type="number"
                   className="main_form w-100"
                   name="bedroom"
-                  defaultValue={user.bedroom || ""}
+                  defaultValue={bedroom || ""}
                 />
               </div>
               <div className="col-md-4 form_sub_stream">
@@ -240,7 +263,7 @@ const Property = ({ data }) => {
                   type="number"
                   className="main_form w-100"
                   name="bathroom"
-                  defaultValue={user.bathroom || ""}
+                  defaultValue={bathroom || ""}
                 />
               </div>
               <div className="col-md-4 form_sub_stream">
@@ -255,7 +278,7 @@ const Property = ({ data }) => {
                   type="number"
                   className="main_form w-100"
                   name="car"
-                  defaultValue={user.car || ""}
+                  defaultValue={car || ""}
                 />
               </div>
               <div className="col-md-4 form_sub_stream">
@@ -270,7 +293,7 @@ const Property = ({ data }) => {
                   type="number"
                   className="main_form w-100"
                   name="bike"
-                  defaultValue={user.bike || ""}
+                  defaultValue={bike || ""}
                 />
               </div>
               <div className="col-md-4 form_sub_stream">
@@ -285,7 +308,7 @@ const Property = ({ data }) => {
                   type="number"
                   className="main_form w-100"
                   name="pet"
-                  defaultValue={user.pet || ""}
+                  defaultValue={pet || ""}
                 />
               </div>
               <div className="col-md-4 mb-3">
@@ -300,7 +323,7 @@ const Property = ({ data }) => {
                   className="main_form  w-100"
                   name="perDay"
                   onBlur={handleOnBlur}
-                  defaultValue={user.perDay || ""}
+                  defaultValue={perDay || ""}
                 />
               </div>
 
@@ -316,7 +339,7 @@ const Property = ({ data }) => {
                   className="main_form  w-100"
                   name="perMonth"
                   onBlur={handleOnBlur}
-                  defaultValue={user.perMonth || ""}
+                  defaultValue={perMonth || ""}
                 />
               </div>
               <div className="col-md-4 mb-3">
@@ -331,7 +354,7 @@ const Property = ({ data }) => {
                   className="main_form  w-100"
                   name="perYear"
                   onBlur={handleOnBlur}
-                  defaultValue={user.perYear || ""}
+                  defaultValue={perYear || ""}
                 />
               </div>
 
@@ -347,7 +370,7 @@ const Property = ({ data }) => {
                   className="main_form  w-100"
                   name="availble"
                   onBlur={handleOnBlur}
-                  defaultValue={user.availble || ""}
+                  defaultValue={availble || ""}
                 />
               </div>
               <div className="col-md-6 mb-3">
@@ -362,7 +385,7 @@ const Property = ({ data }) => {
                   className="main_form  w-100"
                   name="rating"
                   onBlur={handleOnBlur}
-                  defaultValue={user.rating || ""}
+                  defaultValue={rating || ""}
                 />
               </div>
 

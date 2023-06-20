@@ -291,26 +291,7 @@ const Navbar = () => {
                         </a>
                       </li>
                     </Link>
-                    <Link to={"/add_seat"}>
-                      <li className="main_nav-link">
-                        <a href="/add_seat" className="nav-link">
-                          <i class="fa-sharp fa-solid fa-building-columns span_text2"></i>
-                          <div className="menu_flex">
-                            <span className="span_text">Add Seat</span>
-                          </div>
-                        </a>
-                      </li>
-                    </Link>
-                    <Link to={"/seat_list"}>
-                      <li className="main_nav-link">
-                        <a href="/seat_list" className="nav-link">
-                          <img style={{ width: 16 }} src={img6} alt="" />
-                          <div className="menu_flex">
-                            <span className="span_text">Seat List</span>
-                          </div>
-                        </a>
-                      </li>
-                    </Link>
+
                     <Link to={"/add_property"}>
                       <li className="main_nav-link">
                         <a href="/add_property" className="nav-link">
@@ -331,6 +312,26 @@ const Navbar = () => {
                           <i class="fa-solid fa-grip-lines span_text2"></i>
                           <div className="menu_flex">
                             <span className="span_text">Property List</span>
+                          </div>
+                        </a>
+                      </li>
+                    </Link>
+                    <Link to={"/add_seat"}>
+                      <li className="main_nav-link">
+                        <a href="/add_seat" className="nav-link">
+                          <i class="fa-sharp fa-solid fa-building-columns span_text2"></i>
+                          <div className="menu_flex">
+                            <span className="span_text">Add Seat</span>
+                          </div>
+                        </a>
+                      </li>
+                    </Link>
+                    <Link to={"/seat_list"}>
+                      <li className="main_nav-link">
+                        <a href="/seat_list" className="nav-link">
+                          <img style={{ width: 16 }} src={img6} alt="" />
+                          <div className="menu_flex">
+                            <span className="span_text">Seat List</span>
                           </div>
                         </a>
                       </li>
