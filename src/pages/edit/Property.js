@@ -6,27 +6,7 @@ import { useEffect } from "react";
 
 const Property = ({ data }) => {
   console.log(data);
-  const {
-    _id,
-    name,
-    city,
-    availble,
-    desc,
-    fulldesc,
-    rating,
-    perDay,
-    perMonth,
-    perYear,
-    bedroom,
-    bathroom,
-    photos,
-    car,
-    bike,
-    pet,
-    categoryId,
-    branchId,
-    facility,
-  } = data;
+
   const [user, setUser] = useState(data);
   const [files, setFiles] = useState("");
   const [categories, setCategories] = useState([]);
@@ -81,9 +61,21 @@ const Property = ({ data }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const formData = new FormData(e.target);
+    const selectedFacilities = [];
+    facilities.forEach((facility) => {
+      if (formData.getAll("facility[]").includes(facility._id)) {
+        selectedFacilities.push(facility.name);
+      }
+    });
+    const data2 = {
+      categoryId: formData.get("category"),
+      branchId: formData.get("branch"),
+      facility: selectedFacilities,
+    };
     const newPost = {
       ...user,
+      ...data2,
     };
     try {
       const list = await Promise.all(
@@ -106,7 +98,10 @@ const Property = ({ data }) => {
         photos: list,
       };
 
-      await axios.put(`http://localhost:5001/api/property/${_id}`, product);
+      await axios.put(
+        `http://localhost:5001/api/property/${user._id}`,
+        product
+      );
       MySwal.fire("Good job!", "successfully edited", "success");
     } catch (err) {
       MySwal.fire("Something Error Found.", "warning");
@@ -124,11 +119,10 @@ const Property = ({ data }) => {
                 </label>
                 <select
                   name="category"
-                  value={categoryId}
                   id="inputState"
                   className="main_form w-100"
                 >
-                  <option value="">Select Type</option>
+                  <option disabled>Select Type</option>
                   {categories.map((pd) => (
                     <option key={pd._id} value={pd._id}>
                       {pd.name}
@@ -143,11 +137,10 @@ const Property = ({ data }) => {
                 <select
                   name="branch"
                   id="inputState"
-                  value={user.branchId}
                   className="main_form w-100"
                   required
                 >
-                  <option>Select Type</option>
+                  <option disabled>Select Type</option>
                   {branch.map((category) => (
                     <option key={category._id} value={category._id}>
                       {category.name}
@@ -191,7 +184,7 @@ const Property = ({ data }) => {
                   type="text"
                   className="main_form w-100"
                   name="name"
-                  defaultValue={name || ""}
+                  defaultValue={user.name || ""}
                 />
               </div>
               <div className="col-md-6 form_sub_stream">
@@ -205,7 +198,7 @@ const Property = ({ data }) => {
                   type="text"
                   className="main_form w-100"
                   name="city"
-                  defaultValue={city || ""}
+                  defaultValue={user.city || ""}
                 />
               </div>
               <div className="col-md-6 form_sub_stream">
@@ -219,7 +212,7 @@ const Property = ({ data }) => {
                   type="text"
                   className="main_form w-100"
                   name="desc"
-                  defaultValue={desc || ""}
+                  defaultValue={user.desc || ""}
                 />
               </div>
               <div className="col-md-6 form_sub_stream">
@@ -233,7 +226,7 @@ const Property = ({ data }) => {
                   type="text"
                   className="main_form w-100"
                   name="fulldesc"
-                  defaultValue={fulldesc}
+                  defaultValue={user.fulldesc || ""}
                 />
               </div>
               <div className="col-md-4 form_sub_stream">
@@ -248,7 +241,7 @@ const Property = ({ data }) => {
                   type="number"
                   className="main_form w-100"
                   name="bedroom"
-                  defaultValue={bedroom || ""}
+                  defaultValue={user.bedroom || ""}
                 />
               </div>
               <div className="col-md-4 form_sub_stream">
@@ -263,7 +256,7 @@ const Property = ({ data }) => {
                   type="number"
                   className="main_form w-100"
                   name="bathroom"
-                  defaultValue={bathroom || ""}
+                  defaultValue={user.bathroom || ""}
                 />
               </div>
               <div className="col-md-4 form_sub_stream">
@@ -278,7 +271,7 @@ const Property = ({ data }) => {
                   type="number"
                   className="main_form w-100"
                   name="car"
-                  defaultValue={car || ""}
+                  defaultValue={user.car || ""}
                 />
               </div>
               <div className="col-md-4 form_sub_stream">
@@ -293,7 +286,7 @@ const Property = ({ data }) => {
                   type="number"
                   className="main_form w-100"
                   name="bike"
-                  defaultValue={bike || ""}
+                  defaultValue={user.bike || ""}
                 />
               </div>
               <div className="col-md-4 form_sub_stream">
@@ -308,7 +301,7 @@ const Property = ({ data }) => {
                   type="number"
                   className="main_form w-100"
                   name="pet"
-                  defaultValue={pet || ""}
+                  defaultValue={user.pet || ""}
                 />
               </div>
               <div className="col-md-4 mb-3">
@@ -323,7 +316,7 @@ const Property = ({ data }) => {
                   className="main_form  w-100"
                   name="perDay"
                   onBlur={handleOnBlur}
-                  defaultValue={perDay || ""}
+                  defaultValue={user.perDay || ""}
                 />
               </div>
 
@@ -339,7 +332,7 @@ const Property = ({ data }) => {
                   className="main_form  w-100"
                   name="perMonth"
                   onBlur={handleOnBlur}
-                  defaultValue={perMonth || ""}
+                  defaultValue={user.perMonth || ""}
                 />
               </div>
               <div className="col-md-4 mb-3">
@@ -354,7 +347,7 @@ const Property = ({ data }) => {
                   className="main_form  w-100"
                   name="perYear"
                   onBlur={handleOnBlur}
-                  defaultValue={perYear || ""}
+                  defaultValue={user.perYear || ""}
                 />
               </div>
 
@@ -370,7 +363,7 @@ const Property = ({ data }) => {
                   className="main_form  w-100"
                   name="availble"
                   onBlur={handleOnBlur}
-                  defaultValue={availble || ""}
+                  defaultValue={user.availble || ""}
                 />
               </div>
               <div className="col-md-6 mb-3">
@@ -385,7 +378,7 @@ const Property = ({ data }) => {
                   className="main_form  w-100"
                   name="rating"
                   onBlur={handleOnBlur}
-                  defaultValue={rating || ""}
+                  defaultValue={user.rating || ""}
                 />
               </div>
 

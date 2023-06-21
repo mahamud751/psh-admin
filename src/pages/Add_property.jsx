@@ -121,7 +121,7 @@ const Add_property = () => {
                   id="inputState"
                   className="main_form w-100"
                 >
-                  <option selected>Select Type</option>
+                  <option>Select Type</option>
                   {categories.map((pd) => (
                     <option key={pd._id} value={pd._id}>
                       {pd.name}

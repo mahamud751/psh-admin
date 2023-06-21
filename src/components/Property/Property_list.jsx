@@ -86,6 +86,10 @@ const Property_list = (props) => {
         );
       },
     },
+    {
+      dataField: "name",
+      text: "Name",
+    },
     { dataField: "category.name", text: "Category" },
     { dataField: "branch.name", text: "Branch" },
     // {

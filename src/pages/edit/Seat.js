@@ -36,9 +36,14 @@ const Seat = ({ data }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const formData = new FormData(e.target);
 
+    const data2 = {
+      propertyId: formData.get("property"),
+    };
     const newPost = {
       ...user,
+      ...data2,
     };
     try {
       const list = await Promise.all(
@@ -82,7 +87,7 @@ const Seat = ({ data }) => {
                   id="inputState"
                   className="main_form w-100"
                 >
-                  <option selected>Select Room</option>
+                  <option>Select Room</option>
                   {categories.map((pd) => (
                     <option key={pd._id} value={pd._id}>
                       {pd.name}
