@@ -2,7 +2,6 @@ import React, { createContext, useEffect, useState } from "react";
 import {
   createUserWithEmailAndPassword,
   FacebookAuthProvider,
-  getRedirectResult,
   sendEmailVerification,
   GoogleAuthProvider,
   getAuth,
