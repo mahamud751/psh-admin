@@ -23,6 +23,7 @@ import Add_Facility from "./pages/Add_Facility";
 import Facility from "./pages/Facility";
 import Add_Seat from "./pages/Add_Seat";
 import Seat from "./pages/Seat";
+import Issue from "./pages/issue";
 function App() {
   return (
     <div>
@@ -56,6 +57,7 @@ function App() {
           <Route path="add_recommended" element={<Add_Recommended />} />
           <Route path="recommended_list" element={<Recommended />} />
           <Route path="orders" element={<Orders />} />
+          <Route path="issues" element={<Issue />} />
         </Route>
       </Routes>
     </div>

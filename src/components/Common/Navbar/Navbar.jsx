@@ -386,6 +386,16 @@ const Navbar = () => {
                         </a>
                       </li>
                     </Link>
+                    <Link to={"/issues"}>
+                      <li className="main_nav-link">
+                        <a href="/issues" className="nav-link">
+                          <img style={{ width: 16 }} src={img9} alt="" />
+                          <div className="menu_flex">
+                            <span className="span_text">Issues</span>
+                          </div>
+                        </a>
+                      </li>
+                    </Link>
                   </>
                 ) : (
                   ""

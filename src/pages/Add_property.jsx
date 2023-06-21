@@ -416,7 +416,7 @@ const Add_property = () => {
                   type="file"
                   id="file"
                   className="main_form w-100 p-0"
-                  name="img"
+                  name="photos"
                   onChange={(e) => setFiles(e.target.files)}
                   multiple
                 />
