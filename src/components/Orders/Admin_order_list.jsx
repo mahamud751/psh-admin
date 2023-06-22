@@ -9,38 +9,25 @@ import ToolkitProvider, {
 } from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import BootstrapTable from "react-bootstrap-table-next";
-import Seat from "../../pages/edit/Seat";
-import { Link } from "react-router-dom";
-import jsPDF from "jspdf";
-import "jspdf-autotable";
-import { AuthContext } from "../../contexts/UserProvider";
-
-const Seat_list = () => {
+import Category from "../../pages/edit/Category";
+const MyExportCSV = (props) => {
+  const handleClick = () => {
+    props.onExport();
+  };
+  return (
+    <div>
+      <button className="college_btn  mb-2 p-3" onClick={handleClick}>
+        Export to CSV
+      </button>
+    </div>
+  );
+};
+const Admin_Orders_list = () => {
   const MySwal = withReactContent(Swal);
-  const { user } = useContext(AuthContext);
-  const userBranch = user.branch.name;
+
   //sub stream
   const [data, setData] = useState([]);
-  const [categories, setCategories] = useState([]);
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const { data } = await axios.get("http://localhost:5001/api/property", {
-          mode: "cors",
-        });
-        const categoryMap = {};
-        data.forEach((category) => {
-          categoryMap[category._id] = category.name;
-        });
-        setCategories(categoryMap);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchCategories();
-  }, []);
   const columns = [
     {
       text: "No",
@@ -53,32 +40,26 @@ const Seat_list = () => {
         );
       },
     },
+
     {
-      text: "Image",
-      formatter: (cellContent, row) => {
-        return (
-          <div>
-            <img
-              src={row.photos && row.photos[0]}
-              alt=""
-              style={{ width: 120 }}
-            />
-          </div>
-        );
-      },
+      dataField: "firstName",
+      text: "First Name",
     },
     {
-      dataField: "name",
-      text: "Seat",
-    },
-    { dataField: "property.name", text: "Property" },
-    {
-      dataField: "desc",
-      text: "Description",
+      dataField: "lastName",
+      text: "Last Name",
     },
     {
-      dataField: "seatNumber",
-      text: "Seat Number",
+      dataField: "email",
+      text: "Email",
+    },
+    {
+      dataField: "phone",
+      text: "Phone",
+    },
+    {
+      dataField: "address",
+      text: "Address",
     },
     {
       text: "Action",
@@ -97,21 +78,21 @@ const Seat_list = () => {
                 src={img}
                 alt=""
                 className="ms-3"
-                onClick={() => handleSeat(row._id)}
+                onClick={() => handleCategory(row._id)}
               />
             </div>
             <div
               className="modal fade"
-              id={`loginModal${row._id}`}
+              id={`loginModal${row.id}`}
               tabIndex="{-1}"
               role="dialog"
               aria-labelledby="loginModal"
               aria-hidden="true"
             >
               <div className="modal-dialog modal-dialog-centered">
-                <div className="modal-content" style={{ width: 700 }}>
+                <div className="modal-content">
                   <div className="modal-body">
-                    <Seat data={row} />
+                    <Category data={row} />
                   </div>
                 </div>
               </div>
@@ -143,7 +124,7 @@ const Seat_list = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:5001/api/seat`, {
+        const { data } = await axios.get(`http://localhost:5001/api/order`, {
           mode: "cors",
         });
         setData(data);
@@ -152,14 +133,14 @@ const Seat_list = () => {
       }
     };
     getData();
-  }, []);
-  const main = data.filter((pd) => pd.property.branch.name === userBranch);
+  }, [data]);
+
   //delete
   const [products, setProducts] = useState(data);
-  const handleSeat = async (id) => {
+  const handleCategory = async (id) => {
     const confirmation = window.confirm("Are you Sure?");
     if (confirmation) {
-      const url = `http://localhost:5001/api/seat/${id}`;
+      const url = `http://localhost:5001/api/order/${id}`;
       fetch(url, {
         method: "DELETE",
       })
@@ -174,22 +155,6 @@ const Seat_list = () => {
         });
     }
   };
-  const handleDownloadPDF = () => {
-    const doc = new jsPDF();
-    const columns = [
-      { title: "No", dataKey: "no" },
-      { title: "Seat", dataKey: "seat" },
-    ];
-    const tableData = data.map((item, index) => ({
-      no: index + 1,
-      seat: item.name,
-    }));
-    doc.autoTable(columns, tableData, { startY: 20 });
-
-    // Save the PDF file
-    doc.save("seat_list.pdf");
-  };
-
   return (
     <div className="wrapper">
       <div className="content-wrapper" style={{ background: "unset" }}>
@@ -197,26 +162,7 @@ const Seat_list = () => {
           <div className="container-fluid">
             <div className="row">
               <div className="col-md-7">
-                <h6 className="college_h6">Seat List</h6>
-              </div>
-              <div className="export_btn_main">
-                <div>
-                  <div className="">
-                    <div className="corporate_addNew_btn">
-                      <Link to={"/add_seat"}>
-                        <button className="college_btn2 ms-4 p-3">
-                          Add New
-                        </button>
-                      </Link>
-                    </div>
-                  </div>
-                  <button
-                    className="export_btn mt-2 p-3"
-                    onClick={handleDownloadPDF}
-                  >
-                    Export to PDF
-                  </button>
-                </div>
+                <h6 className="college_h6">Orders List</h6>
               </div>
             </div>
             <hr style={{ height: "1px", background: "rgb(191 173 173)" }} />
@@ -225,19 +171,18 @@ const Seat_list = () => {
                 <>
                   <ToolkitProvider
                     bootstrap4
-                    keyField="_id"
+                    keyField="id"
                     columns={columns}
-                    data={main}
+                    data={data}
                     pagination={pagination}
-                    exportCSV
                   >
                     {(props) => (
                       <React.Fragment>
                         <BootstrapTable
                           bootstrap4
-                          keyField="_id"
+                          keyField="id"
                           columns={columns}
-                          data={main}
+                          data={data}
                           pagination={pagination}
                           {...props.baseProps}
                         />
@@ -260,4 +205,4 @@ const Seat_list = () => {
   );
 };
 
-export default Seat_list;
+export default Admin_Orders_list;

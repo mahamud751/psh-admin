@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import img from "../../img/college/Icon material-delete.png";
 import img3 from "../../img/college/Icon feather-edit.png";
 import axios from "axios";
@@ -13,12 +13,10 @@ import Seat from "../../pages/edit/Seat";
 import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
-import { AuthContext } from "../../contexts/UserProvider";
 
-const Seat_list = () => {
+const Admin_seat_list = () => {
   const MySwal = withReactContent(Swal);
-  const { user } = useContext(AuthContext);
-  const userBranch = user.branch.name;
+
   //sub stream
   const [data, setData] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -153,7 +151,6 @@ const Seat_list = () => {
     };
     getData();
   }, []);
-  const main = data.filter((pd) => pd.property.branch.name === userBranch);
   //delete
   const [products, setProducts] = useState(data);
   const handleSeat = async (id) => {
@@ -227,7 +224,7 @@ const Seat_list = () => {
                     bootstrap4
                     keyField="_id"
                     columns={columns}
-                    data={main}
+                    data={data}
                     pagination={pagination}
                     exportCSV
                   >
@@ -237,7 +234,7 @@ const Seat_list = () => {
                           bootstrap4
                           keyField="_id"
                           columns={columns}
-                          data={main}
+                          data={data}
                           pagination={pagination}
                           {...props.baseProps}
                         />
@@ -260,4 +257,4 @@ const Seat_list = () => {
   );
 };
 
-export default Seat_list;
+export default Admin_seat_list;

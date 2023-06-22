@@ -20,14 +20,10 @@ import { AuthContext } from "../../../contexts/UserProvider";
 const Navbar = () => {
   const { logoutUser, user } = useContext(AuthContext);
   const { admin } = useAdmin();
-  console.log(admin);
+
   const location = useLocation();
   const navigate = useNavigate();
-  // const handleLogOut = () => {
-  //   // Clear localStorage and reset user state
-  //   logoutUser();
-  //   navigate("/signup"); // Redirect to signin page after logout
-  // };
+
   console.log(user);
 
   const handleLogOut = () => {
@@ -146,9 +142,11 @@ const Navbar = () => {
 
         <aside
           className="main-sidebar sidebar-dark-primary elevation-4 side_menubar"
-          // style={{
-          //   position: "fixed",
-          // }}
+          style={
+            {
+              // position: "fixed",
+            }
+          }
         >
           {/* Sidebar */}
           <div className="sidebar">
@@ -194,21 +192,34 @@ const Navbar = () => {
                   </li>
                 </Link>
                 {user && user.role === "user" ? (
-                  <Link to={"/order"}>
-                    <li className="main_nav-link">
-                      <a href="/order" className="nav-link">
-                        <i class="fa-sharp fa-solid fa-house span_text2"></i>
+                  <>
+                    <Link to={"/order"}>
+                      <li className="main_nav-link">
+                        <a href="/order" className="nav-link">
+                          <i class="fa-sharp fa-solid fa-house span_text2"></i>
 
-                        <div className="menu_flex">
-                          <span className="span_text">Order</span>
-                        </div>
-                      </a>
-                    </li>
-                  </Link>
+                          <div className="menu_flex">
+                            <span className="span_text">Order</span>
+                          </div>
+                        </a>
+                      </li>
+                    </Link>
+                    <Link to={"/issue"}>
+                      <li className="main_nav-link">
+                        <a href="/issue" className="nav-link">
+                          <i class="fa-sharp fa-solid fa-house span_text2"></i>
+
+                          <div className="menu_flex">
+                            <span className="span_text">Issue</span>
+                          </div>
+                        </a>
+                      </li>
+                    </Link>
+                  </>
                 ) : (
                   ""
                 )}
-                {(user && user.role === "admin") || user.role === "manager" ? (
+                {user && user.role === "admin" ? (
                   <>
                     <Link to={"/add_manager"}>
                       <li className="main_nav-link">
@@ -226,27 +237,6 @@ const Navbar = () => {
                           <img style={{ width: 16 }} src={img6} alt="" />
                           <div className="menu_flex">
                             <span className="span_text">Manager List</span>
-                          </div>
-                        </a>
-                      </li>
-                    </Link>
-
-                    <Link to={"/add_category"}>
-                      <li className="main_nav-link">
-                        <a href="/add_category" className="nav-link">
-                          <i class="fa-sharp fa-solid fa-building-columns span_text2"></i>
-                          <div className="menu_flex">
-                            <span className="span_text">Add Category</span>
-                          </div>
-                        </a>
-                      </li>
-                    </Link>
-                    <Link to={"/category_list"}>
-                      <li className="main_nav-link">
-                        <a href="/category_list" className="nav-link">
-                          <img style={{ width: 16 }} src={img6} alt="" />
-                          <div className="menu_flex">
-                            <span className="span_text">Category List</span>
                           </div>
                         </a>
                       </li>
@@ -271,6 +261,82 @@ const Navbar = () => {
                         </a>
                       </li>
                     </Link>
+                  </>
+                ) : (
+                  ""
+                )}
+
+                {(user && user.role === "admin") || user.role === "manager" ? (
+                  <>
+                    <Link to={"/add_property"}>
+                      <li className="main_nav-link">
+                        <a href="/add_property" className="nav-link">
+                          <img
+                            style={{ width: 16, color: "red" }}
+                            src={img7}
+                            alt=""
+                          />
+                          <div className="menu_flex">
+                            <span className="span_text">Add Property</span>
+                          </div>
+                        </a>
+                      </li>
+                    </Link>
+                  </>
+                ) : (
+                  ""
+                )}
+                {user && user.role === "admin" ? (
+                  <Link to={"/property_list"}>
+                    <li className="main_nav-link">
+                      <a href="/property_list" className="nav-link">
+                        <i class="fa-solid fa-grip-lines span_text2"></i>
+                        <div className="menu_flex">
+                          <span className="span_text">Property List</span>
+                        </div>
+                      </a>
+                    </li>
+                  </Link>
+                ) : (
+                  ""
+                )}
+                {user && user.role === "manager" ? (
+                  <Link to={"/property_list_m"}>
+                    <li className="main_nav-link">
+                      <a href="/property_list_m" className="nav-link">
+                        <i class="fa-solid fa-grip-lines span_text2"></i>
+                        <div className="menu_flex">
+                          <span className="span_text">Property List</span>
+                        </div>
+                      </a>
+                    </li>
+                  </Link>
+                ) : (
+                  ""
+                )}
+                {(user && user.role === "admin") || user.role === "manager" ? (
+                  <>
+                    <Link to={"/add_category"}>
+                      <li className="main_nav-link">
+                        <a href="/add_category" className="nav-link">
+                          <i class="fa-sharp fa-solid fa-building-columns span_text2"></i>
+                          <div className="menu_flex">
+                            <span className="span_text">Add Category</span>
+                          </div>
+                        </a>
+                      </li>
+                    </Link>
+                    <Link to={"/category_list"}>
+                      <li className="main_nav-link">
+                        <a href="/category_list" className="nav-link">
+                          <img style={{ width: 16 }} src={img6} alt="" />
+                          <div className="menu_flex">
+                            <span className="span_text">Category List</span>
+                          </div>
+                        </a>
+                      </li>
+                    </Link>
+
                     <Link to={"/add_facility"}>
                       <li className="main_nav-link">
                         <a href="/add_facility" className="nav-link">
@@ -292,30 +358,6 @@ const Navbar = () => {
                       </li>
                     </Link>
 
-                    <Link to={"/add_property"}>
-                      <li className="main_nav-link">
-                        <a href="/add_property" className="nav-link">
-                          <img
-                            style={{ width: 16, color: "red" }}
-                            src={img7}
-                            alt=""
-                          />
-                          <div className="menu_flex">
-                            <span className="span_text">Add Property</span>
-                          </div>
-                        </a>
-                      </li>
-                    </Link>
-                    <Link to={"/property_list"}>
-                      <li className="main_nav-link">
-                        <a href="/property_list" className="nav-link">
-                          <i class="fa-solid fa-grip-lines span_text2"></i>
-                          <div className="menu_flex">
-                            <span className="span_text">Property List</span>
-                          </div>
-                        </a>
-                      </li>
-                    </Link>
                     <Link to={"/add_seat"}>
                       <li className="main_nav-link">
                         <a href="/add_seat" className="nav-link">
@@ -326,16 +368,7 @@ const Navbar = () => {
                         </a>
                       </li>
                     </Link>
-                    <Link to={"/seat_list"}>
-                      <li className="main_nav-link">
-                        <a href="/seat_list" className="nav-link">
-                          <img style={{ width: 16 }} src={img6} alt="" />
-                          <div className="menu_flex">
-                            <span className="span_text">Seat List</span>
-                          </div>
-                        </a>
-                      </li>
-                    </Link>
+
                     <Link to={"/add_promo"}>
                       <li className="main_nav-link">
                         <a href="/add_promo" className="nav-link">
@@ -376,12 +409,29 @@ const Navbar = () => {
                         </a>
                       </li>
                     </Link>
-                    <Link to={"/orders"}>
+
+                    <Link to={"/review"}>
                       <li className="main_nav-link">
-                        <a href="/order" className="nav-link">
+                        <a href="/review" className="nav-link">
                           <img style={{ width: 16 }} src={img9} alt="" />
                           <div className="menu_flex">
-                            <span className="span_text">Orders</span>
+                            <span className="span_text">Review</span>
+                          </div>
+                        </a>
+                      </li>
+                    </Link>
+                  </>
+                ) : (
+                  ""
+                )}
+                {user && user.role === "admin" ? (
+                  <>
+                    <Link to={"/seat_list"}>
+                      <li className="main_nav-link">
+                        <a href="/seat_list" className="nav-link">
+                          <img style={{ width: 16 }} src={img6} alt="" />
+                          <div className="menu_flex">
+                            <span className="span_text">Seat List</span>
                           </div>
                         </a>
                       </li>
@@ -392,6 +442,52 @@ const Navbar = () => {
                           <img style={{ width: 16 }} src={img9} alt="" />
                           <div className="menu_flex">
                             <span className="span_text">Issues</span>
+                          </div>
+                        </a>
+                      </li>
+                    </Link>
+                    <Link to={"/orders"}>
+                      <li className="main_nav-link">
+                        <a href="/orders" className="nav-link">
+                          <img style={{ width: 16 }} src={img9} alt="" />
+                          <div className="menu_flex">
+                            <span className="span_text">Orders</span>
+                          </div>
+                        </a>
+                      </li>
+                    </Link>
+                  </>
+                ) : (
+                  ""
+                )}
+                {user && user.role === "manager" ? (
+                  <>
+                    <Link to={"/seat_list_m"}>
+                      <li className="main_nav-link">
+                        <a href="/seat_list_m" className="nav-link">
+                          <img style={{ width: 16 }} src={img6} alt="" />
+                          <div className="menu_flex">
+                            <span className="span_text">Seat List</span>
+                          </div>
+                        </a>
+                      </li>
+                    </Link>
+                    <Link to={"/issues_m"}>
+                      <li className="main_nav-link">
+                        <a href="/issues_m" className="nav-link">
+                          <img style={{ width: 16 }} src={img9} alt="" />
+                          <div className="menu_flex">
+                            <span className="span_text">Issues</span>
+                          </div>
+                        </a>
+                      </li>
+                    </Link>
+                    <Link to={"/orders_m"}>
+                      <li className="main_nav-link">
+                        <a href="/orders_m" className="nav-link">
+                          <img style={{ width: 16 }} src={img9} alt="" />
+                          <div className="menu_flex">
+                            <span className="span_text">Orders</span>
                           </div>
                         </a>
                       </li>

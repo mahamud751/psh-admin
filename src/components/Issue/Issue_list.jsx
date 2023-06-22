@@ -10,6 +10,8 @@ import ToolkitProvider, {
 import paginationFactory from "react-bootstrap-table2-paginator";
 import BootstrapTable from "react-bootstrap-table-next";
 import Issue from "../../pages/edit/Issue";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/UserProvider";
 const MyExportCSV = (props) => {
   const handleClick = () => {
     props.onExport();
@@ -24,7 +26,8 @@ const MyExportCSV = (props) => {
 };
 const Issue_list = () => {
   const MySwal = withReactContent(Swal);
-
+  const { user } = useContext(AuthContext);
+  const email = user.email;
   //sub stream
   const [data, setData] = useState([]);
   const [branch, setBranch] = useState({});
@@ -70,46 +73,47 @@ const Issue_list = () => {
       text: "Description",
     },
     { dataField: "branch.name", text: "Branch" },
-    {
-      text: "Action",
-      formatter: (cellContent, row) => {
-        return (
-          <>
-            {" "}
-            <div className="d-flex justify-content-center">
-              <img
-                src={img3}
-                alt=""
-                data-toggle="modal"
-                data-target={`#loginModal${row._id}`}
-              />
-              <img
-                src={img}
-                alt=""
-                className="ms-3"
-                onClick={() => handleCategory(row._id)}
-              />
-            </div>
-            <div
-              className="modal fade"
-              id={`loginModal${row._id}`}
-              tabIndex="{-1}"
-              role="dialog"
-              aria-labelledby="loginModal"
-              aria-hidden="true"
-            >
-              <div className="modal-dialog modal-dialog-centered">
-                <div className="modal-content" style={{ width: 700 }}>
-                  <div className="modal-body">
-                    <Issue data={row} />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </>
-        );
-      },
-    },
+    { dataField: "status", text: "Status" },
+    // {
+    //   text: "Action",
+    //   formatter: (cellContent, row) => {
+    //     return (
+    //       <>
+    //         {" "}
+    //         <div className="d-flex justify-content-center">
+    //           <img
+    //             src={img3}
+    //             alt=""
+    //             data-toggle="modal"
+    //             data-target={`#loginModal${row._id}`}
+    //           />
+    //           <img
+    //             src={img}
+    //             alt=""
+    //             className="ms-3"
+    //             onClick={() => handleCategory(row._id)}
+    //           />
+    //         </div>
+    //         <div
+    //           className="modal fade"
+    //           id={`loginModal${row._id}`}
+    //           tabIndex="{-1}"
+    //           role="dialog"
+    //           aria-labelledby="loginModal"
+    //           aria-hidden="true"
+    //         >
+    //           <div className="modal-dialog modal-dialog-centered">
+    //             <div className="modal-content" style={{ width: 700 }}>
+    //               <div className="modal-body">
+    //                 <Issue data={row} />
+    //               </div>
+    //             </div>
+    //           </div>
+    //         </div>
+    //       </>
+    //     );
+    //   },
+    // },
   ];
   const pagination = paginationFactory({
     page: 1,
@@ -142,7 +146,8 @@ const Issue_list = () => {
       }
     };
     getData();
-  }, [data]);
+  }, []);
+  const main = data.filter((pd) => pd.email === email);
   //delete
   const [products, setProducts] = useState(data);
   const handleCategory = async (id) => {
@@ -181,7 +186,7 @@ const Issue_list = () => {
                     bootstrap4
                     keyField="id"
                     columns={columns}
-                    data={data}
+                    data={main}
                     pagination={pagination}
                   >
                     {(props) => (
@@ -190,7 +195,7 @@ const Issue_list = () => {
                           bootstrap4
                           keyField="id"
                           columns={columns}
-                          data={data}
+                          data={main}
                           pagination={pagination}
                           {...props.baseProps}
                         />

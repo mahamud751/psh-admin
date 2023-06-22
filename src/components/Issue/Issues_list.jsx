@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import img from "../../img/college/Icon material-delete.png";
 import img3 from "../../img/college/Icon feather-edit.png";
 import axios from "axios";
@@ -9,31 +9,40 @@ import ToolkitProvider, {
 } from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import BootstrapTable from "react-bootstrap-table-next";
-import Seat from "../../pages/edit/Seat";
-import { Link } from "react-router-dom";
-import jsPDF from "jspdf";
-import "jspdf-autotable";
+import Issue from "../../pages/edit/Issue";
+import { useContext } from "react";
 import { AuthContext } from "../../contexts/UserProvider";
-
-const Seat_list = () => {
+const MyExportCSV = (props) => {
+  const handleClick = () => {
+    props.onExport();
+  };
+  return (
+    <div>
+      <button className="college_btn  mb-2 p-3" onClick={handleClick}>
+        Export to CSV
+      </button>
+    </div>
+  );
+};
+const Issue_list = () => {
   const MySwal = withReactContent(Swal);
   const { user } = useContext(AuthContext);
   const userBranch = user.branch.name;
   //sub stream
   const [data, setData] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const [branch, setBranch] = useState({});
 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const { data } = await axios.get("http://localhost:5001/api/property", {
+        const { data } = await axios.get("http://localhost:5001/api/branch", {
           mode: "cors",
         });
         const categoryMap = {};
         data.forEach((category) => {
           categoryMap[category._id] = category.name;
         });
-        setCategories(categoryMap);
+        setBranch(categoryMap);
       } catch (error) {
         console.log(error);
       }
@@ -53,73 +62,58 @@ const Seat_list = () => {
         );
       },
     },
-    {
-      text: "Image",
-      formatter: (cellContent, row) => {
-        return (
-          <div>
-            <img
-              src={row.photos && row.photos[0]}
-              alt=""
-              style={{ width: 120 }}
-            />
-          </div>
-        );
-      },
-    },
+
     {
       dataField: "name",
-      text: "Seat",
+      text: "Issue Name",
     },
-    { dataField: "property.name", text: "Property" },
+
     {
       dataField: "desc",
       text: "Description",
     },
-    {
-      dataField: "seatNumber",
-      text: "Seat Number",
-    },
-    {
-      text: "Action",
-      formatter: (cellContent, row) => {
-        return (
-          <>
-            {" "}
-            <div className="d-flex justify-content-center">
-              <img
-                src={img3}
-                alt=""
-                data-toggle="modal"
-                data-target={`#loginModal${row._id}`}
-              />
-              <img
-                src={img}
-                alt=""
-                className="ms-3"
-                onClick={() => handleSeat(row._id)}
-              />
-            </div>
-            <div
-              className="modal fade"
-              id={`loginModal${row._id}`}
-              tabIndex="{-1}"
-              role="dialog"
-              aria-labelledby="loginModal"
-              aria-hidden="true"
-            >
-              <div className="modal-dialog modal-dialog-centered">
-                <div className="modal-content" style={{ width: 700 }}>
-                  <div className="modal-body">
-                    <Seat data={row} />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </>
-        );
-      },
-    },
+    { dataField: "branch.name", text: "Branch" },
+    { dataField: "status", text: "Status" },
+    // {
+    //   text: "Action",
+    //   formatter: (cellContent, row) => {
+    //     return (
+    //       <>
+    //         {" "}
+    //         <div className="d-flex justify-content-center">
+    //           <img
+    //             src={img3}
+    //             alt=""
+    //             data-toggle="modal"
+    //             data-target={`#loginModal${row._id}`}
+    //           />
+    //           <img
+    //             src={img}
+    //             alt=""
+    //             className="ms-3"
+    //             onClick={() => handleCategory(row._id)}
+    //           />
+    //         </div>
+    //         <div
+    //           className="modal fade"
+    //           id={`loginModal${row._id}`}
+    //           tabIndex="{-1}"
+    //           role="dialog"
+    //           aria-labelledby="loginModal"
+    //           aria-hidden="true"
+    //         >
+    //           <div className="modal-dialog modal-dialog-centered">
+    //             <div className="modal-content" style={{ width: 700 }}>
+    //               <div className="modal-body">
+    //                 <Issue data={row} />
+    //               </div>
+    //             </div>
+    //           </div>
+    //         </div>
+    //       </>
+    //     );
+    //   },
+    // },
   ];
   const pagination = paginationFactory({
     page: 1,
@@ -143,7 +137,7 @@ const Seat_list = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:5001/api/seat`, {
+        const { data } = await axios.get(`http://localhost:5001/api/issue`, {
           mode: "cors",
         });
         setData(data);
@@ -153,13 +147,13 @@ const Seat_list = () => {
     };
     getData();
   }, []);
-  const main = data.filter((pd) => pd.property.branch.name === userBranch);
+  const main = data.filter((pd) => pd.branch.name === userBranch);
   //delete
   const [products, setProducts] = useState(data);
-  const handleSeat = async (id) => {
+  const handleCategory = async (id) => {
     const confirmation = window.confirm("Are you Sure?");
     if (confirmation) {
-      const url = `http://localhost:5001/api/seat/${id}`;
+      const url = `http://localhost:5001/api/issue/${id}`;
       fetch(url, {
         method: "DELETE",
       })
@@ -174,22 +168,6 @@ const Seat_list = () => {
         });
     }
   };
-  const handleDownloadPDF = () => {
-    const doc = new jsPDF();
-    const columns = [
-      { title: "No", dataKey: "no" },
-      { title: "Seat", dataKey: "seat" },
-    ];
-    const tableData = data.map((item, index) => ({
-      no: index + 1,
-      seat: item.name,
-    }));
-    doc.autoTable(columns, tableData, { startY: 20 });
-
-    // Save the PDF file
-    doc.save("seat_list.pdf");
-  };
-
   return (
     <div className="wrapper">
       <div className="content-wrapper" style={{ background: "unset" }}>
@@ -197,26 +175,7 @@ const Seat_list = () => {
           <div className="container-fluid">
             <div className="row">
               <div className="col-md-7">
-                <h6 className="college_h6">Seat List</h6>
-              </div>
-              <div className="export_btn_main">
-                <div>
-                  <div className="">
-                    <div className="corporate_addNew_btn">
-                      <Link to={"/add_seat"}>
-                        <button className="college_btn2 ms-4 p-3">
-                          Add New
-                        </button>
-                      </Link>
-                    </div>
-                  </div>
-                  <button
-                    className="export_btn mt-2 p-3"
-                    onClick={handleDownloadPDF}
-                  >
-                    Export to PDF
-                  </button>
-                </div>
+                <h6 className="college_h6">Issue List</h6>
               </div>
             </div>
             <hr style={{ height: "1px", background: "rgb(191 173 173)" }} />
@@ -225,17 +184,16 @@ const Seat_list = () => {
                 <>
                   <ToolkitProvider
                     bootstrap4
-                    keyField="_id"
+                    keyField="id"
                     columns={columns}
                     data={main}
                     pagination={pagination}
-                    exportCSV
                   >
                     {(props) => (
                       <React.Fragment>
                         <BootstrapTable
                           bootstrap4
-                          keyField="_id"
+                          keyField="id"
                           columns={columns}
                           data={main}
                           pagination={pagination}
@@ -260,4 +218,4 @@ const Seat_list = () => {
   );
 };
 
-export default Seat_list;
+export default Issue_list;

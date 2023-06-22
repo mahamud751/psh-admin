@@ -49,7 +49,7 @@ const Recommended_list = () => {
     },
     {
       dataField: "name",
-      text: "Category",
+      text: "Name",
     },
     {
       text: "Action",

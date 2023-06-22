@@ -18,7 +18,7 @@ const Property_list = (props) => {
   const MySwal = withReactContent(Swal);
   const { user } = useContext(AuthContext);
   const userBranch = user.branch.name;
-  console.log(userBranch, "ss");
+
   //sub stream
   const [data, setData] = useState([]);
 
@@ -211,7 +211,7 @@ const Property_list = (props) => {
     getData();
   }, []);
   const main = data.filter((pd) => pd.branch.name === userBranch);
-  console.log(main, "main");
+
   //delete
   const [products, setProducts] = useState(data);
   const handleCategory = async (id) => {

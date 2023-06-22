@@ -5,11 +5,25 @@ import withReactContent from "sweetalert2-react-content";
 import "./Main_steam.css";
 import axios from "axios";
 
-const Promo = ({ data }) => {
-  const { _id, name } = data;
+const Manager = ({ data }) => {
+  const { _id, name, seatNumber, desc } = data;
   const [user, setUser] = useState(data);
   const [files, setFiles] = useState("");
+  const [categories, setCategories] = useState([]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:5001/api/branch");
+        setCategories(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  console.log(categories);
   const MySwal = withReactContent(Swal);
 
   const handleOnBlur = (e) => {
@@ -22,9 +36,14 @@ const Promo = ({ data }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const formData = new FormData(e.target);
 
+    const data2 = {
+      branchId: formData.get("branch"),
+    };
     const newPost = {
       ...user,
+      ...data2,
     };
     try {
       const list = await Promise.all(
@@ -47,7 +66,7 @@ const Promo = ({ data }) => {
         photos: list,
       };
 
-      await axios.put(`http://localhost:5001/api/promo/${_id}`, product);
+      await axios.put(`http://localhost:5001/api/seat/${_id}`, product);
       MySwal.fire("Good job!", "successfully edited", "success");
     } catch (err) {
       MySwal.fire("Something Error Found.", "warning");
@@ -59,12 +78,29 @@ const Promo = ({ data }) => {
         <div className="row">
           <div>
             <div className="card-body">
+              <div className="col-md-12 form_sub_stream ">
+                <label htmlFor="inputState" className="profile_label3">
+                  Room
+                </label>
+                <select
+                  name="property"
+                  id="inputState"
+                  className="main_form w-100"
+                >
+                  <option>Select Room</option>
+                  {categories.map((pd) => (
+                    <option key={pd._id} value={pd._id}>
+                      {pd.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
               <div className="col-md-12 mb-3">
                 <label
                   htmlFor="inputState"
                   className="form-label profile_label3"
                 >
-                  Promo Name
+                  Seat Name
                 </label>
                 <input
                   type="text"
@@ -79,7 +115,37 @@ const Promo = ({ data }) => {
                   htmlFor="inputState"
                   className="form-label profile_label3"
                 >
-                  Category Picture
+                  Seat Number
+                </label>
+                <input
+                  type="text"
+                  className="main_form  w-100"
+                  name="seatNumber"
+                  onBlur={handleOnBlur}
+                  defaultValue={seatNumber || ""}
+                />
+              </div>
+              <div className="col-md-12 mb-3">
+                <label
+                  htmlFor="inputState"
+                  className="form-label profile_label3"
+                >
+                  Seat Description
+                </label>
+                <input
+                  type="text"
+                  className="main_form  w-100"
+                  name="desc"
+                  onBlur={handleOnBlur}
+                  defaultValue={desc || ""}
+                />
+              </div>
+              <div className="col-md-12 mb-3">
+                <label
+                  htmlFor="inputState"
+                  className="form-label profile_label3"
+                >
+                  Seat Picture
                 </label>
                 <input
                   type="file"
@@ -96,7 +162,7 @@ const Promo = ({ data }) => {
                   className="profile_btn"
                   style={{ width: 220 }}
                 >
-                  Edit Promo
+                  Edit Seat
                 </button>
               </div>
             </div>
@@ -107,4 +173,4 @@ const Promo = ({ data }) => {
   );
 };
 
-export default Promo;
+export default Manager;

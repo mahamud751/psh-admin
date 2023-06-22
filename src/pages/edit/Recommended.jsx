@@ -64,7 +64,7 @@ const Recommended = ({ data }) => {
                   htmlFor="inputState"
                   className="form-label profile_label3"
                 >
-                  Category Name
+                  Name
                 </label>
                 <input
                   type="text"

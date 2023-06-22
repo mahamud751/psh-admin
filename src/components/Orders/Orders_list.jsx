@@ -26,7 +26,8 @@ const MyExportCSV = (props) => {
 };
 const Orders_list = () => {
   const MySwal = withReactContent(Swal);
-
+  const { user } = useContext(AuthContext);
+  const userBranch = user.branch.name;
   //sub stream
   const [data, setData] = useState([]);
 
@@ -136,7 +137,7 @@ const Orders_list = () => {
     };
     getData();
   }, [data]);
-
+  const main = data ? data.filter((pd) => pd.branch.name === userBranch) : "";
   //delete
   const [products, setProducts] = useState(data);
   const handleCategory = async (id) => {
@@ -175,7 +176,7 @@ const Orders_list = () => {
                     bootstrap4
                     keyField="id"
                     columns={columns}
-                    data={data}
+                    data={main}
                     pagination={pagination}
                   >
                     {(props) => (
@@ -184,7 +185,7 @@ const Orders_list = () => {
                           bootstrap4
                           keyField="id"
                           columns={columns}
-                          data={data}
+                          data={main}
                           pagination={pagination}
                           {...props.baseProps}
                         />

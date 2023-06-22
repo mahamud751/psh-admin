@@ -47,7 +47,7 @@ const Promo_list = () => {
     },
     {
       dataField: "name",
-      text: "Category",
+      text: "Promo",
     },
     {
       text: "Action",
@@ -164,7 +164,7 @@ const Promo_list = () => {
           <div className="container-fluid">
             <div className="row">
               <div className="col-md-7">
-                <h6 className="college_h6">Category List</h6>
+                <h6 className="college_h6">Promo List</h6>
               </div>
               <div className="export_btn_main">
                 <div>

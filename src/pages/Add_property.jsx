@@ -3,7 +3,11 @@ import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import { AuthContext } from "../contexts/UserProvider";
+import { useContext } from "react";
 const Add_property = () => {
+  const { user } = useContext(AuthContext);
+
   const [files, setFiles] = useState("");
   const MySwal = withReactContent(Swal);
   const [categories, setCategories] = useState([]);
@@ -129,24 +133,41 @@ const Add_property = () => {
                   ))}
                 </select>
               </div>
-              <div className="col-md-6 form_sub_stream ">
-                <label htmlFor="inputState" className="profile_label3">
-                  Branch
-                </label>
-                <select
-                  name="branch"
-                  id="inputState"
-                  className="main_form w-100"
-                  required
-                >
-                  <option value="">Select Type</option>
-                  {branch.map((category) => (
-                    <option key={category._id} value={category._id}>
-                      {category.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
+              {user && user.role === "admin" ? (
+                <div className="col-md-6 form_sub_stream ">
+                  <label htmlFor="inputState" className="profile_label3">
+                    Branch
+                  </label>
+                  <select
+                    name="branch"
+                    id="inputState"
+                    className="main_form w-100"
+                    required
+                  >
+                    <option value="">Select Type</option>
+                    {branch.map((category) => (
+                      <option key={category._id} value={category._id}>
+                        {category.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              ) : (
+                <div className="col-md-6 form_sub_stream ">
+                  <label htmlFor="inputState" className="profile_label3">
+                    Branch
+                  </label>
+                  <select
+                    name="branch"
+                    id="inputState"
+                    className="main_form w-100"
+                    required
+                  >
+                    <option value={user.branch._id}>{user.branch.name}</option>
+                  </select>
+                </div>
+              )}
+
               <div className="col-md-6 form_sub_stream">
                 <label className="profile_label3">Facility</label>
 

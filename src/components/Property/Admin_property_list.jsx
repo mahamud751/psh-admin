@@ -4,29 +4,29 @@ import img3 from "../../img/college/Icon feather-edit.png";
 import axios from "axios";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
-import ToolkitProvider, {
-  CSVExport,
-} from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min";
+import ToolkitProvider from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import BootstrapTable from "react-bootstrap-table-next";
-import Seat from "../../pages/edit/Seat";
 import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import "./Property.css";
+import Property from "../../pages/edit/Property";
 import { AuthContext } from "../../contexts/UserProvider";
 
-const Seat_list = () => {
+const Admin_property_list = (props) => {
   const MySwal = withReactContent(Swal);
-  const { user } = useContext(AuthContext);
-  const userBranch = user.branch.name;
+
   //sub stream
   const [data, setData] = useState([]);
-  const [categories, setCategories] = useState([]);
+
+  const [categories, setCategories] = useState({});
+  const [branch, setBranch] = useState({});
 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const { data } = await axios.get("http://localhost:5001/api/property", {
+        const { data } = await axios.get("http://localhost:5001/api/category", {
           mode: "cors",
         });
         const categoryMap = {};
@@ -41,6 +41,26 @@ const Seat_list = () => {
 
     fetchCategories();
   }, []);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const { data } = await axios.get("http://localhost:5001/api/branch", {
+          mode: "cors",
+        });
+        const categoryMap = {};
+        data.forEach((category) => {
+          categoryMap[category._id] = category.name;
+        });
+        setBranch(categoryMap);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
   const columns = [
     {
       text: "No",
@@ -54,14 +74,14 @@ const Seat_list = () => {
       },
     },
     {
-      text: "Image",
+      text: "Picture",
       formatter: (cellContent, row) => {
         return (
           <div>
             <img
-              src={row.photos && row.photos[0]}
+              src={row.photos[0]}
               alt=""
-              style={{ width: 120 }}
+              style={{ width: 120, height: 120 }}
             />
           </div>
         );
@@ -69,16 +89,51 @@ const Seat_list = () => {
     },
     {
       dataField: "name",
-      text: "Seat",
+      text: "Name",
     },
-    { dataField: "property.name", text: "Property" },
+    { dataField: "category.name", text: "Category" },
+    { dataField: "branch.name", text: "Branch" },
+    // {
+    //   text: "Type",
+    //   formatter: (cellContent, row) => {
+    //     const categoryName =
+    //       categories[row.category ? row.category.id : ""] || "";
+    //     return <p>{categoryName}</p>;
+    //   },
+    // },
+    // {
+    //   text: "Category",
+    //   formatter: (cellContent, row) => {
+    //     return <p>{row.category ? (row.category.id == id[value] ? name : "") : ""}</p>;
+    //   },
+    // },
+    // {
+    //   dataField: "type",
+    //   text: "Type",
+    // },
     {
       dataField: "desc",
       text: "Description",
     },
     {
-      dataField: "seatNumber",
-      text: "Seat Number",
+      dataField: "availble",
+      text: "Availble",
+    },
+    {
+      dataField: "city",
+      text: "City",
+    },
+    {
+      dataField: "perDay",
+      text: "Per Day",
+    },
+    {
+      dataField: "perMonth",
+      text: "Per Month",
+    },
+    {
+      dataField: "perYear",
+      text: "Per Month",
     },
     {
       text: "Action",
@@ -97,7 +152,7 @@ const Seat_list = () => {
                 src={img}
                 alt=""
                 className="ms-3"
-                onClick={() => handleSeat(row._id)}
+                onClick={() => handleCategory(row._id)}
               />
             </div>
             <div
@@ -111,7 +166,7 @@ const Seat_list = () => {
               <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content" style={{ width: 700 }}>
                   <div className="modal-body">
-                    <Seat data={row} />
+                    <Property data={row} />
                   </div>
                 </div>
               </div>
@@ -143,7 +198,7 @@ const Seat_list = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:5001/api/seat`, {
+        const { data } = await axios.get(`http://localhost:5001/api/property`, {
           mode: "cors",
         });
         setData(data);
@@ -153,13 +208,13 @@ const Seat_list = () => {
     };
     getData();
   }, []);
-  const main = data.filter((pd) => pd.property.branch.name === userBranch);
+
   //delete
   const [products, setProducts] = useState(data);
-  const handleSeat = async (id) => {
+  const handleCategory = async (id) => {
     const confirmation = window.confirm("Are you Sure?");
     if (confirmation) {
-      const url = `http://localhost:5001/api/seat/${id}`;
+      const url = `http://localhost:5001/api/property/${id}`;
       fetch(url, {
         method: "DELETE",
       })
@@ -176,20 +231,40 @@ const Seat_list = () => {
   };
   const handleDownloadPDF = () => {
     const doc = new jsPDF();
+
+    // Define the table columns
     const columns = [
       { title: "No", dataKey: "no" },
-      { title: "Seat", dataKey: "seat" },
+      { title: "Type", dataKey: "type" },
+      { title: "Description", dataKey: "desc" },
+      { title: "Availble", dataKey: "availble" },
+      { title: "Address", dataKey: "address" },
+      { title: "Per Day", dataKey: "perDay" },
+      { title: "Per Month", dataKey: "perMonth" },
+      { title: "Per Year", dataKey: "perYear" },
     ];
-    const tableData = data.map((item, index) => ({
-      no: index + 1,
-      seat: item.name,
-    }));
+
+    // Map the data array to match the table columns
+    const tableData = data.map((item, index) => {
+      return [
+        index + 1,
+
+        item.type,
+        item.desc,
+        item.availble,
+        item.address,
+        item.perDay,
+        item.perMonth,
+        item.perYear,
+      ];
+    });
+
+    // Set the table content using autotable plugin
     doc.autoTable(columns, tableData, { startY: 20 });
 
     // Save the PDF file
-    doc.save("seat_list.pdf");
+    doc.save("hotel_list.pdf");
   };
-
   return (
     <div className="wrapper">
       <div className="content-wrapper" style={{ background: "unset" }}>
@@ -197,13 +272,13 @@ const Seat_list = () => {
           <div className="container-fluid">
             <div className="row">
               <div className="col-md-7">
-                <h6 className="college_h6">Seat List</h6>
+                <h6 className="college_h6">Property List</h6>
               </div>
               <div className="export_btn_main">
                 <div>
                   <div className="">
                     <div className="corporate_addNew_btn">
-                      <Link to={"/add_seat"}>
+                      <Link to={"/add_hotel"}>
                         <button className="college_btn2 ms-4 p-3">
                           Add New
                         </button>
@@ -227,7 +302,7 @@ const Seat_list = () => {
                     bootstrap4
                     keyField="_id"
                     columns={columns}
-                    data={main}
+                    data={data}
                     pagination={pagination}
                     exportCSV
                   >
@@ -237,7 +312,7 @@ const Seat_list = () => {
                           bootstrap4
                           keyField="_id"
                           columns={columns}
-                          data={main}
+                          data={data}
                           pagination={pagination}
                           {...props.baseProps}
                         />
@@ -247,17 +322,11 @@ const Seat_list = () => {
                 </>
               </div>
             </div>
-            {/* /.row (main row) */}
           </div>
-          {/* /.container-fluid */}
         </section>
-        {/* /.content */}
       </div>
-      {/* /.content-wrapper */}
-
-      {/* Control Sidebar */}
     </div>
   );
 };
 
-export default Seat_list;
+export default Admin_property_list;

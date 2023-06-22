@@ -29,6 +29,9 @@ const Issue = ({ data }) => {
     const field = e.target.name;
     const value = e.target.value;
     const newInfo = { ...user };
+    if (field === "status") {
+      newInfo[field] = value;
+    }
     newInfo[field] = value;
     setUser(newInfo);
   };
@@ -37,12 +40,12 @@ const Issue = ({ data }) => {
     e.preventDefault();
     const formData = new FormData(e.target);
 
-    const data2 = {
-      branchId: formData.get("branch"),
-    };
+    // const data2 = {
+    //   branchId: formData.get("branch"),
+    // };
     const newPost = {
       ...user,
-      ...data2,
+      // ...data2,
     };
     try {
       const product = {
@@ -61,7 +64,7 @@ const Issue = ({ data }) => {
         <div className="row">
           <div>
             <div className="card-body">
-              <div className="col-md-12 form_sub_stream ">
+              {/* <div className="col-md-12 form_sub_stream ">
                 <label htmlFor="inputState" className="profile_label3">
                   Branch
                 </label>
@@ -77,8 +80,8 @@ const Issue = ({ data }) => {
                     </option>
                   ))}
                 </select>
-              </div>
-              <div className="col-md-12 mb-3">
+              </div> */}
+              {/* <div className="col-md-12 mb-3">
                 <label
                   htmlFor="inputState"
                   className="form-label profile_label3"
@@ -92,9 +95,9 @@ const Issue = ({ data }) => {
                   onBlur={handleOnBlur}
                   defaultValue={name || ""}
                 />
-              </div>
+              </div> */}
 
-              <div className="col-md-12 mb-3">
+              {/* <div className="col-md-12 mb-3">
                 <label
                   htmlFor="inputState"
                   className="form-label profile_label3"
@@ -108,6 +111,25 @@ const Issue = ({ data }) => {
                   onBlur={handleOnBlur}
                   defaultValue={desc || ""}
                 />
+              </div> */}
+              <div className="col-md-12 mb-3">
+                <label
+                  htmlFor="inputState"
+                  className="form-label profile_label3"
+                >
+                  Status
+                </label>
+                <select
+                  name="status"
+                  id="inputState"
+                  className="main_form w-100"
+                  onBlur={handleOnBlur}
+                  defaultValue={user.status}
+                >
+                  <option value="pending">Pending</option>
+                  <option value="process">Process</option>
+                  <option value="success">Success</option>
+                </select>
               </div>
 
               <div className="d-flex justify-content-center">

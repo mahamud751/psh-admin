@@ -5,10 +5,9 @@ import withReactContent from "sweetalert2-react-content";
 import "./Main_steam.css";
 import axios from "axios";
 
-const Promo = ({ data }) => {
-  const { _id, name } = data;
+const Review = ({ data }) => {
+  const { _id, comment } = data;
   const [user, setUser] = useState(data);
-  const [files, setFiles] = useState("");
 
   const MySwal = withReactContent(Swal);
 
@@ -27,27 +26,11 @@ const Promo = ({ data }) => {
       ...user,
     };
     try {
-      const list = await Promise.all(
-        Object.values(files).map(async (file) => {
-          const data = new FormData();
-          data.append("file", file);
-          data.append("upload_preset", "upload");
-          const uploadRes = await axios.post(
-            "https://api.cloudinary.com/v1_1/dtpvtjiry/image/upload",
-            data
-          );
-
-          const { url } = uploadRes.data;
-          return url;
-        })
-      );
-
       const product = {
         ...newPost,
-        photos: list,
       };
 
-      await axios.put(`http://localhost:5001/api/promo/${_id}`, product);
+      await axios.put(`http://localhost:5001/api/review/${_id}`, product);
       MySwal.fire("Good job!", "successfully edited", "success");
     } catch (err) {
       MySwal.fire("Something Error Found.", "warning");
@@ -64,29 +47,14 @@ const Promo = ({ data }) => {
                   htmlFor="inputState"
                   className="form-label profile_label3"
                 >
-                  Promo Name
+                  Comment
                 </label>
                 <input
                   type="text"
                   className="main_form  w-100"
-                  name="name"
+                  name="comment"
                   onBlur={handleOnBlur}
-                  defaultValue={name || ""}
-                />
-              </div>
-              <div className="col-md-12 mb-3">
-                <label
-                  htmlFor="inputState"
-                  className="form-label profile_label3"
-                >
-                  Category Picture
-                </label>
-                <input
-                  type="file"
-                  className="main_form w-100 p-0"
-                  name="img"
-                  onChange={(e) => setFiles(e.target.files)}
-                  multiple
+                  defaultValue={comment || ""}
                 />
               </div>
 
@@ -96,7 +64,7 @@ const Promo = ({ data }) => {
                   className="profile_btn"
                   style={{ width: 220 }}
                 >
-                  Edit Promo
+                  Edit Review
                 </button>
               </div>
             </div>
@@ -107,4 +75,4 @@ const Promo = ({ data }) => {
   );
 };
 
-export default Promo;
+export default Review;
