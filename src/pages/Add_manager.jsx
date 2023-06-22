@@ -31,7 +31,8 @@ const Add_Manager = () => {
   }, []);
   const onSubmitRegister = async (data) => {
     const {
-      name,
+      firstName,
+      lastName,
       address,
       email,
       phone,
@@ -42,7 +43,8 @@ const Add_Manager = () => {
 
     try {
       const response = await axios.post("http://localhost:5001/api/users", {
-        name,
+        firstName,
+        lastName,
         address,
         email,
         phone,
@@ -96,14 +98,30 @@ const Add_Manager = () => {
                   htmlFor="inputState"
                   className="form-label profile_label3 "
                 >
-                  Name
+                  First Name
                 </label>
                 <input
                   type="text"
                   className="main_form w-100"
-                  placeholder="Name"
-                  {...register("name", {
-                    required: "Name is Required",
+                  placeholder="firstName"
+                  {...register("firstName", {
+                    required: "firstName is Required",
+                  })}
+                />
+              </div>
+              <div className="col-md-12 form_sub_stream">
+                <label
+                  htmlFor="inputState"
+                  className="form-label profile_label3 "
+                >
+                  Last Name
+                </label>
+                <input
+                  type="text"
+                  className="main_form w-100"
+                  placeholder="lastName"
+                  {...register("lastName", {
+                    required: "lastName is Required",
                   })}
                 />
               </div>

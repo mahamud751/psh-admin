@@ -39,15 +39,26 @@ export const UserProvider = ({ children }) => {
       console.error(error);
     }
   };
-  const registerUser = async (name, address, email, phone, password, role) => {
+  const registerUser = async (
+    firstName,
+    lastName,
+    address,
+    email,
+    phone,
+    password,
+    role,
+    branch
+  ) => {
     try {
       const response = await axios.post("http://localhost:5001/api/users", {
-        name,
+        firstName,
+        lastName,
         address,
         email,
         phone,
         password,
         role,
+        branch,
       });
 
       if (response.status === 200) {

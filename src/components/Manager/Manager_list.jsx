@@ -23,7 +23,26 @@ const Manager_list = () => {
   //sub stream
   const [data, setData] = useState([]);
   const [branches, setBranches] = useState([]);
+  const [categories, setCategories] = useState([]);
 
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const { data } = await axios.get("http://localhost:5001/api/branch", {
+          mode: "cors",
+        });
+        const categoryMap = {};
+        data.forEach((category) => {
+          categoryMap[category._id] = category.name;
+        });
+        setCategories(categoryMap);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
   const columns = [
     {
       text: "No",
@@ -38,17 +57,15 @@ const Manager_list = () => {
     },
 
     {
-      dataField: "name",
-      text: "Name",
+      dataField: "firstName",
+      text: "First Name",
     },
+
     {
-      dataField: "branch",
-      text: "Branch",
-      formatter: (cellContent, row) => {
-        const branch = branches.find((b) => b._id === cellContent);
-        return branch ? branch.name : "";
-      },
+      dataField: "lastName",
+      text: "Last Name",
     },
+    { dataField: "branch.name", text: "Branch" },
 
     {
       text: "Action",

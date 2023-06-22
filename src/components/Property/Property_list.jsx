@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import img from "../../img/college/Icon material-delete.png";
 import img3 from "../../img/college/Icon feather-edit.png";
 import axios from "axios";
@@ -12,10 +12,13 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import "./Property.css";
 import Property from "../../pages/edit/Property";
+import { AuthContext } from "../../contexts/UserProvider";
 
 const Property_list = (props) => {
   const MySwal = withReactContent(Swal);
-
+  const { user } = useContext(AuthContext);
+  const userBranch = user.branch.name;
+  console.log(userBranch, "ss");
   //sub stream
   const [data, setData] = useState([]);
 
@@ -207,7 +210,8 @@ const Property_list = (props) => {
     };
     getData();
   }, []);
-
+  const main = data.filter((pd) => pd.branch.name === userBranch);
+  console.log(main, "main");
   //delete
   const [products, setProducts] = useState(data);
   const handleCategory = async (id) => {
@@ -301,7 +305,7 @@ const Property_list = (props) => {
                     bootstrap4
                     keyField="_id"
                     columns={columns}
-                    data={data}
+                    data={main}
                     pagination={pagination}
                     exportCSV
                   >
@@ -311,7 +315,7 @@ const Property_list = (props) => {
                           bootstrap4
                           keyField="_id"
                           columns={columns}
-                          data={data}
+                          data={main}
                           pagination={pagination}
                           {...props.baseProps}
                         />
