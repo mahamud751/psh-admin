@@ -23,7 +23,7 @@ const Invoice = () => {
     };
     getData(data);
   }, []);
-  // const item =  data.getState.map((item, i) => item) ;
+
   const item = data.getState;
   return (
     <div className="wrapper">
