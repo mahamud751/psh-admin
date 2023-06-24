@@ -34,7 +34,7 @@ const Add_Facility = () => {
         photos: list,
       };
 
-      await axios.post("https://psh-server.onrender.com/api/facility", product);
+      await axios.post("http://localhost:5001/api/facility", product);
       MySwal.fire("Good job!", "successfully added", "success");
       formRef.current.reset();
     } catch (err) {

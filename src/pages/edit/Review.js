@@ -30,10 +30,7 @@ const Review = ({ data }) => {
         ...newPost,
       };
 
-      await axios.put(
-        `https://psh-server.onrender.com/api/review/${_id}`,
-        product
-      );
+      await axios.put(`http://localhost:5001/api/review/${_id}`, product);
       MySwal.fire("Good job!", "successfully edited", "success");
     } catch (err) {
       MySwal.fire("Something Error Found.", "warning");

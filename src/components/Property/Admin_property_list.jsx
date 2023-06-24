@@ -26,12 +26,9 @@ const Admin_property_list = (props) => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const { data } = await axios.get(
-          "https://psh-server.onrender.com/api/category",
-          {
-            mode: "cors",
-          }
-        );
+        const { data } = await axios.get("http://localhost:5001/api/category", {
+          mode: "cors",
+        });
         const categoryMap = {};
         data.forEach((category) => {
           categoryMap[category._id] = category.name;
@@ -48,12 +45,9 @@ const Admin_property_list = (props) => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const { data } = await axios.get(
-          "https://psh-server.onrender.com/api/branch",
-          {
-            mode: "cors",
-          }
-        );
+        const { data } = await axios.get("http://localhost:5001/api/branch", {
+          mode: "cors",
+        });
         const categoryMap = {};
         data.forEach((category) => {
           categoryMap[category._id] = category.name;
@@ -204,12 +198,9 @@ const Admin_property_list = (props) => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const { data } = await axios.get(
-          `https://psh-server.onrender.com/api/property`,
-          {
-            mode: "cors",
-          }
-        );
+        const { data } = await axios.get(`http://localhost:5001/api/property`, {
+          mode: "cors",
+        });
         setData(data);
       } catch (error) {
         console.log(error);
@@ -223,7 +214,7 @@ const Admin_property_list = (props) => {
   const handleCategory = async (id) => {
     const confirmation = window.confirm("Are you Sure?");
     if (confirmation) {
-      const url = `https://psh-server.onrender.com/api/property/${id}`;
+      const url = `http://localhost:5001/api/property/${id}`;
       fetch(url, {
         method: "DELETE",
       })

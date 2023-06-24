@@ -114,12 +114,9 @@ const Facility_list = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const { data } = await axios.get(
-          `https://psh-server.onrender.com/api/facility`,
-          {
-            mode: "cors",
-          }
-        );
+        const { data } = await axios.get(`http://localhost:5001/api/facility`, {
+          mode: "cors",
+        });
         setData(data);
       } catch (error) {
         console.log(error);
@@ -132,7 +129,7 @@ const Facility_list = () => {
   const handleFacility = async (id) => {
     const confirmation = window.confirm("Are you Sure?");
     if (confirmation) {
-      const url = `https://psh-server.onrender.com/api/facility/${id}`;
+      const url = `http://localhost:5001/api/facility/${id}`;
       fetch(url, {
         method: "DELETE",
       })

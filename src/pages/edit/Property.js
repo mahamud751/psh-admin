@@ -16,9 +16,7 @@ const Property = ({ data }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "https://psh-server.onrender.com/api/category"
-        );
+        const response = await axios.get("http://localhost:5001/api/category");
         setCategories(response.data);
       } catch (error) {
         console.log(error);
@@ -30,9 +28,7 @@ const Property = ({ data }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "https://psh-server.onrender.com/api/branch"
-        );
+        const response = await axios.get("http://localhost:5001/api/branch");
         setBranch(response.data);
       } catch (error) {
         console.log(error);
@@ -44,9 +40,7 @@ const Property = ({ data }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "https://psh-server.onrender.com/api/facility"
-        );
+        const response = await axios.get("http://localhost:5001/api/facility");
         setFacilities(response.data);
       } catch (error) {
         console.log(error);
@@ -105,7 +99,7 @@ const Property = ({ data }) => {
       };
 
       await axios.put(
-        `https://psh-server.onrender.com/api/property/${user._id}`,
+        `http://localhost:5001/api/property/${user._id}`,
         product
       );
       MySwal.fire("Good job!", "successfully edited", "success");

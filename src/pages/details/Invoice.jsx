@@ -11,7 +11,7 @@ const Invoice = () => {
     const getData = async () => {
       try {
         const { data } = await axios.get(
-          `https://psh-server.onrender.com/api/order/${id}`,
+          `http://localhost:5001/api/order/${id}`,
           {
             mode: "cors",
           }
@@ -23,8 +23,8 @@ const Invoice = () => {
     };
     getData(data);
   }, []);
-  const item = data.getState.map((item, i) => item);
-  console.log(item);
+  // const item =  data.getState.map((item, i) => item) ;
+  const item = data.getState;
   return (
     <div className="wrapper">
       <div className="content-wrapper" style={{ background: "unset" }}>
@@ -87,18 +87,20 @@ const Invoice = () => {
                               </tr>
                             </thead>
                             <tbody>
-                              {item.map((arr1) =>
-                                arr1.map((obj, i) => (
-                                  <>
-                                    <tr>
-                                      <td>{i + 1}</td>
-                                      <td>{obj.name}</td>
-                                      <td>{obj.desc}</td>
-                                      <td>$64.50</td>
-                                    </tr>
-                                  </>
-                                ))
-                              )}
+                              {item
+                                ? item.map((arr1) =>
+                                    arr1.map((obj, i) => (
+                                      <>
+                                        <tr>
+                                          <td>{i + 1}</td>
+                                          <td>{obj.name}</td>
+                                          <td>{obj.desc}</td>
+                                          <td>$64.50</td>
+                                        </tr>
+                                      </>
+                                    ))
+                                  )
+                                : ""}
                             </tbody>
                           </table>
                         </div>

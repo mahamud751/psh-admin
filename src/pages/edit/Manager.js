@@ -14,9 +14,7 @@ const Manager = ({ data }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "https://psh-server.onrender.com/api/branch"
-        );
+        const response = await axios.get("http://localhost:5001/api/branch");
         setCategories(response.data);
       } catch (error) {
         console.log(error);
@@ -68,10 +66,7 @@ const Manager = ({ data }) => {
         photos: list,
       };
 
-      await axios.put(
-        `https://psh-server.onrender.com/api/seat/${_id}`,
-        product
-      );
+      await axios.put(`http://localhost:5001/api/seat/${_id}`, product);
       MySwal.fire("Good job!", "successfully edited", "success");
     } catch (err) {
       MySwal.fire("Something Error Found.", "warning");

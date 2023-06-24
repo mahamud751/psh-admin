@@ -47,10 +47,7 @@ const Branch = ({ data }) => {
         photos: list,
       };
 
-      await axios.put(
-        `https://psh-server.onrender.com/api/branch/${_id}`,
-        product
-      );
+      await axios.put(`http://localhost:5001/api/branch/${_id}`, product);
       MySwal.fire("Good job!", "successfully edited", "success");
     } catch (err) {
       MySwal.fire("Something Error Found.", "warning");

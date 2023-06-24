@@ -26,12 +26,9 @@ const Seat_list = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const { data } = await axios.get(
-          "https://psh-server.onrender.com/api/property",
-          {
-            mode: "cors",
-          }
-        );
+        const { data } = await axios.get("http://localhost:5001/api/property", {
+          mode: "cors",
+        });
         const categoryMap = {};
         data.forEach((category) => {
           categoryMap[category._id] = category.name;
@@ -146,12 +143,9 @@ const Seat_list = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const { data } = await axios.get(
-          `https://psh-server.onrender.com/api/seat`,
-          {
-            mode: "cors",
-          }
-        );
+        const { data } = await axios.get(`http://localhost:5001/api/seat`, {
+          mode: "cors",
+        });
         setData(data);
       } catch (error) {
         console.log(error);
@@ -165,7 +159,7 @@ const Seat_list = () => {
   const handleSeat = async (id) => {
     const confirmation = window.confirm("Are you Sure?");
     if (confirmation) {
-      const url = `https://psh-server.onrender.com/api/seat/${id}`;
+      const url = `http://localhost:5001/api/seat/${id}`;
       fetch(url, {
         method: "DELETE",
       })
