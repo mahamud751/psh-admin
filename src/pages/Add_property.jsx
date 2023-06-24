@@ -17,7 +17,9 @@ const Add_property = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:5001/api/category");
+        const response = await axios.get(
+          "https://psh-server.onrender.com/api/category"
+        );
         setCategories(response.data);
       } catch (error) {
         console.log(error);
@@ -29,7 +31,9 @@ const Add_property = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:5001/api/branch");
+        const response = await axios.get(
+          "https://psh-server.onrender.com/api/branch"
+        );
         setBranch(response.data);
       } catch (error) {
         console.log(error);
@@ -41,7 +45,9 @@ const Add_property = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:5001/api/facility");
+        const response = await axios.get(
+          "https://psh-server.onrender.com/api/facility"
+        );
         setFacilities(response.data);
       } catch (error) {
         console.log(error);
@@ -104,7 +110,7 @@ const Add_property = () => {
         photos: list,
       };
 
-      await axios.post("http://localhost:5001/api/property", product);
+      await axios.post("https://psh-server.onrender.com/api/property", product);
       MySwal.fire("Good job!", "successfully added", "success");
       formRef.current.reset();
     } catch (err) {

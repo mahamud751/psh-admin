@@ -28,9 +28,12 @@ const Manager_list = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const { data } = await axios.get("http://localhost:5001/api/branch", {
-          mode: "cors",
-        });
+        const { data } = await axios.get(
+          "https://psh-server.onrender.com/api/branch",
+          {
+            mode: "cors",
+          }
+        );
         const categoryMap = {};
         data.forEach((category) => {
           categoryMap[category._id] = category.name;
@@ -132,8 +135,8 @@ const Manager_list = () => {
     const fetchData = async () => {
       try {
         const [usersResponse, branchesResponse] = await Promise.all([
-          axios.get("http://localhost:5001/api/users"),
-          axios.get("http://localhost:5001/api/branch"),
+          axios.get("https://psh-server.onrender.com/api/users"),
+          axios.get("https://psh-server.onrender.com/api/branch"),
         ]);
 
         setData(usersResponse.data);
@@ -153,7 +156,7 @@ const Manager_list = () => {
   const handleCategory = async (id) => {
     const confirmation = window.confirm("Are you Sure?");
     if (confirmation) {
-      const url = `http://localhost:5001/api/users/${id}`;
+      const url = `https://psh-server.onrender.com/api/users/${id}`;
       fetch(url, {
         method: "DELETE",
       })

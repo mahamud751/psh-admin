@@ -113,9 +113,12 @@ const Category_list = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:5001/api/category`, {
-          mode: "cors",
-        });
+        const { data } = await axios.get(
+          `https://psh-server.onrender.com/api/category`,
+          {
+            mode: "cors",
+          }
+        );
         setData(data);
       } catch (error) {
         console.log(error);
@@ -128,7 +131,7 @@ const Category_list = () => {
   const handleCategory = async (id) => {
     const confirmation = window.confirm("Are you Sure?");
     if (confirmation) {
-      const url = `http://localhost:5001/api/category/${id}`;
+      const url = `https://psh-server.onrender.com/api/category/${id}`;
       fetch(url, {
         method: "DELETE",
       })

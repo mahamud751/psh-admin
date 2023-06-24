@@ -13,7 +13,9 @@ const Order = ({ data }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:5001/api/order");
+        const response = await axios.get(
+          "https://psh-server.onrender.com/api/order"
+        );
         setCategories(response.data);
       } catch (error) {
         console.log(error);
@@ -52,7 +54,10 @@ const Order = ({ data }) => {
         ...newPost,
       };
 
-      await axios.put(`http://localhost:5001/api/order/${_id}`, product);
+      await axios.put(
+        `https://psh-server.onrender.com/api/order/${_id}`,
+        product
+      );
       MySwal.fire("Good job!", "successfully edited", "success");
     } catch (err) {
       MySwal.fire("Something Error Found.", "warning");

@@ -11,7 +11,7 @@ const Invoice = () => {
     const getData = async () => {
       try {
         const { data } = await axios.get(
-          `http://localhost:5001/api/order/${id}`,
+          `https://psh-server.onrender.com/api/order/${id}`,
           {
             mode: "cors",
           }

@@ -34,7 +34,10 @@ const Add_Recommended = () => {
         photos: list,
       };
 
-      await axios.post("http://localhost:5001/api/recommended", product);
+      await axios.post(
+        "https://psh-server.onrender.com/api/recommended",
+        product
+      );
       MySwal.fire("Good job!", "successfully added", "success");
     } catch (err) {
       MySwal.fire("Something Error Found.", "warning");

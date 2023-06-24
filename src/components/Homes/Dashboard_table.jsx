@@ -135,9 +135,12 @@ const Dashoboard_table = (props) => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:5001/api/hotels`, {
-          mode: "cors",
-        });
+        const { data } = await axios.get(
+          `https://psh-server.onrender.com/api/hotels`,
+          {
+            mode: "cors",
+          }
+        );
         setData(data);
       } catch (error) {
         console.log(error);
@@ -150,7 +153,7 @@ const Dashoboard_table = (props) => {
   const handleCategory = async (id) => {
     const confirmation = window.confirm("Are you Sure?");
     if (confirmation) {
-      const url = `http://localhost:5001/api/hotels/${id}`;
+      const url = `https://psh-server.onrender.com/api/hotels/${id}`;
       fetch(url, {
         method: "DELETE",
       })
