@@ -12,6 +12,8 @@ import BootstrapTable from "react-bootstrap-table-next";
 import Category from "../../pages/edit/Category";
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/UserProvider";
+import Invoice from "../../pages/details/Invoice";
+import { Link } from "react-router-dom";
 const MyExportCSV = (props) => {
   const handleClick = () => {
     props.onExport();
@@ -63,6 +65,22 @@ const Order_list = () => {
     {
       dataField: "address",
       text: "Address",
+    },
+    // {
+    //   dataField: "_id",
+    //   text: "Invoice",
+    // },
+
+    {
+      text: "Invoice",
+      formatter: (cellContent, row) => {
+        return (
+          <>
+            {" "}
+            <Link to={`/invoice/${row._id}`}>Details</Link>
+          </>
+        );
+      },
     },
     {
       text: "Action",
@@ -127,24 +145,47 @@ const Order_list = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:5001/api/order`, {
-          mode: "cors",
-        });
+        const { data } = await axios.get(
+          `https://psh-server.onrender.com/api/order`,
+          {
+            mode: "cors",
+          }
+        );
         setData(data);
       } catch (error) {
         console.log(error);
       }
     };
     getData(data);
-  }, [data]);
+  }, []);
   const main = data.filter((pd) => pd.email === email);
+  const cart = main.map((pd) => pd.getState);
+  // const propertyValue = cart ? cart[0][0][0]["property"] : "";
+  // const pro = cart.map((pd) => pd);
+  const desiredProperty = "property";
+  let foundValue = null;
+
+  cart.flatMap((arr1) =>
+    arr1.flatMap((arr2) =>
+      arr2.find((obj) => {
+        if (obj.hasOwnProperty(desiredProperty)) {
+          foundValue = obj[desiredProperty];
+          return true; // Stop the iteration once property is found
+        }
+      })
+    )
+  );
+
+  console.log(foundValue);
+
+  // console.log(cart);
 
   //delete
   const [products, setProducts] = useState(data);
   const handleCategory = async (id) => {
     const confirmation = window.confirm("Are you Sure?");
     if (confirmation) {
-      const url = `http://localhost:5001/api/order/${id}`;
+      const url = `https://psh-server.onrender.com/api/order/${id}`;
       fetch(url, {
         method: "DELETE",
       })

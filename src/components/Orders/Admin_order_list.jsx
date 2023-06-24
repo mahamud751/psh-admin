@@ -124,23 +124,26 @@ const Admin_Orders_list = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:5001/api/order`, {
-          mode: "cors",
-        });
+        const { data } = await axios.get(
+          `https://psh-server.onrender.com/api/order`,
+          {
+            mode: "cors",
+          }
+        );
         setData(data);
       } catch (error) {
         console.log(error);
       }
     };
     getData();
-  }, [data]);
+  }, []);
 
   //delete
   const [products, setProducts] = useState(data);
   const handleCategory = async (id) => {
     const confirmation = window.confirm("Are you Sure?");
     if (confirmation) {
-      const url = `http://localhost:5001/api/order/${id}`;
+      const url = `https://psh-server.onrender.com/api/order/${id}`;
       fetch(url, {
         method: "DELETE",
       })

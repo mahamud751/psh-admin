@@ -33,9 +33,12 @@ const Admin_issue_list = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const { data } = await axios.get("http://localhost:5001/api/branch", {
-          mode: "cors",
-        });
+        const { data } = await axios.get(
+          "https://psh-server.onrender.com/api/branch",
+          {
+            mode: "cors",
+          }
+        );
         const categoryMap = {};
         data.forEach((category) => {
           categoryMap[category._id] = category.name;
@@ -72,46 +75,46 @@ const Admin_issue_list = () => {
     },
     { dataField: "branch.name", text: "Branch" },
     { dataField: "status", text: "Status" },
-    // {
-    //   text: "Action",
-    //   formatter: (cellContent, row) => {
-    //     return (
-    //       <>
-    //         {" "}
-    //         <div className="d-flex justify-content-center">
-    //           <img
-    //             src={img3}
-    //             alt=""
-    //             data-toggle="modal"
-    //             data-target={`#loginModal${row._id}`}
-    //           />
-    //           <img
-    //             src={img}
-    //             alt=""
-    //             className="ms-3"
-    //             onClick={() => handleCategory(row._id)}
-    //           />
-    //         </div>
-    //         <div
-    //           className="modal fade"
-    //           id={`loginModal${row._id}`}
-    //           tabIndex="{-1}"
-    //           role="dialog"
-    //           aria-labelledby="loginModal"
-    //           aria-hidden="true"
-    //         >
-    //           <div className="modal-dialog modal-dialog-centered">
-    //             <div className="modal-content" style={{ width: 700 }}>
-    //               <div className="modal-body">
-    //                 <Issue data={row} />
-    //               </div>
-    //             </div>
-    //           </div>
-    //         </div>
-    //       </>
-    //     );
-    //   },
-    // },
+    {
+      text: "Action",
+      formatter: (cellContent, row) => {
+        return (
+          <>
+            {" "}
+            <div className="d-flex justify-content-center">
+              <img
+                src={img3}
+                alt=""
+                data-toggle="modal"
+                data-target={`#loginModal${row._id}`}
+              />
+              <img
+                src={img}
+                alt=""
+                className="ms-3"
+                onClick={() => handleCategory(row._id)}
+              />
+            </div>
+            <div
+              className="modal fade"
+              id={`loginModal${row._id}`}
+              tabIndex="{-1}"
+              role="dialog"
+              aria-labelledby="loginModal"
+              aria-hidden="true"
+            >
+              <div className="modal-dialog modal-dialog-centered">
+                <div className="modal-content" style={{ width: 700 }}>
+                  <div className="modal-body">
+                    <Issue data={row} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </>
+        );
+      },
+    },
   ];
   const pagination = paginationFactory({
     page: 1,
@@ -135,9 +138,12 @@ const Admin_issue_list = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:5001/api/issue`, {
-          mode: "cors",
-        });
+        const { data } = await axios.get(
+          `https://psh-server.onrender.com/api/issue`,
+          {
+            mode: "cors",
+          }
+        );
         setData(data);
       } catch (error) {
         console.log(error);
@@ -150,7 +156,7 @@ const Admin_issue_list = () => {
   const handleCategory = async (id) => {
     const confirmation = window.confirm("Are you Sure?");
     if (confirmation) {
-      const url = `http://localhost:5001/api/issue/${id}`;
+      const url = `https://psh-server.onrender.com/api/issue/${id}`;
       fetch(url, {
         method: "DELETE",
       })

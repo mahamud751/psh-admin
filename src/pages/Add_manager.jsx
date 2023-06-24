@@ -19,7 +19,9 @@ const Add_Manager = () => {
     // Fetch branches from your backend API and update the branches state
     const fetchBranches = async () => {
       try {
-        const response = await fetch("http://localhost:5001/api/branch");
+        const response = await fetch(
+          "https://psh-server.onrender.com/api/branch"
+        );
         const data = await response.json();
         setBranches(data);
       } catch (error) {
@@ -42,16 +44,19 @@ const Add_Manager = () => {
     } = data;
 
     try {
-      const response = await axios.post("http://localhost:5001/api/users", {
-        firstName,
-        lastName,
-        address,
-        email,
-        phone,
-        password,
-        role,
-        branch: branchId,
-      });
+      const response = await axios.post(
+        "https://psh-server.onrender.com/api/users",
+        {
+          firstName,
+          lastName,
+          address,
+          email,
+          phone,
+          password,
+          role,
+          branch: branchId,
+        }
+      );
 
       if (response.status === 200) {
         // Registration successful

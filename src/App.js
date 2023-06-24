@@ -30,6 +30,7 @@ import Review from "./pages/Review";
 import Issues from "./pages/Issues";
 import Admin_issue from "./pages/Admin_issue";
 import Admin_seat from "./pages/Admin_seat";
+import Invoice from "./pages/details/Invoice";
 function App() {
   return (
     <div>
@@ -70,6 +71,7 @@ function App() {
           <Route path="issues_m" element={<Issues />} />
           <Route path="issues" element={<Admin_issue />} />
           <Route path="review" element={<Review />} />
+          <Route path="invoice/:id" element={<Invoice />} />
         </Route>
       </Routes>
     </div>

@@ -12,7 +12,9 @@ const Add_Seat = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:5001/api/property");
+        const response = await axios.get(
+          "https://psh-server.onrender.com/api/property"
+        );
         setProperty(response.data);
       } catch (error) {
         console.log(error);
@@ -51,7 +53,7 @@ const Add_Seat = () => {
         photos: list,
       };
 
-      await axios.post("http://localhost:5001/api/seat", product);
+      await axios.post("https://psh-server.onrender.com/api/seat", product);
       MySwal.fire("Good job!", "successfully added", "success");
       formRef.current.reset();
     } catch (err) {

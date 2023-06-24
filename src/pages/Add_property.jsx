@@ -17,7 +17,9 @@ const Add_property = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:5001/api/category");
+        const response = await axios.get(
+          "https://psh-server.onrender.com/api/category"
+        );
         setCategories(response.data);
       } catch (error) {
         console.log(error);
@@ -29,7 +31,9 @@ const Add_property = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:5001/api/branch");
+        const response = await axios.get(
+          "https://psh-server.onrender.com/api/branch"
+        );
         setBranch(response.data);
       } catch (error) {
         console.log(error);
@@ -41,7 +45,9 @@ const Add_property = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:5001/api/facility");
+        const response = await axios.get(
+          "https://psh-server.onrender.com/api/facility"
+        );
         setFacilities(response.data);
       } catch (error) {
         console.log(error);
@@ -79,6 +85,7 @@ const Add_property = () => {
       perYear: formData.get("perYear"),
       categoryId: formData.get("category"),
       branchId: formData.get("branch"),
+      recommended: formData.get("recommended"),
       facility: selectedFacilities,
     };
 
@@ -103,7 +110,7 @@ const Add_property = () => {
         photos: list,
       };
 
-      await axios.post("http://localhost:5001/api/property", product);
+      await axios.post("https://psh-server.onrender.com/api/property", product);
       MySwal.fire("Good job!", "successfully added", "success");
       formRef.current.reset();
     } catch (err) {
@@ -167,7 +174,35 @@ const Add_property = () => {
                   </select>
                 </div>
               )}
+              <div className="col-md-6 form_sub_stream ">
+                <label htmlFor="inputState" className="profile_label3">
+                  Recommended
+                </label>
+                <select
+                  name="recommended"
+                  id="inputState"
+                  className="main_form w-100"
+                  required
+                >
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
+              </div>
 
+              <div className="col-md-6 form_sub_stream">
+                <label
+                  htmlFor="inputState"
+                  className="form-label profile_label3 "
+                >
+                  Name
+                </label>
+                <input
+                  type="text"
+                  className="main_form w-100"
+                  name="name"
+                  placeholder="Name"
+                />
+              </div>
               <div className="col-md-6 form_sub_stream">
                 <label className="profile_label3">Facility</label>
 
@@ -192,20 +227,6 @@ const Add_property = () => {
                     </div>
                   ))}
                 </div>
-              </div>
-              <div className="col-md-6 form_sub_stream">
-                <label
-                  htmlFor="inputState"
-                  className="form-label profile_label3 "
-                >
-                  Name
-                </label>
-                <input
-                  type="text"
-                  className="main_form w-100"
-                  name="name"
-                  placeholder="Name"
-                />
               </div>
               <div className="col-md-6 form_sub_stream">
                 <label
