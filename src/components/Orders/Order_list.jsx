@@ -83,44 +83,8 @@ const Order_list = () => {
       },
     },
     {
-      text: "Action",
-      formatter: (cellContent, row) => {
-        return (
-          <>
-            {" "}
-            <div className="d-flex justify-content-center">
-              <img
-                src={img3}
-                alt=""
-                data-toggle="modal"
-                data-target={`#loginModal${row._id}`}
-              />
-              <img
-                src={img}
-                alt=""
-                className="ms-3"
-                onClick={() => handleCategory(row._id)}
-              />
-            </div>
-            <div
-              className="modal fade"
-              id={`loginModal${row.id}`}
-              tabIndex="{-1}"
-              role="dialog"
-              aria-labelledby="loginModal"
-              aria-hidden="true"
-            >
-              <div className="modal-dialog modal-dialog-centered">
-                <div className="modal-content">
-                  <div className="modal-body">
-                    <Category data={row} />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </>
-        );
-      },
+      dataField: "status",
+      text: "Status",
     },
   ];
   const pagination = paginationFactory({

@@ -10,6 +10,8 @@ import ToolkitProvider, {
 import paginationFactory from "react-bootstrap-table2-paginator";
 import BootstrapTable from "react-bootstrap-table-next";
 import Category from "../../pages/edit/Category";
+import { Link } from "react-router-dom";
+import Order from "../../pages/edit/Order";
 const MyExportCSV = (props) => {
   const handleClick = () => {
     props.onExport();
@@ -62,6 +64,21 @@ const Admin_Orders_list = () => {
       text: "Address",
     },
     {
+      dataField: "status",
+      text: "Status",
+    },
+    {
+      text: "Invoice",
+      formatter: (cellContent, row) => {
+        return (
+          <>
+            {" "}
+            <Link to={`/invoice/${row._id}`}>Details</Link>
+          </>
+        );
+      },
+    },
+    {
       text: "Action",
       formatter: (cellContent, row) => {
         return (
@@ -83,16 +100,16 @@ const Admin_Orders_list = () => {
             </div>
             <div
               className="modal fade"
-              id={`loginModal${row.id}`}
+              id={`loginModal${row._id}`}
               tabIndex="{-1}"
               role="dialog"
               aria-labelledby="loginModal"
               aria-hidden="true"
             >
               <div className="modal-dialog modal-dialog-centered">
-                <div className="modal-content">
+                <div className="modal-content" style={{ width: 700 }}>
                   <div className="modal-body">
-                    <Category data={row} />
+                    <Order data={row} />
                   </div>
                 </div>
               </div>

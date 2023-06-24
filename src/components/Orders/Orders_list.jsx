@@ -12,6 +12,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import Category from "../../pages/edit/Category";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/UserProvider";
+import Order from "../../pages/edit/Order";
 const MyExportCSV = (props) => {
   const handleClick = () => {
     props.onExport();
@@ -65,6 +66,21 @@ const Orders_list = () => {
       text: "Address",
     },
     {
+      dataField: "status",
+      text: "Status",
+    },
+    {
+      text: "Invoice",
+      formatter: (cellContent, row) => {
+        return (
+          <>
+            {" "}
+            <Link to={`/invoice/${row._id}`}>Details</Link>
+          </>
+        );
+      },
+    },
+    {
       text: "Action",
       formatter: (cellContent, row) => {
         return (
@@ -95,7 +111,7 @@ const Orders_list = () => {
               <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content">
                   <div className="modal-body">
-                    <Category data={row} />
+                    <Order data={row} />
                   </div>
                 </div>
               </div>
